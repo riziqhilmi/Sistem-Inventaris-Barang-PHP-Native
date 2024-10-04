@@ -20,7 +20,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
                     <div class="container">
                     <a class="navbar-brand" href="#">
-    <img src="logo_sd.png" width="35" height="45" class="d-inline-block align-top" alt="">
+    <img src="img/logo_sd.png" width="35" height="45" class="d-inline-block align-top" alt="">
     SDN PASAREJO 1
   </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="1.jpg" class="d-block carousel-img w-100" alt="...">
+        <img src="img/1.jpg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>SDN PASAREJO 1</h5>
           <p>Sekolah Menengah Kejuruan Bidang Keahlian Bisnis-Manajemen, Pariwisata dan Teknologi Informasi dan Komunikasi, Melaksanakan pembelajaran berbasis Teknologi Informasi dan Komunikasi, Memenuhi fasilitas praktik dan bahan ajar sesuai dengan standar yang ditetapkan.</p>
@@ -94,7 +94,7 @@
       </div>
       
       <div class="carousel-item">
-        <img src="2.jpg" class="d-block carousel-img w-100" alt="...">
+        <img src="img/2.jpg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
         <h5>SMKN 1 CIAMIS</h5>
           <p>
@@ -109,14 +109,7 @@
         <a href="" class="btn btn-carousel ">Selengkapnya &dHar; </a>
         </div>
       </div>
-      <!-- <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </div>
-      </div>
-    </div> -->
+      
     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="sr-only">Previous</span>
@@ -155,7 +148,7 @@
 <div class="row">
 <div class="header2 col-10 mt-5 text-center mx-auto"><h1 data-aos="fade-right" data-aos-duration="1200">Sambutan Kepala Sekolah</h1>
 <br>
-<img src="kepsek.png" class="rounded-circle" alt="">
+<img src="img/kepsek.png" class="rounded-circle" alt="">
 <br>
 <br>
 <blockquote class="blockquote">
@@ -197,7 +190,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <div class="row"  data-aos="fade-left" data-aos-duration="1200" id="ak">
     <div class="col-6" >
     <div class="card mb-5">
-  <img src="ak.jpg" class="card-img-top" alt="...">
+  <img src="img/ak.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akutansi</h5>
     <p class="card-text">Mewujudkan Kompetensi Keahlian Akuntansi yang berkualitas dan religius di bidang bisnis dan manajemen untuk menanggapi persaingan di era global <br> <br></p>
@@ -210,7 +203,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <br>
     <div class="col-6">
     <div class="card mb-5">
-  <img src="pm.png" class="card-img-top img-fluid" alt="...">
+  <img src="img/pm.png" class="card-img-top img-fluid" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Pemasaran</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional. SMKN 1 CIAMIS Yakin Bisa! <br> <br></p>
@@ -224,7 +217,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <div class="row"  data-aos="fade-right" data-aos-duration="1200" id="">
     <div class="col-6" id="adper">
     <div class="card mb-3">
-  <img src="ad.jpg" class="card-img-top" alt="...">
+  <img src="img/ad.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Administrasi Perkantoran</h5>
     <p class="card-text">Mencetak calon sekretaris, dan profesional. <br> <br> <br> <br> </p>
@@ -238,7 +231,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 
     <div class="col-6">
     <div class="card mb-3">
-  <img src="ap.jpg" class="card-img-top" alt="...">
+  <img src="img/ap.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akomodasi Perhotelan</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
@@ -253,7 +246,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <div class="row"  data-aos="fade-left" data-aos-duration="1200">
     <div class="col-6 mx-auto" id="jb">
     <div class="card mb-3">
-  <img src="ad.jpg" class="card-img-top" alt="...">
+  <img src="img/ad.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Jasa Boga</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
@@ -267,7 +260,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 
     <div class="col-6 mx-auto">
     <div class="card mb-3">
-  <img src="mm.jpg" class="card-img-top" alt="...">
+  <img src="img/mm.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Multimedia</h5>
     <p class="card-text">Multimedia adalah Kompetensi Keahlian pada SMK Negeri 1 Ciamis yang berada di lingkungan Dinas Pendidikan Provinsi Jawa Barat, tepatnya di Kabupaten Ciamis.</p>
@@ -283,7 +276,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="col-12" id="rpl">
    
     <div class="card mb-3">
-  <img src="rpl.jpg" class="card-img-top" alt="...">
+  <img src="img/rpl.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498DB !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Rekayasa Perangkat Lunak</h5>
     <p class="card-text">Mencetak dan menghasilkan generasi millenial yang Mahir dalam hal IT Yaitu coding,tech enterpreneur,Leadership dan serta memiliki attitude baik dalam keseharian</p>
@@ -305,7 +298,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 
   <div class="row mx-auto">
   <div class="col-8">
-  <div class="mapouter mx-auto"><div class="gmap_canvas"><iframe width="748" height="476" id="gmap_canvas" src="https://maps.google.com/maps?q=SMKN%201%20CIAMIS&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net/blog/nordvpn-coupon-code/">embedgooglemap.net</a></div><style>.mapouter{position:relative;text-align:right;height:476px;width:748px;}.gmap_canvas {overflow:hidden;background:none!important;height:476px;width:748px;}</style></div>
+  <div class="mapouter mx-auto"><div class="gmap_canvas"><iframe width="748" height="476" id="gmap_canvas" src="https://www.google.com/maps/@-7.9059823,113.8952509,947m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net/blog/nordvpn-coupon-code/">embedgooglemap.net</a></div><style>.mapouter{position:relative;text-align:right;height:476px;width:748px;}.gmap_canvas {overflow:hidden;background:none!important;height:476px;width:748px;}</style></div>
   </div>
   
   </div>  
@@ -324,13 +317,13 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <!-- HTML GOES HERE  -->
 
 
-<div class="testimonial" ">
+<div class="testimonial" >
 	<div class="testimonial-body">
 		<p>Sekolah nya bagus banget . guru nya ramah. aku juga suka kantinya. pokok nya sekolahnya keren dan gak ngebosenin!</p>
 		<i class="fas fa-quote-right"></i>
 	</div>
 	<div class="testimonial-footer">
-		<img src="uqy.jpg" alt="user" />
+		<img src="img/uqy.jpg" alt="user" />
 		<h3>Syauqi Zaidan</h3>
 		<h4 class="text-center">bla bla bla</h4>
 	</div>
@@ -345,7 +338,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 		<i class="fas fa-quote-right"></i>
 	</div>
 	<div class="testimonial-footer">
-		<img src="anto.png" alt="user" />
+		<img src="img/anto.png" alt="user" />
 		<h3>Supryanto wp</h3>
 		<h4 class="text-center">bla bla bla</h4>
 	</div>
@@ -369,7 +362,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 		<i class="fas fa-quote-right"></i>
 	</div>
 	<div class="testimonial-footer">
-		<img src="uqy.jpg" alt="user" />
+		<img src="img/uqy.jpg" alt="user" />
 		<h3>Syauqi Zaidan</h3>
 		<h4 class="text-center">bla bla bla</h4>
 	</div>
@@ -384,7 +377,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 		<i class="fas fa-quote-right"></i>
 	</div>
 	<div class="testimonial-footer">
-		<img src="anto.png" alt="user" />
+		<img src="img/anto.png" alt="user" />
 		<h3>Syauqi Zaidan</h3>
 		<h4 class="text-center">bla bla bla</h4>
 	</div>
@@ -399,52 +392,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 </div>
 </div>
 
-<!-- Footer -->
-<section id="footer">
-		<div class="container">
-			<div class="row text-center text-xs-center text-sm-left text-md-left">
-				<div class="col-xs-12 col-sm-4 col-md-4">
-					<h5>Telefon</h5>
-					<ul class="list-unstyled quick-links">
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4">
-					<h5>Sosial Media</h5>
-					<ul class="list-unstyled quick-links">
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Videos</a></li>
-					</ul>
-				</div>
-				<div class="col-xs-12 col-sm-4 col-md-4">
-					<h5>Info Pendaftaran</h5>
-					<ul class="list-unstyled quick-links">
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Home</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>About</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>FAQ</a></li>
-						<li><a href="javascript:void();"><i class="fa fa-angle-double-right"></i>Get Started</a></li>
-						<li><a href="https://wwwe.sunlimetech.com" title="Design and developed by"><i class="fa fa-angle-double-right"></i>Imprint</a></li>
-					</ul>
-				</div>
-  </div>	
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
-					<p class="h6">
-            <br>
-            <br>&copy All right Reversed.<a class="text-green ml-2" href="https://www.sunlimetech.com" target="_blank">Syauqi Zaidan @descience</a></p>
-				</div>
-				</hr>
-			</div>	
-		</div>
-	</section>
-	<!-- ./Footer -->
+
     <!-- Optional JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
