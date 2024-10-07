@@ -88,15 +88,15 @@
         <img src="img/1.jpg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>SDN PASAREJO 1</h5>
-          <p>Sekolah Menengah Kejuruan Bidang Keahlian Bisnis-Manajemen, Pariwisata dan Teknologi Informasi dan Komunikasi, Melaksanakan pembelajaran berbasis Teknologi Informasi dan Komunikasi, Memenuhi fasilitas praktik dan bahan ajar sesuai dengan standar yang ditetapkan.</p>
-          
+          <p>Sekolah SD nya chaha yaa</p>
+
         </div>
       </div>
       
       <div class="carousel-item">
         <img src="img/2.jpg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
-        <h5>SMKN 1 CIAMIS</h5>
+        <h5>SDN PASAREJO 01</h5>
           <p>
             Dengan hadirnya situs SMK Negeri 1 Ciamis ini,
             semoga dapat memberikan informasi
@@ -123,7 +123,7 @@
 <!-- end carousel -->
 <div class="row panel mx-auto">
 <div class="header col-8 mt-5 text-center mx-auto"><h1> Selamat Datang</h1>
-<p >Selamat datang di website SMKN 1 Ciamis. Sekolah bertaraf internasional yang memiliki banyak prestasi dan 
+<p >Selamat datang di website SDN PASAREJO 01. Sekolah bertaraf internasional yang memiliki banyak prestasi dan 
     murid yang berkarakter.
 </p>
 </div>
