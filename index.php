@@ -88,7 +88,7 @@
         <img src="img/1.jpg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>SDN PASAREJO 1</h5>
-          <p>Sekolah SD nya chaha</p>
+          <p>Sekolah SD nya chaha yaa</p>
 
         </div>
       </div>
