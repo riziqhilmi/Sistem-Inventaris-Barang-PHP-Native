@@ -1,3 +1,15 @@
+<?php
+session_start(); // Memulai session
+
+// Cek apakah user sudah login
+if (!isset($_SESSION['user_id'])) {
+    // Jika belum login, redirect ke halaman login
+    header('Location: login.php');
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,34 +44,8 @@
 
             </div>
         </div>
-    </div>
-</div>
+   
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/chart.js"></script>
-<script>
-    const ctx = document.getElementById('lineChart').getContext('2d');
-    const lineChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-            datasets: [{
-                label: 'Jumlah Kegiatan',
-                data: [50, 75, 60, 80, 90, 100, 110],
-                borderColor: 'rgba(54, 162, 235, 1)',
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
+
 </body>
 </html>

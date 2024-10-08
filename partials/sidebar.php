@@ -19,7 +19,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white">
+            <a href="data_siswa.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 Data Siswa
             </a>
@@ -68,5 +68,5 @@
         
     </ul>
     <hr>
-    <a href="index.php" class="btn btn-outline-light">Logout</a>
+    <a href="logout.php" class="btn btn-outline-light">Logout</a>
 </div>

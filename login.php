@@ -1,37 +1,47 @@
 <?php
+session_start(); // Mulai session
 include('koneksi.php');
 
-if(isset($_POST['submit'])) {
-  $email = $_POST['username'];
-  $pass = $_POST['password'];
+if (isset($_POST['submit'])) {
+    $usr = $_POST['username'];
+    $pass = $_POST['password'];
 
-  if(!empty(trim($email)) && !empty(trim($pass))) {
-      
-      $query      = "SELECT * FROM user WHERE username = '$email'";
-      $result     = mysqli_query($koneksi, $query);
-      $num        = mysqli_num_rows($result);
+    if (!empty(trim($usr)) && !empty(trim($pass))) {
+        // Query untuk mendapatkan user berdasarkan username atau email
+        $query = "SELECT * FROM user WHERE username = '$usr' OR email = '$usr'";
+        $result = mysqli_query($koneksi, $query);
+        $num = mysqli_num_rows($result);
 
-      while ($row = mysqli_fetch_array($result)) {
-          $id = $row['id_user'];
-          $userVal = $row['username'];
-          $passVal = $row['password'];
-          $userName = $row['email'];
-          
-}
+        if ($num != 0) {
+            while ($row = mysqli_fetch_array($result)) {
+                $id = $row['id_user'];
+                $userVal = $row['username'];
+                $passVal = $row['password'];
+                $userName = $row['email'];
+            }
 
+            // Cek apakah username/email dan password cocok
+            if (($userVal == $usr || $userName == $usr) && $passVal == $pass) {
+                // Simpan data user di session
+                $_SESSION['user_id'] = $id;
+                $_SESSION['username'] = $userVal;
 
-if ($num != 0) {
-  if ($userVal == $email && $passVal == $pass) {
-      header('Location: dashboard.php');
-  } else {
-      $error = 'user atau password salah!!!';
-      header('Location: login.php');
-  }
-} else {
-  $error = 'user tidak ditemukan!!!';
-  header('Location: login.php');
-      }
-  }
+                // Redirect ke halaman dashboard
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                // Jika user atau password salah
+                $_SESSION['error'] = 'User atau password salah!!!';
+                header('Location: login.php');
+                exit();
+            }
+        } else {
+            // Jika user tidak ditemukan
+            $_SESSION['error'] = 'User tidak ditemukan!!!';
+            header('Location: login.php');
+            exit();
+        }
+    }
 }
 ?>
 
@@ -99,6 +109,9 @@ if ($num != 0) {
         <label class="form-check-label" for="show-password">Lihat Password</label>
     </div>
     <button type="submit" name="submit" class="btn btnlogin btn-block">Submit</button>
+    <div style="margin-top: 10px;">
+  <label for="akun">Tidak Punya Akun? <a href="register.php">Daftar disini!!</a></label>
+</div>
 </form>
 
                     <script>
@@ -116,14 +129,9 @@ if ($num != 0) {
                 </div>
             </div>
         </div>
-
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+         <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+     </body>
 </html>
