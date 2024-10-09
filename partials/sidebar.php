@@ -79,7 +79,7 @@ $base_url = "/project"; // Sesuaikan dengan folder root proyek kamu
         
     </ul>
     <hr>
-    <a href="/project/logout.php" class="btn btn-outline-light">Logout</a>
+    <a href="/project/fitur/logout.php" class="btn btn-outline-light">Logout</a>
 </div>
 
 

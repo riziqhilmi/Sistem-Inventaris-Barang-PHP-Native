@@ -8,7 +8,9 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 ?>
-
+<?php
+include ("koneksi.php");
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,14 +26,95 @@ if (!isset($_SESSION['user_id'])) {
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 bg-dark sidebar">
-            <?php include 'partials/sidebar.php'; ?>
-        </div>
+        <div class="col-md-2 sidebar bg-dark sticky-top">
+    <?php include 'partials/sidebar.php'; ?>
+</div>
+
         
         <!-- Main Content -->
         <div class="col-md-10 p-4">
             <div class="container">
                 <h1 class="mb-4">Data Guru</h1>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Siswa - Siswi</h1>
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">SD Pasarejo 1</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>NIS</th>
+                                            <th>NISN</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Tempat Lahir</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Agama</th>
+                                            <th>Alamat</th>
+                                        </tr>
+                                        <?php
+    
+    $query  = "SELECT * FROM siswa";
+    $result = mysqli_query($koneksi, $query);
+    $no = 1;
+    
+    
+    while ($row = mysqli_fetch_array($result)){
+        
+        $nama = $row['nama'];
+        $nisn = $row['NISN'];
+        $nis = $row['NIS'];
+        $tempatLahir = $row['tempat_lahir'];
+        $tglLahir = $row['tgl_lahir'];
+        $agama = $row['agama'];
+        $alamat = $row['alamat'];
+    ?>
+    <tr>
+        <td><?php echo $no; ?></td>
+        <td><?php echo $nama; ?></td>
+        <td><?php echo $nisn; ?></td>
+        <td><?php echo $nis; ?></td>
+        <td><?php echo $tempatLahir; ?></td>
+        <td><?php echo $tglLahir; ?></td>
+        <td><?php echo $agama; ?></td>
+        <td><?php echo $alamat; ?></td>
+        //<td><a href="edit.php?id=<?php echo $row['id_siswa']; ?>">edit</a></td>
+        <td><a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>">hapus</a></td>
+    </tr>
+    <?php
+        $no++;
+    }
+?>
+                                    
+                                    
+
+
+
+                                        
+                                        
+                                        
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+
+
 
                 <!-- Graph -->
                 <div class="row">
