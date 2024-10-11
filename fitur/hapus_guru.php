@@ -9,7 +9,7 @@ $id = $_GET['id'];
         // Jika pengguna menekan "OK", maka data akan dihapus
         window.location.href = "delete_action.php?id=<?php echo $id; ?>";
     } else {
-        window.location.href = "../data_siswa.php";
+        window.location.href = "../data_guru.php";
 
     }
 </script>

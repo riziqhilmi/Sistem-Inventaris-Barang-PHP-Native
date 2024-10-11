@@ -88,7 +88,7 @@ include ("koneksi.php");
         <td><?php echo $tglLahir; ?></td>
         <td><?php echo $agama; ?></td>
         <td><?php echo $alamat; ?></td>
-        //<td><a href="edit.php?id=<?php echo $row['id_siswa']; ?>">edit</a></td>
+        <td><a href="edit.php?id=<?php echo $row['id_siswa']; ?>">edit</a></td>
         <td><a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>">hapus</a></td>
     </tr>
     <?php
