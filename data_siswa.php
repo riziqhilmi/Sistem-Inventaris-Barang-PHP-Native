@@ -41,7 +41,6 @@ include ("koneksi.php");
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Siswa - Siswi</h1>
-                    
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -68,12 +67,12 @@ include ("koneksi.php");
     $result = mysqli_query($koneksi, $query);
     $no = 1;
     
-    
     while ($row = mysqli_fetch_array($result)){
         
         $nama = $row['nama'];
-        $nisn = $row['NISN'];
         $nis = $row['NIS'];
+        $nisn = $row['NISN'];
+        $jenis_kelamin = $row['jenis_kelamin'];
         $tempatLahir = $row['tempat_lahir'];
         $tglLahir = $row['tgl_lahir'];
         $agama = $row['agama'];
@@ -82,28 +81,30 @@ include ("koneksi.php");
     <tr>
         <td><?php echo $no; ?></td>
         <td><?php echo $nama; ?></td>
-        <td><?php echo $nisn; ?></td>
         <td><?php echo $nis; ?></td>
+        <td><?php echo $nisn; ?></td>
+        <td><?php echo $jenis_kelamin; ?></td>
         <td><?php echo $tempatLahir; ?></td>
         <td><?php echo $tglLahir; ?></td>
         <td><?php echo $agama; ?></td>
         <td><?php echo $alamat; ?></td>
-        <td><a href="edit.php?id=<?php echo $row['id_siswa']; ?>">edit</a></td>
-        <td><a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>">hapus</a></td>
+  <td>
+    <button type="button" class="btn btn-primary btn-sm">Edit</button>
+    <a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>">
+        <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+    
+    </a>
+  </td>
+</tr>
     </tr>
     <?php
         $no++;
     }
 ?>
+
                                     
                                     
-
-
-
-                                        
-                                        
-                                        
-                                    
+     
                                 </table>
                             </div>
                         </div>

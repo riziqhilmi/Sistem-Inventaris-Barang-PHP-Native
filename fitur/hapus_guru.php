@@ -7,7 +7,7 @@ $id = $_GET['id'];
     var result = confirm("Apakah Anda yakin ingin menghapus data ini?");
     if(result) {
         // Jika pengguna menekan "OK", maka data akan dihapus
-        window.location.href = "delete_action.php?id=<?php echo $id; ?>";
+        window.location.href = "delete_action_guru.php?id=<?php echo $id; ?>";
     } else {
         window.location.href = "../data_guru.php";
 
