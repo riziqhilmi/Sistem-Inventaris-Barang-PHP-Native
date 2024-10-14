@@ -1,16 +1,14 @@
 <?php
 include('../koneksi.php');
+
 $id = $_GET['id'];
+
+$query = "DELETE FROM siswa WHERE id_siswa='$id'";
+
+if (mysqli_query($koneksi, $query)) {
+    header('Location: ../data_siswa.php');
+    exit();
+} else {
+    echo "<script>alert('Data gagal dihapus: " . mysqli_error($koneksi) . "'); window.location='../data_siswa.php';</script>";
+}
 ?>
-
-<script type="text/javascript">
-    var result = confirm("Apakah Anda yakin ingin menghapus data ini?");
-    if(result) {
-        // Jika pengguna menekan "OK", maka data akan dihapus
-        window.location.href = "delete_action.php?id=<?php echo $id; ?>";
-    } else {
-        window.location.href = "../data_siswa.php";
-
-    }
-</script>
-
