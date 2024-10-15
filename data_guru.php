@@ -74,12 +74,11 @@ include ("koneksi.php");
                                     <?php
                                    $query = isset($_GET['query']) ? $_GET['query'] : '';
 
-                                   // Modifikasi query untuk menyesuaikan input pencarian
                                    if ($query) {
-                                       $query = mysqli_real_escape_string($koneksi, $query); // Sanitasi input untuk keamanan
-                                       $sql = "SELECT * FROM guru WHERE nama LIKE '%$query%' OR NIP LIKE '%$query%'"; // Filter berdasarkan nama atau NIP
+                                       $query = mysqli_real_escape_string($koneksi, $query); 
+                                       $sql = "SELECT * FROM guru WHERE nama LIKE '%$query%' OR NIP LIKE '%$query%'OR kontak LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR alamat LIKE '%$query%' OR status LIKE '%$query%'"; // Filter berdasarkan nama atau NIP
                                    } else {
-                                       $sql = "SELECT * FROM guru"; // Ambil semua data jika tidak ada pencarian
+                                       $sql = "SELECT * FROM guru";
                                    }
                                    
                                    $result = mysqli_query($koneksi, $sql);
