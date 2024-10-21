@@ -47,7 +47,7 @@ include ("koneksi.php");
                         <div class="card-body">
 
                         <div class="d-flex justify-content-between mb-3">
-                            <button type="button" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+                            <button type="button" class="btn btn-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
                                 Tambah Data Siswa
                             </button>
 
@@ -58,7 +58,7 @@ include ("koneksi.php");
                             
                         </div>  
 
-                        <div class="table-responsive">
+                            <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <tr>
                                         <th>No</th>
@@ -77,7 +77,7 @@ include ("koneksi.php");
 
                                    if ($query) {
                                        $query = mysqli_real_escape_string($koneksi, $query); 
-                                       $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%' "; 
+                                       $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
                                    } else {
                                        $sql = "SELECT * FROM siswa";
                                    }
@@ -86,18 +86,18 @@ include ("koneksi.php");
                                    $no = 1;
 
                                    while ($row = mysqli_fetch_array($result)) {
-                                    $nama = $row['nama'];
-                                    $nis = $row['NIS'];
-                                    $nisn = $row['NISN'];
-                                    $jenis_kelamin = $row['jenis_kelamin'];
-                                    $tempatLahir = $row['tempat_lahir'];
-                                    $tglLahir = $row['tgl_lahir'];
-                                    $agama = $row['agama'];
-                                    $alamat = $row['alamat'];
-                                ?>
+                                        $nama = $row['nama'];
+                                        $nis = $row['NIS'];
+                                        $nisn = $row['NISN'];
+                                        $jenis_kelamin = $row['jenis_kelamin'];
+                                        $tempatLahir = $row['tempat_lahir'];
+                                        $tglLahir = $row['tgl_lahir'];
+                                        $agama = $row['agama'];
+                                        $alamat = $row['alamat'];
+                            ?>
                           
                             
-                          <tr>
+                                <tr>
                                         <td><?php echo $no; ?></td>
                                         <td><?php echo $nama; ?></td>
                                         <td><?php echo $nis; ?></td>
@@ -109,63 +109,64 @@ include ("koneksi.php");
                                         <td><?php echo $alamat; ?></td>
                                         <td>
                                             <!-- Tombol Edit -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editStudentModal<?php echo $row['id_siswa']; ?>">
+                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editTeacherModal<?php echo $row['id_siswa']; ?>">
                                                 Edit
                                             </button>
 
                                             <!-- Tombol Hapus -->
-                                            <a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus siswa ini?');" class="btn btn-danger btn-sm">
+                                            <a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus Siswa ini?');" class="btn btn-danger btn-sm">
                                                 Hapus
                                             </a>
                                         </td>
                                     </tr>
 
                                     <!-- Modal Edit Data Siswa -->
-                                    <div class="modal fade" id="editStudentModal<?php echo $row['id Siswa']; ?>" tabindex="-1" aria-labelledby="editStudentLabel<?php echo $row['id Siswa']; ?>" aria-hidden="true">
+                                    <div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="editStudentLabel<?php echo $row['id Siswa']; ?>">Edit Data Siswa</h5>
+                                                    <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_siswa']; ?>">Edit Data Siswa</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <form action="fitur/edit Siswa.php" method="POST">
-    <input type="hidden" name="id Siswa" value="<?php echo $row['id Siswa']; ?>">
+                                                <form action="fitur/edit_siswa.php" method="POST">
+                            <input type="hidden" name="id_siswa" value="<?php echo $row['id_siswa']; ?>">
     
-    <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="nip" class="form-label">NIP</label>
-        <input type="text" class="form-control" name="nip" value="<?php echo $row['NIP']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="kontak" class="form-label">Kontak</label>
-        <input type="text" class="form-control" name="kontak" value="<?php echo $row['kontak']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-        <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-        <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="alamat" class="form-label">Alamat</label>
-        <textarea class="form-control" name="alamat" required><?php echo $row['alamat']; ?></textarea>
-    </div>
-    
-    <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <input type="text" class="form-control" name="status" value="<?php echo $row['status']; ?>" required>
-    </div>
+                            <div class="mb-3">
+                                                            <label for="nama" class="form-label">Nama</label>
+                                                            <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="nis" class="form-label">NIS</label>
+                                                            <input type="text" class="form-control" name="nis" value="<?php echo $row['NIS']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="nisn" class="form-label">NISN</label>
+                                                            <input type="text" class="form-control" name="nisn" value="<?php echo $row['NISN']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                                            <select class="form-select" name="jenis_kelamin" required>
+                                                                <option value="L" <?php echo ($jenis_kelamin == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
+                                                                <option value="P" <?php echo ($jenis_kelamin == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                                            <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                                                            <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="agama" class="form-label">Agama</label>
+                                                            <input type="text" class="form-control" name="agama" value="<?php echo $row['agama']; ?>" required>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="alamat" class="form-label">Alamat</label>
+                                                            <textarea class="form-control" name="alamat" required><?php echo $row['alamat']; ?></textarea>
+                                                        </div>
 
     <button type="submit" class="btn btn-primary">Simpan</button>
 </form>
@@ -193,7 +194,7 @@ include ("koneksi.php");
                 var query = $('input[name="query"]').val(); // Mengambil nilai dari input
 
                 $.ajax({
-                    url: 'fitur/cari Siswa.php', // URL untuk memproses pencarian
+                    url: 'fitur/cari_siswa.php', // URL untuk memproses pencarian
                     method: 'GET',
                     data: { query: query },
                     success: function(response) {
@@ -207,50 +208,51 @@ include ("koneksi.php");
         });
     </script>
 
-                <!-- Modal for Adding Student -->
-                <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentLabel" aria-hidden="true">
+                <!-- Modal for Adding Teacher -->
+                <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addStudentLabel">Tambah Data Siswa</h5>
+                                <h5 class="modal-title" id="addTeacherLabel">Tambah Data Siswa</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="fitur/tambah Siswa.php" method="POST">
+                                <form action="fitur/tambah_siswa.php" method="POST">
     <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" name="nama" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="nip" class="form-label">NIP</label>
-        <input type="text" class="form-control" name="nip" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="kontak" class="form-label">Kontak</label>
-        <input type="text" class="form-control" name="kontak" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-        <input type="text" class="form-control" name="tempat_lahir" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-        <input type="date" class="form-control" name="tgl_lahir" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="alamat" class="form-label">Alamat</label>
-        <textarea class="form-control" name="alamat" required></textarea>
-    </div>
-    
-    <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <input type="text" class="form-control" name="status" required>
-    </div>
+                                        <label for="nama" class="form-label">Nama</label>
+                                        <input type="text" class="form-control" name="nama" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nis" class="form-label">NIS</label>
+                                        <input type="text" class="form-control" name="nis" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="nisn" class="form-label">NISN</label>
+                                        <input type="text" class="form-control" name="nisn" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                        <select class="form-select" name="jenis_kelamin" required>
+                                            <option value="L">Laki-laki</option>
+                                            <option value="P">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                        <input type="text" class="form-control" name="tempat_lahir" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                                        <input type="date" class="form-control" name="tgl_lahir" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="agama" class="form-label">Agama</label>
+                                        <input type="text" class="form-control" name="agama" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="alamat" class="form-label">Alamat</label>
+                                        <textarea class="form-control" name="alamat" required></textarea>
+                                    </div>
 
     <button type="submit" class="btn btn-primary">Simpan</button>
 </form>

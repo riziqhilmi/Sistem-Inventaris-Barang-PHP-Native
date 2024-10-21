@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               VALUES ('$nama', '$nip', '$kontak', '$tempat_lahir', '$tgl_lahir', '$alamat', '$status')";
 
     // Eksekusi query
-    if (mysqli_query($koneksi, $query)) {
+    if (mysqli_query(mysql: $koneksi, $query)) {
         echo "<script>alert('Data guru berhasil ditambahkan'); window.location='../data_guru.php';</script>";
     } else {
         echo "<script>alert('Data guru gagal ditambahkan: " . mysqli_error($koneksi) . "'); window.location='../data_guru.php';</script>";
