@@ -33,6 +33,12 @@ $base_url = "/project"; // Sesuaikan dengan folder root proyek kamu
                 Data Siswa
             </a>
         </li>
+        <li>
+            <a href="/project/data_kelas.php" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                Data Kelas
+            </a>
+        </li>
         
         <li>
             
@@ -44,6 +50,7 @@ $base_url = "/project"; // Sesuaikan dengan folder root proyek kamu
         <li>
             <a href="<?php echo $base_url; ?>/inventaris/barang.php" class="nav-link text-white ms-3">Barang</a>
         </li>
+        
         <li>
             <a href="<?php echo $base_url; ?>/inventaris/suplier.php" class="nav-link text-white ms-3">Suplier</a>
         </li>

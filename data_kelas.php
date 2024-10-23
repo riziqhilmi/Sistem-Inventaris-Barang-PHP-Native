@@ -9,9 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 <?php
-include ("../koneksi.php");
+include ("koneksi.php");
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,23 +19,29 @@ include ("../koneksi.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 bg-dark sidebar">
-            <?php include '../partials/sidebar.php'; ?>
+        <div class="col-md-2 sidebar bg-dark sticky-top">
+            <?php include 'partials/sidebar.php'; ?>
         </div>
-        
+
         <!-- Main Content -->
         <div class="col-md-10 p-4">
             <div class="container">
-                <h1 class="mb-4">Item Barang</h1>
-                 <!-- DataTales Example -->
-                 <div class="card shadow mb-4">
+                <h1 class="mb-4">Data Ruangan</h1>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Daftar Ruangan Pasarejo 1</h1>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
                         
 
                         <div class="card-body">
@@ -71,7 +76,7 @@ include ("../koneksi.php");
                                        $sql = "SELECT * FROM ruangan";
                                    }
                                    
-                                   $result = mysqli_query($koneksi, query: $sql);
+                                   $result = mysqli_query($koneksi, $sql);
                                    $no = 1;
 
                                    while ($row = mysqli_fetch_array($result)) {
@@ -176,19 +181,8 @@ include ("../koneksi.php");
     </div>
 
 </div>
-                
 
-                <!-- Graph -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-   
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
