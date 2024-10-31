@@ -8,7 +8,7 @@ if (isset($_GET['function']) && function_exists($_GET['function'])) {
 function get_guru()
 {
     global $koneksi;
-    $query = $koneksi->query("SELECT * FROM guru");
+    $query = $koneksi->query(query: "SELECT * FROM guru");
     $data = array();
     while ($row = mysqli_fetch_object($query)) {
         $data[] = $row;
