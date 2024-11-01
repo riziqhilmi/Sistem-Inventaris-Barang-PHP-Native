@@ -91,10 +91,10 @@ include ("../koneksi.php");
                                         $jml_ak = $row['jumlah_akhir'];
                                         $tgl = $row['tgl'];
                                         $ket = $row['keterangan'];
-                                    
+                                   
 
-                                        $query_kelas = "SELECT nama_ruangan FROM ruangan";
-                                        $result_kelas = $koneksi->query(query: $query_kelas);
+                                        
+
                             ?>
                           
                             
@@ -152,10 +152,12 @@ include ("../koneksi.php");
     <label for="ruangan" class="form-label">Ruangan</label>
     <select class="form-select" name="ruangan" required>
         <?php
+        $query_kelas = "SELECT nama_ruangan FROM ruangan";
+        $result_kelas_edit = $koneksi->query($query_kelas);
         echo '<option value="">Pilih Ruangan</option>';
         
-        if ($result_kelas->num_rows > 0) {
-            while ($row_kelas = $result_kelas->fetch_assoc()) {
+        if ($result_kelas_edit->num_rows > 0) {
+            while ($row_kelas = $result_kelas_edit->fetch_assoc()) {
                 $selected = (isset($row['ruangan']) && $row['ruangan'] == $row_kelas['nama_ruangan']) ? 'selected' : '';
                 echo '<option value="' . $row_kelas['nama_ruangan'] . '" ' . $selected . '>' . $row_kelas['nama_ruangan'] . '</option>';
             }
@@ -165,6 +167,7 @@ include ("../koneksi.php");
         ?>
     </select>
 </div>
+
 
     <div class="mb-3">
         <label for="kondisi" class="form-label">Kondisi</label>
@@ -203,6 +206,7 @@ include ("../koneksi.php");
 
                                     <?php
                                         $no++;
+                                        
                                     }
                                     ?>
                                 </table>
@@ -240,9 +244,11 @@ include ("../koneksi.php");
     <label for="ruangan" class="form-label">Ruangan</label>
     <select class="form-select" name="ruangan" required>
         <?php
+        $query_kelas = "SELECT nama_ruangan FROM ruangan";
+        $result_kelas = $koneksi->query($query_kelas);
         if ($result_kelas->num_rows > 0) {
-            while ($row = $result_kelas->fetch_assoc()) {
-                echo '<option value="' . $row['nama_ruangan'] . '">' . $row['nama_ruangan'] . '</option>';
+            while ($row_kelas = $result_kelas->fetch_assoc()) {
+                echo '<option value="' . $row_kelas['nama_ruangan'] . '">' . $row_kelas['nama_ruangan'] . '</option>';
             }
         } else {
             echo '<option value="">Tidak ada data ruang tersedia</option>';
