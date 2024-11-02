@@ -52,17 +52,16 @@ $base_url = "/project"; // Sesuaikan dengan folder root proyek kamu
         </li>
         
         <li>
-            <a href="<?php echo $base_url; ?>/inventaris/suplier.php" class="nav-link text-white ms-3">Suplier</a>
-        </li>
-        <li>
             <a href="<?php echo $base_url; ?>/inventaris/barang_masuk.php" class="nav-link text-white ms-3">Barang Masuk</a>
         </li>
+        
         <li>
             <a href="<?php echo $base_url; ?>/inventaris/barang_keluar.php" class="nav-link text-white ms-3">Barang Keluar</a>
         </li>
         <li>
-            <a href="<?php echo $base_url; ?>/inventaris/distribusi.php" class="nav-link text-white ms-3">Distribusi</a>
+            <a href="<?php echo $base_url; ?>/inventaris/peminjaman.php" class="nav-link text-white ms-3">Peminjaman</a>
         </li>
+        
     </ul>
 </li>
 

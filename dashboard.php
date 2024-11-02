@@ -19,7 +19,43 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="assets/js/bar.js"></script> <!-- Panggil file bar.js di sini -->
+    <script>$(document).ready(function () {
+    showGraph();
+});
+
+function showGraph() {
+    $.post("bar_encode.php", function (data) {
+        console.log(data);
+        var id = [];
+        var jual = [];
+
+        for (var i in data) {
+            id.push(data[i].nama);
+            jual.push(data[i].jumlah_akhir);
+        }
+
+        var chartdata = {
+            labels: id,
+            datasets: [
+                {
+                    label: 'Nama Barang',
+                    backgroundColor: '#49e2ff',
+                    hoverBackgroundColor: '#CCCCCC',
+                    hoverBorderColor: '#666666',
+                    data: jual
+                }
+            ]
+        };
+
+        var graphTarget = $("#graphCanvas");
+
+        var barGraph = new Chart(graphTarget, {
+            type: 'bar',
+            data: chartdata
+        });
+    });
+}
+</script> <!-- Panggil file bar.js di sini -->
 </head>
 <body>
 
