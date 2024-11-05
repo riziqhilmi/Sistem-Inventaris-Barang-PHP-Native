@@ -1,36 +1,34 @@
-$(document).ready(function () {
-    showGraph();
-});
-
-function showGraph() {
-    $.post("bar_encode.php", function (data) {
-        console.log(data);
-        var id = [];
-        var jual = [];
-
-        for (var i in data) {
-            id.push(data[i].nama);
-            jual.push(data[i].jumlah_akhir);
-        }
-
-        var chartdata = {
-            labels: id,
-            datasets: [
-                {
-                    label: 'Nama Barang',
-                    backgroundColor: '#49e2ff',
-                    hoverBackgroundColor: '#CCCCCC',
-                    hoverBorderColor: '#666666',
-                    data: jual
-                }
-            ]
-        };
-
-        var graphTarget = $("#graphCanvas");
-
-        var barGraph = new Chart(graphTarget, {
-            type: 'bar',
-            data: chartdata
-        });
-    });
+// Fungsi untuk menyimpan status submenu ke localStorage
+function saveMenuState(menuId, state) {
+  localStorage.setItem(menuId, state);
 }
+
+// Mengatur status submenu berdasarkan localStorage saat halaman dimuat
+document.addEventListener("DOMContentLoaded", function () {
+  const inventarisSubMenu = document.getElementById("inventaris");
+  const laporanSubMenu = document.getElementById("laporan");
+
+  // Cek status dari localStorage dan tambahkan kelas 'show' jika seharusnya terbuka
+  if (localStorage.getItem("inventaris") === "show") {
+    inventarisSubMenu.classList.add("show");
+  }
+  if (localStorage.getItem("laporan") === "show") {
+    laporanSubMenu.classList.add("show");
+  }
+
+  // Event listener untuk menyimpan status submenu Inventaris
+  inventarisSubMenu.addEventListener("shown.bs.collapse", function () {
+    saveMenuState("inventaris", "show");
+  });
+  inventarisSubMenu.addEventListener("hidden.bs.collapse", function () {
+    saveMenuState("inventaris", "hide");
+  });
+
+  // Event listener untuk menyimpan status submenu Laporan
+  laporanSubMenu.addEventListener("shown.bs.collapse", function () {
+    saveMenuState("laporan", "show");
+  });
+  laporanSubMenu.addEventListener("hidden.bs.collapse", function () {
+    saveMenuState("laporan", "hide");
+  });
+});
