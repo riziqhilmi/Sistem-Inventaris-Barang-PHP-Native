@@ -29,13 +29,13 @@ include("../koneksi.php");
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div class="col-md-2 bg-dark sidebar">
+      <div class="col-md-2 sidebar bg-dark vh-100 position-fixed">
         <?php include '../partials/sidebar.php'; ?>
       </div>
 
       <!-- Main Content -->
-      <div class="col-md-10 p-4">
-        <div class="container">
+      <div class="col-md-10 offset-md-2 p-4" style="margin-left: 16.6667%;">
+            <div class="container">
           <h1 class="mb-4">Item Barang</h1>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">

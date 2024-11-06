@@ -72,16 +72,16 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 bg-dark sidebar">
+        <div class="col-md-2 sidebar bg-dark vh-100 position-fixed">
             <?php include '../partials/sidebar.php'; ?>
         </div>
-        
         <!-- Konten Utama -->
-        <div class="col-md-10 p-4">
+        <div class="col-md-10 offset-md-2 p-4" style="margin-left: 16.6667%;">
             <div class="container">
                 <h1 class="mb-4">Barang Masuk</h1>
 
-                <?php if (isset($_SESSION['success'])): ?>
+                 <!-- Notification Alerts -->
+                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success" role="alert">
                         <?php 
                         echo $_SESSION['success'];
@@ -171,6 +171,9 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
 
                 <!-- Grafik -->
                 <div class="row mt-4">
