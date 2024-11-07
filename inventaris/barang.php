@@ -233,81 +233,88 @@ include("../koneksi.php");
           </div>
         </div>
         <!-- /.container-fluid -->
-
-        <!-- Modal for Adding Teacher -->
-        <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="addTeacherLabel">Tambah Data barang</h5>
+<!-- Modal for Adding Item -->
+<div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTeacherLabel">Tambah Data Barang</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form action="../fitur/tambah_barang.php" method="POST">
-                  <div class="mb-3">
-                    <label for="nama_barang" class="form-label">Nama barang</label>
-                    <input type="text" class="form-control" name="nama_barang" required>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="merk" class="form-label">Merek</label>
-                    <input type="text" class="form-control" name="merk" required>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="kategori" class="form-label">Kategori</label>
-                    <input type="text" class="form-control" name="kategori" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="ruangan" class="form-label">Ruangan</label>
-                    <select class="form-select" name="ruangan" required>
-                      <?php
-                      $query_kelas = "SELECT nama_ruangan FROM ruangan";
-                      $result_kelas = $koneksi->query($query_kelas);
-                      if ($result_kelas->num_rows > 0) {
-                        while ($row_kelas = $result_kelas->fetch_assoc()) {
-                          echo '<option value="' . $row_kelas['nama_ruangan'] . '">' . $row_kelas['nama_ruangan'] . '</option>';
-                        }
-                      } else {
-                        echo '<option value="">Tidak ada data ruang tersedia</option>';
-                      }
-                      ?>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="kondisi" class="form-label">Kondisi</label>
-                    <select class="form-select" name="kondisi" required>
-                      <option value="Baik">Baik</option>
-                      <option value="Rusak Ringan">Rusak Ringan</option>
-                      <option value="Rusak Berat">Rusak Berat</option>
-                    </select>
-                  </div>
-                  <div class="mb-3">
-                    <label for="jml_a" class="form-label">Jumlah Awal</label>
-                    <input type="text" class="form-control" name="jml_a" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="jml_ak" class="form-label">Jumlah Akhir</label>
-                    <input type="text" class="form-control" name="jml_ak" required>
-                  </div>
-                  <div class="mb-3">
-                    <label for="tgl" class="form-label">TGL Pengadaan</label>
-                    <input type="date" class="form-control" name="tgl" required>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="ket" class="form-label">Keterangan</label>
-                    <input type="text" class="form-control" name="ket" required>
-                  </div>
-
-
-                  <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
-
-              </div>
             </div>
-          </div>
+            <div class="modal-body">
+                <form action="../fitur/tambah_barang.php" method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nama_barang" class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" name="nama_barang" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="merk" class="form-label">Merek</label>
+                            <input type="text" class="form-control" name="merk" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="kategori" class="form-label">Kategori</label>
+                            <input type="text" class="form-control" name="kategori" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ruangan" class="form-label">Ruangan</label>
+                            <select class="form-select" name="ruangan" required>
+                                <?php
+                                $query_kelas = "SELECT nama_ruangan FROM ruangan";
+                                $result_kelas = $koneksi->query($query_kelas);
+                                if ($result_kelas->num_rows > 0) {
+                                    while ($row_kelas = $result_kelas->fetch_assoc()) {
+                                        echo '<option value="' . $row_kelas['nama_ruangan'] . '">' . $row_kelas['nama_ruangan'] . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">Tidak ada data ruang tersedia</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="kondisi" class="form-label">Kondisi</label>
+                        <select class="form-select" name="kondisi" required>
+                            <option value="Baik">Baik</option>
+                            <option value="Rusak Ringan">Rusak Ringan</option>
+                            <option value="Rusak Berat">Rusak Berat</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="jml_a" class="form-label">Jumlah Awal</label>
+                            <input type="text" class="form-control" name="jml_a" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="jml_ak" class="form-label">Jumlah Akhir</label>
+                            <input type="text" class="form-control" name="jml_ak" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tgl" class="form-label">TGL Pengadaan</label>
+                        <input type="date" class="form-control" name="tgl" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="ket" class="form-label">Keterangan</label>
+                        <input type="text" class="form-control" name="ket" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
+
+        
 
       </div>
     </div>
