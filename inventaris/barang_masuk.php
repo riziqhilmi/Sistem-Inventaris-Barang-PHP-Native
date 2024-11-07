@@ -171,8 +171,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            
 
 
                 <!-- Grafik -->
