@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
               WHERE id_guru='$id_guru'";
 
     $result = mysqli_query($koneksi, $query);
-
     if ($result) {
         echo "<script>alert('Data guru berhasil diubah'); window.location='../data_guru.php';</script>";
     } else {

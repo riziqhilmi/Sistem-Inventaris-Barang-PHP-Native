@@ -4,7 +4,7 @@ include("../koneksi.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$search_query = "";
+$search_query = ""; 
 
 if (isset($_GET['query'])) {
     echo "Searching for: " . htmlspecialchars($_GET['query']) . "<br>"; 

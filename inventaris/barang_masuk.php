@@ -7,6 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once '../koneksi.php';
+//require_once '../fitur/cetak_riwayat_barang_masuk.php';
 
 // Menangani submit form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -66,6 +67,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 <body>
 
@@ -119,6 +121,8 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+
+
                                 <div class="col-md-6 mb-3">
                                     <label for="jumlah" class="form-label">Jumlah</label>
                                     <input type="number" class="form-control" name="jumlah" required min="1">
@@ -133,6 +137,9 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                                <!-- Button to open cetak_riwayat_barang_masuk.php for printing -->
+                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-secondary">Cetak Riwayat Harian</a>
+
                         </form>
                     </div>
                 </div>
@@ -171,8 +178,6 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
 
                 <!-- Grafik -->
@@ -241,6 +246,34 @@ new Chart(ctx, {
         }
     }
 });
+</script>
+
+<script>
+function cetakRiwayat() {
+    // Mengambil data transaksi terakhir
+    $.ajax({
+        url: 'fitur/cetak_riwayat_barang_masuk.php',
+        method: 'GET',
+        success: function(response) {
+            // Membuka jendela baru untuk mencetak
+            var printWindow = window.open('', '', 'width=800,height=600');
+            printWindow.document.write(response);
+            printWindow.document.close();
+            printWindow.print();
+            printWindow.close();
+        },
+        error: function(xhr, status, error) {
+            alert('Terjadi kesalahan saat mencetak riwayat barang masuk.');
+        }
+    });
+}
+</script>
+<script>
+function previewPDF() {
+    // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
+    var url = '../fitur/cetak_riwayat_barang_masuk.php';
+    window.open(url, '_blank');
+}
 </script>
 
 </body>
