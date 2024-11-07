@@ -115,19 +115,24 @@ include("../koneksi.php");
                       <td><?php echo $ket; ?></td>
 
                       <td>
-                        <!-- Tombol Edit -->
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                          data-bs-target="#editTeacherModal<?php echo $row['id_barang']; ?>">
-                          Edit
-                        </button>
+    <!-- Tombol Edit -->
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+      data-bs-target="#editTeacherModal<?php echo $row['id_barang']; ?>">
+      Edit
+    </button>
 
-                        <!-- Tombol Hapus -->
-                        <a href="../fitur/hapus_barang.php?id=<?php echo $row['id_barang']; ?>"
-                          onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?');"
-                          class="btn btn-danger btn-sm">
-                          Hapus
-                        </a>
-                      </td>
+    <!-- Tombol Hapus -->
+    <a href="../fitur/hapus_barang.php?id=<?php echo $row['id_barang']; ?>"
+      onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?');"
+      class="btn btn-danger btn-sm">
+      Hapus
+    </a>
+
+    <!-- Tombol Cetak Barcode -->
+    <a href="../fitur/generate_barcode.php?id=<?php echo $row['id_barang']; ?>" target="_blank" class="btn btn-info btn-sm">
+      Cetak Barcode
+    </a>
+</td>
                     </tr>
 
                     <!-- Modal Edit Data barang -->
