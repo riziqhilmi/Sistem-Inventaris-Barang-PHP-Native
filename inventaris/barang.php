@@ -85,6 +85,17 @@ include("../koneksi.php");
                   $result = mysqli_query($koneksi, query: $sql);
                   $no = 1;
 
+                  // Tentukan jumlah item per halaman
+        $items_per_page = 10;
+
+        // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $items_per_page;
+
+        // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
+        $sql = "SELECT * FROM barang LIMIT $items_per_page OFFSET $offset";
+        $result = mysqli_query($koneksi, $sql);
+
                   while ($row = mysqli_fetch_array($result)) {
                     $nama = $row['nama'];
                     $merk = $row['merek'];
@@ -97,7 +108,13 @@ include("../koneksi.php");
                     $ket = $row['keterangan'];
 
 
+   // Query untuk menghitung total item
+   $count_query = "SELECT COUNT(*) as total FROM barang";
+   $count_result = mysqli_query($koneksi, $count_query);
+   $total_items = mysqli_fetch_assoc($count_result)['total'];
+   $total_pages = ceil($total_items / $items_per_page);
 
+   
 
                     ?>
 
@@ -115,6 +132,7 @@ include("../koneksi.php");
                       <td><?php echo $ket; ?></td>
 
                       <td>
+                        
     <!-- Tombol Edit -->
     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
       data-bs-target="#editTeacherModal<?php echo $row['id_barang']; ?>">
@@ -318,6 +336,40 @@ include("../koneksi.php");
         </div>
     </div>
 </div>
+<?php
+// Kontrol navigasi paginasi
+echo "<div class='d-flex justify-content-center align-items-center my-3'>";
+
+// Tombol Sebelumnya
+if ($page > 1) {
+    echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
+} else {
+    echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
+}
+
+// Angka halaman
+echo "<div class='mx-2'>";
+for ($i = 1; $i <= $total_pages; $i++) {
+    if ($i == $page) {
+        // Halaman saat ini (diberi gaya berbeda)
+        echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
+    } else {
+        // Link ke halaman lain
+        echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
+    }
+}
+echo "</div>";
+
+// Tombol Berikutnya
+if ($page < $total_pages) {
+    echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
+} else {
+    echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
+}
+
+echo "</div>";
+?>
+
 
         
 
@@ -334,6 +386,7 @@ include("../koneksi.php");
       <canvas id="lineChart"></canvas>
     </div>
   </div>
+  
 
   </div>
   </div>
