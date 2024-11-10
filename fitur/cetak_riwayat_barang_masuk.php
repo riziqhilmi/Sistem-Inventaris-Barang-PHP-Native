@@ -222,7 +222,7 @@ $today = date("Y-m-d");
     function closeModal() {
         document.getElementById("modalOverlay").style.display = "none";
         // Optional: Redirect back to barang_masuk.php if the modal is closed
-        window.location.href = 'barang_masuk.php';
+        window.location.href = '../inventaris/barang_masuk.php';
     }
 </script>
 
