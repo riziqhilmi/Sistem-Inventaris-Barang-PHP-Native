@@ -290,7 +290,11 @@ $today = date("Y-m-d");
     // Function to close the modal
     function closeModal() {
         document.getElementById("modalOverlay").style.display = "none";
+<<<<<<< HEAD
         // Redirect back to barang_masuk.php
+=======
+        // Optional: Redirect back to barang_masuk.php if the modal is closed
+>>>>>>> 28bbd77cf09cb498a38d90c93ac89acd25d482b3
         window.location.href = '../inventaris/barang_masuk.php';
     }
 </script>

@@ -82,6 +82,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 </head>
 <body>
 
+<<<<<<< HEAD
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -100,6 +101,21 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         echo $_SESSION['success'];
                         unset($_SESSION['success']);
                         ?>
+=======
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <?php include '../partials/sidebar.php'; ?>
+
+            <!-- Konten Utama -->
+            <div class="col-md-10 p-4">
+                <div class="container">
+                    <h1 class="mb-4">Barang Keluar</h1>
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-success btn-sm ms-auto" type="button">
+                            <img src="../img/save.png" alt="Icon" width="20" height="20" class="me-1"> Cetak Riwayat
+                        </button>
+>>>>>>> 28bbd77cf09cb498a38d90c93ac89acd25d482b3
                     </div>
                 <?php endif; ?>
 

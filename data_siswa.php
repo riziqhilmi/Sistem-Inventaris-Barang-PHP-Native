@@ -26,9 +26,7 @@ include ("koneksi.php");
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 sidebar bg-dark sticky-top">
-            <?php include 'partials/sidebar.php'; ?>
-        </div>
+        <?php include 'partials/sidebar.php'; ?>
 
         <!-- Main Content -->
         <div class="col-md-10 p-4">
