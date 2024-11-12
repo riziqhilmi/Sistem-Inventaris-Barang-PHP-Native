@@ -70,12 +70,10 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 sidebar bg-dark vh-100 position-fixed">
-            <?php include '../partials/sidebar.php'; ?>
-        </div>
+        <?php include '../partials/sidebar.php'; ?>
         
         <!-- Konten Utama -->
-        <div class="col-md-10 p-4" style="margin-left: 16.6667%;">
+        <div class="col-md-10 p-4">
             <div class="container">
                 <h1 class="mb-4">Peminjaman Barang</h1>
 
