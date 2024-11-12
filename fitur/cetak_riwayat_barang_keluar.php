@@ -1,5 +1,5 @@
 <?php
-// cetak_riwayat_barang_masuk.php
+// cetak_riwayat_barang_keluar.php
 
 include('../koneksi.php'); // Database connection
 require_once('../vendor/autoload.php'); // Make sure TCPDF is installed in the 'vendor' directory
@@ -11,12 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $end_date = $_POST['end_date'];
     $file_format = $_POST['file_format'];
 
-    // Query untuk mengambil data barang masuk dalam rentang tanggal
-    $query = "SELECT bm.id_barang_masuk, b.nama, bm.tanggal, bm.jumlah, bm.keterangan 
-              FROM barang_masuk bm 
-              JOIN barang b ON bm.id_barang = b.id_barang 
-              WHERE bm.tanggal BETWEEN '$start_date' AND '$end_date' 
-              ORDER BY bm.tanggal DESC;";
+    // Query untuk mengambil data barang keluar dalam rentang tanggal
+    $query = "SELECT bk.id_barang_keluar, b.nama, bk.tanggal, bk.jumlah, bk.keterangan 
+                FROM barang_keluar bk 
+                JOIN barang b ON bk.id_barang = b.id_barang 
+                WHERE bk.tanggal BETWEEN '$start_date' AND '$end_date' 
+                ORDER BY bk.tanggal DESC;";
 
     $result = $koneksi->query($query);
     $data = [];
@@ -29,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Your Name');
-        $pdf->SetTitle('Riwayat Barang Masuk');
+        $pdf->SetTitle('Riwayat Barang Keluar');
         $pdf->SetMargins(10, 10, 10);
         $pdf->AddPage();
 
         // Set Title
         $pdf->SetFont('helvetica', 'B', 16);
-        $pdf->Cell(0, 10, 'Riwayat Barang Masuk - ' . date('d-m-Y', strtotime($start_date)) . ' s/d ' . date('d-m-Y', strtotime($end_date)), 0, 1, 'C');
+        $pdf->Cell(0, 10, 'Riwayat Barang Keluar - ' . date('d-m-Y', strtotime($start_date)) . ' s/d ' . date('d-m-Y', strtotime($end_date)), 0, 1, 'C');
         $pdf->Ln(5);
 
         // Table Header
@@ -58,12 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Output the PDF
-        $pdf->Output('riwayat_barang_masuk.pdf', 'I');
+        $pdf->Output('riwayat_barang_keluar.pdf', 'I');
         exit; // Hentikan eksekusi setelah output PDF
     } elseif ($file_format === 'EXCEL') {
         // Logika untuk menghasilkan laporan dalam format Excel
         header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=riwayat_barang_masuk.xls");
+        header("Content-Disposition: attachment; filename=riwayat_barang_keluar.xls");
         echo "<table border='1'>
                 <tr>
                     <th>No</th>
@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cetak Riwayat Barang Masuk</title>
+    <title>Cetak Riwayat Barang Keluar</title>
     <style>
         /* Modal overlay styling */
         .modal-overlay {
@@ -227,9 +227,9 @@ $today = date("Y-m-d");
 <!-- Modal Overlay and Modal Content -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
-        <h2>Cetak Riwayat Barang Masuk Harian</h2>
+        <h2>Cetak Riwayat Barang Keluar Harian</h2>
 
-        <form id="report_form" method="POST" action="cetak_riwayat_barang_masuk.php">
+        <form id="report_form" method="POST" action="cetak_riwayat_barang_keluar.php">
             <!-- Hidden inputs for today's date as the start and end date -->
             <input type="hidden" name="start_date" value="<?php echo $today; ?>">
             <input type="hidden" name="end_date" value="<?php echo $today; ?>">
@@ -290,8 +290,8 @@ $today = date("Y-m-d");
     // Function to close the modal
     function closeModal() {
         document.getElementById("modalOverlay").style.display = "none";
-        // Redirect back to barang_masuk.php
-        window.location.href = '../inventaris/barang_masuk.php';
+        // Redirect back to barang_keluar.php
+        window.location.href = '../inventaris/barang_keluar.php';
     }
 </script>
 

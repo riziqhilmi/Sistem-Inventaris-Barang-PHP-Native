@@ -16,19 +16,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $jumlah_pinjam = $_POST['jumlah_pinjam'];
     $keterangan = $_POST['keterangan'];
 
-    
     $koneksi->begin_transaction();
 
     try {
-        
+        // Cek stok barang sebelum meminjam
+        $cek_stok_query = "SELECT jumlah_akhir FROM barang WHERE id_barang = ?";
+        $cek_stmt = $koneksi->prepare($cek_stok_query);
+        $cek_stmt->bind_param("i", $id_barang);
+        $cek_stmt->execute();
+        $cek_stmt->bind_result($stok_akhir);
+        $cek_stmt->fetch();
+        $cek_stmt->close();
+
+        if ($jumlah_pinjam > $stok_akhir) {
+            throw new Exception("Jumlah pinjaman melebihi stok yang tersedia.");
+        }
+
+        // Insert data peminjaman
         $query = "INSERT INTO peminjaman (id_barang, nama_peminjam, tanggal_pinjam, tanggal_kembali, jumlah_pinjam, keterangan) 
                  VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("isssss", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan);
         $stmt->execute();
 
-        $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir - ? 
-                 WHERE id_barang = ?";
+        // Update stok barang
+        $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir - ? WHERE id_barang = ?";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("ii", $jumlah_pinjam, $id_barang);
         $stmt->execute();
@@ -43,10 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 
+// Load data barang
 $query = "SELECT id_barang, nama, merek FROM barang ORDER BY nama";
 $result = $koneksi->query($query);
 $barang_list = $result->fetch_all(MYSQLI_ASSOC);
 
+// Load data peminjaman
 $query = "SELECT p.*, b.nama, b.merek 
           FROM peminjaman p 
           JOIN barang b ON p.id_barang = b.id_barang 
@@ -138,7 +152,14 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
+                            <div class="row mt-3">
+                        </div>
+
+                        <div class="d-flex justify-content-start mt-3">
+                            <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                            <button onclick="cetakRiwayatHarian()" class="btn btn-secondary">Cetak Riwayat Harian</button>
+                        </div>
+
                         </form>
                     </div>
                 </div>
@@ -220,6 +241,13 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
     </div>
+    <script>
+        function previewPDF() {
+        // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
+        var url = '../fitur/cetak_riwayat_peminjaman.php';
+        window.open(url, '_blank');
+    }
+</script>
 </div>
 
 <!-- Script untuk grafik -->
@@ -323,5 +351,3 @@ new Chart(ctxPopular, {
     }
 });
 </script>
-                
-                        
