@@ -98,12 +98,9 @@
         <div class="carousel-caption d-none d-md-block">
         <h5>SDN PASAREJO 01</h5>
           <p>
-            Dengan hadirnya situs SMK Negeri 1 Ciamis ini,
+            Dengan hadirnya situs SD Negeri 1 Pasarejo ini,
             semoga dapat memberikan informasi
-            kepada khalayak tentang SMK Negeri 1 Ciamis.
-            SMK Bisa, SMKN 1 Ciamis Yakin Bisa.
-            Banyak prestasi yang dicapai oleh SMKN 1 Ciamis yang membuatnya sekolah
-            Favorit di Kabupaten Ciamis.
+            kepada khalayak tentang SD Negeri 1 Pasarejo.
         
         </p>
         <a href="" class="btn btn-carousel ">Selengkapnya &dHar; </a>
