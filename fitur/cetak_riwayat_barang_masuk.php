@@ -222,6 +222,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 // Set today's date in 'Y-m-d' format
 $today = date("Y-m-d");
+
+$query = "SELECT bk.*, b.nama 
+          FROM barang_masuk bk 
+          JOIN barang b ON bk.id_barang = b.id_barang 
+          WHERE DATE(bk.tanggal) = '$today' 
+          ORDER BY bk.tanggal DESC;";
+$result = mysqli_query(mysql: $koneksi, query: $query);
+
+// Simpan data ke dalam array
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
 ?>
 
 <!-- Modal Overlay and Modal Content -->

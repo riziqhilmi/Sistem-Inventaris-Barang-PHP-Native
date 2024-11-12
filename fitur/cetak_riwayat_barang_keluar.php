@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $file_format = $_POST['file_format'];
 
     // Query untuk mengambil data barang keluar dalam rentang tanggal
+    
     $query = "SELECT bk.id_barang_keluar, b.nama, bk.tanggal, bk.jumlah, bk.keterangan 
                 FROM barang_keluar bk 
                 JOIN barang b ON bk.id_barang = b.id_barang 
@@ -220,8 +221,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 <?php
-// Set today's date in 'Y-m-d' format
-$today = date("Y-m-d");
+// Koneksi ke database
+
+// Ambil tanggal hari ini
+$today = date('Y-m-d');
+
+// Query untuk mengambil data riwayat barang keluar hari ini
+$query = "SELECT bk.*, b.nama 
+          FROM barang_keluar bk 
+          JOIN barang b ON bk.id_barang = b.id_barang 
+          WHERE DATE(bk.tanggal) = '$today' 
+          ORDER BY bk.tanggal DESC;";
+$result = mysqli_query(mysql: $koneksi, query: $query);
+
+// Simpan data ke dalam array
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
 ?>
 
 <!-- Modal Overlay and Modal Content -->
@@ -258,9 +275,9 @@ $today = date("Y-m-d");
                         <tr>
                             <td><?php echo $no++; ?></td>
                             <td><?php echo date('d-m-Y', strtotime($row['tanggal'])); ?></td>
-                            <td><?php echo $row['nama']; ?></td>
+                            <td><?php echo htmlspecialchars($row['nama']); ?></td>
                             <td><?php echo $row['jumlah']; ?></td>
-                            <td><?php echo $row['keterangan']; ?></td>
+                            <td><?php echo htmlspecialchars($row['keterangan']); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -277,7 +294,6 @@ $today = date("Y-m-d");
                 <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
             </div>
         </form>
-
     </div>
 </div>
 

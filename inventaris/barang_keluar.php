@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once '../koneksi.php';
-require_once '../fitur/cetak_riwayat_barang_keluar.php';
+
 
 // Menangani submit form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -70,6 +70,8 @@ $query = "SELECT bk.*, b.nama, b.merek
 $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -81,41 +83,22 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
-
-<<<<<<< HEAD
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2 sidebar bg-dark vh-100 position-fixed">
-            <?php include '../partials/sidebar.php'; ?>
-        </div>
+        <?php include '../partials/sidebar.php'; ?>
         <!-- Konten Utama -->
-        <div class="col-md-10 offset-md-2 p-4" style="margin-left: 16.6667%;">
+        <div class="col-md-10 p-4">
             <div class="container">
                 <h1 class="mb-4">Barang Keluar</h1>
 
-                <!-- Notification Alerts -->
-                <?php if (isset($_SESSION['success'])): ?>
+                 <!-- Notification Alerts -->
+                 <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success" role="alert">
                         <?php 
                         echo $_SESSION['success'];
                         unset($_SESSION['success']);
                         ?>
-=======
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <?php include '../partials/sidebar.php'; ?>
-
-            <!-- Konten Utama -->
-            <div class="col-md-10 p-4">
-                <div class="container">
-                    <h1 class="mb-4">Barang Keluar</h1>
-                    <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-success btn-sm ms-auto" type="button">
-                            <img src="../img/save.png" alt="Icon" width="20" height="20" class="me-1"> Cetak Riwayat
-                        </button>
->>>>>>> 28bbd77cf09cb498a38d90c93ac89acd25d482b3
                     </div>
                 <?php endif; ?>
 
@@ -127,6 +110,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         ?>
                     </div>
                 <?php endif; ?>
+
 
                 <!-- Form Input Barang Keluar -->
                 <div class="card mb-4">
