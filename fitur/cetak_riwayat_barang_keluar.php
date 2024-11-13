@@ -305,9 +305,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
     // Function to close the modal
     function closeModal() {
-        document.getElementById("modalOverlay").style.display = "none";
-        // Redirect back to barang_keluar.php
-        window.location.href = '../inventaris/barang_keluar.php';
+        window.close();
     }
 </script>
 
