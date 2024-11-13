@@ -1,16 +1,17 @@
 <?php
-include('../koneksi.php'); // Koneksi ke database
-require_once('../vendor/autoload.php'); // Pastikan TCPDF terinstal di direktori 'vendor'
+include('../koneksi.php'); // Database connection
+require_once('../vendor/autoload.php'); // Make sure TCPDF is installed in the 'vendor' directory
 
-// Cek apakah form telah disubmit
+// Check if form has been submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil tanggal dari form
+    // Get dates from form
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $file_format = $_POST['file_format'];
 
-    // Query untuk mengambil data peminjaman dalam rentang tanggal
-    $query = "SELECT p.id_peminjaman, p.kode_peminjaman, p.tanggal_pinjam, p.tanggal_kembali, p.jumlah_pinjam, p.status, p.keterangan, b.nama AS nama_barang
+    // Query to get loan data within date range
+    $query = "SELECT p.id_peminjaman, p.kode_peminjaman, p.tanggal_pinjam, p.tanggal_kembali, 
+                     p.jumlah_pinjam, p.status, p.keterangan, b.nama AS nama_barang
               FROM peminjaman p
               JOIN barang b ON p.id_barang = b.id_barang
               WHERE p.tanggal_pinjam BETWEEN '$start_date' AND '$end_date'
@@ -23,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($file_format === 'PDF') {
-        // Membuat dokumen PDF baru
+        // Create new PDF document
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator(PDF_CREATOR);
         $pdf->SetAuthor('Your Name');
@@ -31,12 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf->SetMargins(10, 10, 10);
         $pdf->AddPage();
 
-        // Judul
+        // Set Title
         $pdf->SetFont('helvetica', 'B', 16);
         $pdf->Cell(0, 10, 'Riwayat Peminjaman - ' . date('d-m-Y', strtotime($start_date)) . ' s/d ' . date('d-m-Y', strtotime($end_date)), 0, 1, 'C');
         $pdf->Ln(5);
 
-        // Header tabel
+        // Table Header
         $pdf->SetFont('helvetica', 'B', 12);
         $pdf->Cell(10, 10, 'No', 1, 0, 'C');
         $pdf->Cell(40, 10, 'Tanggal Pinjam', 1, 0, 'C');
@@ -45,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf->Cell(20, 10, 'Status', 1, 0, 'C');
         $pdf->Cell(50, 10, 'Keterangan', 1, 1, 'C');
 
-        // Data tabel
+        // Table Data
         $pdf->SetFont('helvetica', '', 12);
         $no = 1;
         foreach ($data as $row) {
@@ -57,11 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $pdf->Cell(50, 10, $row['keterangan'], 1, 1, 'L');
         }
 
-        // Output PDF
+        // Output the PDF
         $pdf->Output('riwayat_peminjaman.pdf', 'I');
         exit;
     } elseif ($file_format === 'EXCEL') {
-        // Output dalam format Excel
+        // Output in Excel format
         header("Content-Type: application/vnd.ms-excel");
         header("Content-Disposition: attachment; filename=riwayat_peminjaman.xls");
         echo "<table border='1'>
@@ -102,23 +103,150 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cetak Riwayat Peminjaman</title>
     <style>
-        /* Styling modal, tabel, dll */
+        /* Modal overlay styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Modal box styling */
+        .modal {
+            background: #fff;
+            width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Modal header */
+        .modal h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Table styling */
+        .modal table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .modal th, .modal td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal th {
+            background-color: #f2f2f2;
+        }
+
+        /* Dropdown styling */
+        .modal label {
+            display: block;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        .modal select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Button container styling */
+        .modal .button-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Button styling */
+        .modal button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .modal .print-btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .modal .cancel-btn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Close button styling */
+        .modal .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        /* Additional styling for button hover */
+        .modal button:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
 <?php
-// Menentukan tanggal hari ini dalam format 'Y-m-d'
+// Set today's date in 'Y-m-d' format
 $today = date("Y-m-d");
+
+// Query to get today's loans
+$query = "SELECT p.*, b.nama AS nama_barang 
+          FROM peminjaman p 
+          JOIN barang b ON p.id_barang = b.id_barang 
+          WHERE DATE(p.tanggal_pinjam) = '$today' 
+          ORDER BY p.tanggal_pinjam DESC";
+$result = mysqli_query($koneksi, $query);
+
+// Store data in array
+$data = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $data[] = $row;
+}
 ?>
 
-<!-- Modal Overlay dan Konten Modal -->
+<!-- Modal Overlay and Modal Content -->
 <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
         <h2>Cetak Riwayat Peminjaman Harian</h2>
 
-        <form id="report_form" method="POST" action="cetak_riwayat_barang_keluar.php">
-            <!-- Tanggal otomatis sebagai start dan end date untuk laporan harian -->
+        <form id="report_form" method="POST" action="cetak_riwayat_peminjaman.php">
+            <!-- Hidden inputs for today's date as the start and end date -->
             <input type="hidden" name="start_date" value="<?php echo $today; ?>">
             <input type="hidden" name="end_date" value="<?php echo $today; ?>">
             
@@ -128,7 +256,7 @@ $today = date("Y-m-d");
                 <option value="EXCEL">Excel</option>
             </select>
 
-            <!-- Preview Tabel -->
+            <!-- Preview Table -->
             <table>
                 <thead>
                     <tr>
@@ -161,21 +289,22 @@ $today = date("Y-m-d");
                 </tbody>
             </table>
 
-            <!-- Tombol Cetak dan Batal -->
+            <!-- Button Container for Print and Cancel Buttons -->
             <div class="button-container">
                 <button type="submit" class="print-btn">Cetak Laporan</button>
-                <button type="button" class="cancel-btn" onclick="closeModal()">Batal</button>
+                <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
             </div>
         </form>
-
     </div>
 </div>
 
 <script>
+    // Automatically display the modal on page load
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("modalOverlay").style.display = "flex";
     });
 
+    // Function to close the modal
     function closeModal() {
         document.getElementById("modalOverlay").style.display = "none";
         window.location.href = '../inventaris/barang_keluar.php';

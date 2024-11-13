@@ -155,7 +155,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 
                         <div class="d-flex justify-content-start mt-3">
                             <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                            <button onclick="cetakRiwayatHarian()" class="btn btn-secondary">Cetak Riwayat Harian</button>
+                            <a href="../fitur/cetak_riwayat_peminjaman.php" class="btn btn-secondary">Cetak Riwayat Harian</a>
                         </div>
 
                         </form>
