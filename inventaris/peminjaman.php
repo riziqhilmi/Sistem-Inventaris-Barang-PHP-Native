@@ -153,11 +153,11 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                             <div class="row mt-3">
                         </div>
 
-                        <div class="d-flex justify-content-start mt-3">
-                            <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                            <a href="../fitur/cetak_riwayat_peminjaman.php" class="btn btn-secondary">Cetak Riwayat Harian</a>
-                        </div>
-
+                        <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;">Simpan</button>
+                                
+                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
+                                <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+                                Cetak Riwayat Harian </a>
                         </form>
                     </div>
                 </div>

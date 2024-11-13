@@ -121,7 +121,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
 
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-6 mb-3 ">
                                     <label for="jumlah" class="form-label">Jumlah</label>
                                     <input type="number" class="form-control" name="jumlah" required min="1">
                                 </div>
@@ -134,9 +134,10 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
-                                <!-- Button to open cetak_riwayat_barang_masuk.php for printing -->
-                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success">
+                            
+                            <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;">Simpan</button>
+                                
+                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
                                 <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
                                 Cetak Riwayat Harian </a>
                         </form>
