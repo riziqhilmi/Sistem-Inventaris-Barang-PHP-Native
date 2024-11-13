@@ -136,8 +136,9 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
                                 <!-- Button to open cetak_riwayat_barang_masuk.php for printing -->
-                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-secondary">Cetak Riwayat Harian</a>
-
+                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success">
+                                <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+                                Cetak Riwayat Harian </a>
                         </form>
                     </div>
                 </div>

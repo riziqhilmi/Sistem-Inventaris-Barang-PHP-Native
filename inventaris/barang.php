@@ -124,9 +124,10 @@ include("../koneksi.php");
                         Hapus
                       </a>
                       <!-- Tombol Cetak Barcode -->
-                      <a href="../fitur/generate_barcode.php?id=<?php echo $row['id_barang']; ?>" target="_blank" class="btn btn-info btn-sm">
+                      <a href="../fitur/generate_barcode.php?id=<?php echo $row['id_barang']; ?>" target="_blank" class="btn btn-info btn-sm mt-1">
                         Cetak Barcode
                       </a>
+
                     </td>
                   </tr>
 
