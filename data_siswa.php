@@ -83,6 +83,14 @@ include ("koneksi.php");
                                    $result = mysqli_query($koneksi, $sql);
                                    $no = 1;
 
+                                   $items_per_page = 10;
+                  // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
+                  $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                  $offset = ($page - 1) * $items_per_page;
+                  // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
+                  $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
+                  $result = mysqli_query($koneksi, $sql);
+
                                    while ($row = mysqli_fetch_array($result)) {
                                         $nama = $row['nama'];
                                         $nis = $row['NIS'];
@@ -259,6 +267,33 @@ include ("koneksi.php");
                         </div>
                     </div>
                 </div>
+
+                <?php
+      echo "<div class='d-flex justify-content-center align-items-center my-3'>";
+      if ($page > 1) {
+        echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
+      } else {
+        echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
+      }
+      echo "<div class='mx-2'>";
+      for ($i = 1; $i <= $items_per_page; $i++) {
+        if ($i == $page) {
+            // Halaman saat ini (diberi gaya berbeda)
+            echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
+        } else {
+            // Link ke halaman lain
+            echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
+        }
+      }
+      echo "</div>";
+      if ($page < $items_per_page) {
+        echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
+      } else {
+        echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
+      }
+
+      echo "</div>";
+      ?>
 
             </div>
         </div>
