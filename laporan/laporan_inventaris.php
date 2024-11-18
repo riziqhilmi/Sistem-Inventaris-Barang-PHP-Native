@@ -1,9 +1,7 @@
 <?php
-session_start(); // Memulai session
+session_start();
 
-// Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, redirect ke halaman login
     header('Location: login.php');
     exit();
 }
@@ -15,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Barang Masuk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
@@ -29,7 +27,7 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Main Content -->
         <div class="col-md-10 p-4">
             <div class="container">
-                <h1 class="mb-4">Laporan Inventaris</h1>
+                <h1 class="mb-4">Barang Masuk</h1>
 
                 
 

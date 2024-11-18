@@ -8,6 +8,10 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once '../koneksi.php';
 
+$query_ruangan = "SELECT id_ruangan, nama_ruangan FROM ruangan ORDER BY nama_ruangan";
+$result_ruangan = $koneksi->query($query_ruangan);
+$ruangan_list = $result_ruangan->fetch_all(MYSQLI_ASSOC);
+
 
 // Menangani submit form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -56,10 +60,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 
-// Mengambil daftar barang
-$query = "SELECT id_barang, nama, merek, jumlah_akhir FROM barang ORDER BY nama";
-$result = $koneksi->query($query);
-$barang_list = $result->fetch_all(MYSQLI_ASSOC);
+// Ganti query barang_list dengan kondisi filter ruangan
+$barang_list = [];
+
+// Jika ruangan dipilih, ambil barang sesuai ruangan
+if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
+    $id_ruangan = $_GET['id_ruangan'];
+    $query = "SELECT id_barang, nama, merek, jumlah_akhir 
+              FROM barang 
+              WHERE ruangan = (SELECT nama_ruangan FROM ruangan WHERE id_ruangan = ?) 
+              ORDER BY nama";
+    $stmt = $koneksi->prepare($query);
+    $stmt->bind_param("i", $id_ruangan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $barang_list = $result->fetch_all(MYSQLI_ASSOC);
+}
 
 // Mengambil data transaksi terakhir
 $query = "SELECT bk.*, b.nama, b.merek 
@@ -120,20 +136,32 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="id_barang" class="form-label">Pilih Barang</label>
-                                    <select class="form-select" name="id_barang" id="id_barang" required>
-                                        <option value="">Pilih Barang</option>
-                                        <?php foreach ($barang_list as $barang): ?>
-                                            <option value="<?= $barang['id_barang'] ?>" 
-                                                    data-stok="<?= $barang['jumlah_akhir'] ?>">
-                                                <?= htmlspecialchars($barang['nama']) ?> - 
-                                                <?= htmlspecialchars($barang['merek']) ?>
-                                                (Stok: <?= $barang['jumlah_akhir'] ?>)
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
+                            <div class="col-md-6 mb-3">
+    <label for="id_ruangan" class="form-label">Pilih Ruangan</label>
+    <select class="form-select" id="id_ruangan" onchange="filterBarang(this.value)">
+        <option value="">Pilih Ruangan</option>
+        <?php foreach ($ruangan_list as $ruangan): ?>
+            <option value="<?= $ruangan['id_ruangan'] ?>"
+                <?= (isset($_GET['id_ruangan']) && $_GET['id_ruangan'] == $ruangan['id_ruangan']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($ruangan['nama_ruangan']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+<div class="col-md-6 mb-3">
+    <label for="id_barang" class="form-label">Pilih Barang</label>
+    <select class="form-select" name="id_barang" id="id_barang" required>
+        <option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>
+        <?php foreach ($barang_list as $barang): ?>
+            <option value="<?= $barang['id_barang'] ?>" 
+                    data-stok="<?= $barang['jumlah_akhir'] ?>">
+                <?= htmlspecialchars($barang['nama']) ?> - 
+                <?= htmlspecialchars($barang['merek']) ?>
+                (Stok: <?= $barang['jumlah_akhir'] ?>)
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
                                 <div class="col-md-6 mb-3">
                                     <label for="jumlah" class="form-label">Jumlah</label>
                                     <input type="number" class="form-control" name="jumlah" id="jumlah" required min="1">
@@ -213,8 +241,19 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+
+// Tambahkan di dalam <script> atau file terpisah
+function filterBarang(ruanganId) {
+    if (ruanganId) {
+        window.location.href = 'barang_keluar.php?id_ruangan=' + ruanganId;
+    } else {
+        $('#id_barang').html('<option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>');
+    }
+}
+
 // Inisialisasi date picker
 flatpickr("input[type=date]", {
     dateFormat: "Y-m-d",

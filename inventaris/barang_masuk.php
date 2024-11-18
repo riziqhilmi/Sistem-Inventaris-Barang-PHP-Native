@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 require_once '../koneksi.php';
-//require_once '../fitur/cetak_riwayat_barang_masuk.php';
 
 // Menangani submit form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
@@ -44,10 +43,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 
-// Mengambil daftar barang
-$query = "SELECT id_barang, nama, merek FROM barang ORDER BY nama";
-$result = $koneksi->query($query);
-$barang_list = $result->fetch_all(MYSQLI_ASSOC);
+// Mengambil daftar ruangan
+$query_ruangan = "SELECT id_ruangan, nama_ruangan FROM ruangan ORDER BY nama_ruangan";
+$result_ruangan = $koneksi->query($query_ruangan);
+$ruangan_list = $result_ruangan->fetch_all(MYSQLI_ASSOC);
+
+// Mengambil daftar barang (awalnya kosong)
+$barang_list = [];
+
+// Jika ruangan dipilih, ambil barang sesuai ruangan
+if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
+    $id_ruangan = $_GET['id_ruangan'];
+    $query = "SELECT id_barang, nama, merek FROM barang WHERE ruangan = (SELECT nama_ruangan FROM ruangan WHERE id_ruangan = ?) ORDER BY nama";
+    $stmt = $koneksi->prepare($query);
+    $stmt->bind_param("i", $id_ruangan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $barang_list = $result->fetch_all(MYSQLI_ASSOC);
+}
 
 // Mengambil data transaksi terakhir
 $query = "SELECT bm.*, b.nama, b.merek 
@@ -67,7 +80,6 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 </head>
 <body>
 
@@ -80,8 +92,8 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
             <div class="container">
                 <h1 class="mb-4">Barang Masuk</h1>
 
-                 <!-- Notification Alerts -->
-                 <?php if (isset($_SESSION['success'])): ?>
+                <!-- Notification Alerts -->
+                <?php if (isset($_SESSION['success'])): ?>
                     <div class="alert alert-success" role="alert">
                         <?php 
                         echo $_SESSION['success'];
@@ -108,9 +120,22 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         <form action="" method="POST">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
+                                    <label for="id_ruangan" class="form-label">Pilih Ruangan</label>
+                                    <select class="form-select" id="id_ruangan" onchange="filterBarang(this.value)">
+                                        <option value="">Pilih Ruangan</option>
+                                        <?php foreach ($ruangan_list as $ruangan): ?>
+                                            <option value="<?= $ruangan['id_ruangan'] ?>"
+                                                <?= (isset($_GET['id_ruangan']) && $_GET['id_ruangan'] == $ruangan['id_ruangan']) ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($ruangan['nama_ruangan']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
                                     <label for="id_barang" class="form-label">Pilih Barang</label>
-                                    <select class="form-select" name="id_barang" required>
-                                        <option value="">Pilih Barang</option>
+                                    <select class="form-select" name="id_barang" id="id_barang" required>
+                                        <option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>
                                         <?php foreach ($barang_list as $barang): ?>
                                             <option value="<?= $barang['id_barang'] ?>">
                                                 <?= htmlspecialchars($barang['nama']) ?> - 
@@ -120,7 +145,6 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     </select>
                                 </div>
 
-
                                 <div class="col-md-6 mb-3 ">
                                     <label for="jumlah" class="form-label">Jumlah</label>
                                     <input type="number" class="form-control" name="jumlah" required min="1">
@@ -128,18 +152,18 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 <div class="col-md-6 mb-3">
                                     <label for="tanggal" class="form-label">Tanggal</label>
                                     <input type="date" class="form-control" name="tanggal" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
+                                </div>                                
+                                <div class="col-md-12 mb-3">
                                     <label for="keterangan" class="form-label">Keterangan</label>
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
                             
-                            <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;">Simpan</button>
+                            <button type="submit" name="submit" class="btn btn-primary float-right" style="float: right;">Simpan</button>
                                 
-                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
-                                <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
-                                Cetak Riwayat Harian </a>
+                            <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right; margin-right: 10px;">
+                            <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+                            Cetak Riwayat Harian </a>
                         </form>
                     </div>
                 </div>
@@ -200,8 +224,18 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
+// Fungsi untuk memfilter barang berdasarkan ruangan
+function filterBarang(ruanganId) {
+    if (ruanganId) {
+        window.location.href = 'barang_masuk.php?id_ruangan=' + ruanganId;
+    } else {
+        $('#id_barang').html('<option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>');
+    }
+}
+
 // Inisialisasi date picker
 flatpickr("input[type=date]", {
     dateFormat: "Y-m-d",
@@ -245,29 +279,7 @@ new Chart(ctx, {
         }
     }
 });
-</script>
 
-<script>
-function cetakRiwayat() {
-    // Mengambil data transaksi terakhir
-    $.ajax({
-        url: 'fitur/cetak_riwayat_barang_masuk.php',
-        method: 'GET',
-        success: function(response) {
-            // Membuka jendela baru untuk mencetak
-            var printWindow = window.open('', '', 'width=800,height=600');
-            printWindow.document.write(response);
-            printWindow.document.close();
-            printWindow.print();
-            printWindow.close();
-        },
-        error: function(xhr, status, error) {
-            alert('Terjadi kesalahan saat mencetak riwayat barang masuk.');
-        }
-    });
-}
-</script>
-<script>
 function previewPDF() {
     // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
     var url = '../fitur/cetak_riwayat_barang_masuk.php';
@@ -277,3 +289,4 @@ function previewPDF() {
 
 </body>
 </html>
+                                    
