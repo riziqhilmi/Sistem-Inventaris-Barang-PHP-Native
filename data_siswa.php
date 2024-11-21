@@ -85,11 +85,11 @@ include ("koneksi.php");
 
                                    $items_per_page = 10;
                   // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
-                  $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                  $offset = ($page - 1) * $items_per_page;
-                  // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
-                  $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
-                  $result = mysqli_query($koneksi, $sql);
+                                    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                    $offset = ($page - 1) * $items_per_page;
+                                    // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
+                                    $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
+                                    $result = mysqli_query($koneksi, $sql);
 
                                    while ($row = mysqli_fetch_array($result)) {
                                         $nama = $row['nama'];
