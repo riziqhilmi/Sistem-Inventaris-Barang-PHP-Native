@@ -96,6 +96,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <title>Barang Keluar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/barang_keluar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
@@ -137,31 +138,31 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         <form action="" method="POST">
                             <div class="row">
                             <div class="col-md-6 mb-3">
-    <label for="id_ruangan" class="form-label">Pilih Ruangan</label>
-    <select class="form-select" id="id_ruangan" onchange="filterBarang(this.value)">
-        <option value="">Pilih Ruangan</option>
-        <?php foreach ($ruangan_list as $ruangan): ?>
-            <option value="<?= $ruangan['id_ruangan'] ?>"
-                <?= (isset($_GET['id_ruangan']) && $_GET['id_ruangan'] == $ruangan['id_ruangan']) ? 'selected' : '' ?>>
-                <?= htmlspecialchars($ruangan['nama_ruangan']) ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
-<div class="col-md-6 mb-3">
-    <label for="id_barang" class="form-label">Pilih Barang</label>
-    <select class="form-select" name="id_barang" id="id_barang" required>
-        <option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>
-        <?php foreach ($barang_list as $barang): ?>
-            <option value="<?= $barang['id_barang'] ?>" 
-                    data-stok="<?= $barang['jumlah_akhir'] ?>">
-                <?= htmlspecialchars($barang['nama']) ?> - 
-                <?= htmlspecialchars($barang['merek']) ?>
-                (Stok: <?= $barang['jumlah_akhir'] ?>)
-            </option>
-        <?php endforeach; ?>
-    </select>
-</div>
+                                <label for="id_ruangan" class="form-label">Pilih Ruangan</label>
+                                <select class="form-select" id="id_ruangan" onchange="filterBarang(this.value)">
+                                    <option value="">Pilih Ruangan</option>
+                                    <?php foreach ($ruangan_list as $ruangan): ?>
+                                        <option value="<?= $ruangan['id_ruangan'] ?>"
+                                            <?= (isset($_GET['id_ruangan']) && $_GET['id_ruangan'] == $ruangan['id_ruangan']) ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($ruangan['nama_ruangan']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="id_barang" class="form-label">Pilih Barang</label>
+                                <select class="form-select" name="id_barang" id="id_barang" required>
+                                    <option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>
+                                    <?php foreach ($barang_list as $barang): ?>
+                                        <option value="<?= $barang['id_barang'] ?>" 
+                                                data-stok="<?= $barang['jumlah_akhir'] ?>">
+                                            <?= htmlspecialchars($barang['nama']) ?> - 
+                                            <?= htmlspecialchars($barang['merek']) ?>
+                                            (Stok: <?= $barang['jumlah_akhir'] ?>)
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="jumlah" class="form-label">Jumlah</label>
                                     <input type="number" class="form-control" name="jumlah" id="jumlah" required min="1">
@@ -176,10 +177,10 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;">Simpan</button>
+                            <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
                                 
                             <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
-                            <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+                            <img src="../img/printt.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
                             Cetak Riwayat Harian </a>
                         </form>
                     </div>

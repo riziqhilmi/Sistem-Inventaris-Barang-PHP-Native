@@ -60,7 +60,7 @@ if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $barang_list = $result->fetch_all(MYSQLI_ASSOC);
-}
+    }
 
 // Mengambil data transaksi terakhir
 $query = "SELECT bm.*, b.nama, b.merek 
@@ -78,6 +78,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barang Masuk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/barang_masuk.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
@@ -159,10 +160,10 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                             </div>
                             
-                            <button type="submit" name="submit" class="btn btn-primary float-right" style="float: right;">Simpan</button>
+                            <button type="submit" name="submit" class="btn btn-primary float-right" style="float: right;"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
                                 
                             <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right; margin-right: 10px;">
-                            <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
+                            <img src="../img/printt.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
                             Cetak Riwayat Harian </a>
                         </form>
                     </div>

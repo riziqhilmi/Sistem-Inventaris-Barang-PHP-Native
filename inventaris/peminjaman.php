@@ -113,6 +113,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peminjaman Barang</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/peminjaman.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -185,7 +186,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary float-right">Simpan</button>
+                            <button type="submit" name="submit" class="btn btn-primary float-right"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
                         </form>
                     </div>
                 </div>
@@ -225,11 +226,11 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                             <td>
                                                 <?php 
                                                 if ($trans['status'] === 'Terlambat') {
-                                                    echo '<span class="badge bg-danger">Terlambat</span>';
+                                                    echo '<span class="btn bg-danger" style="color: white;">Terlambat</span>';
                                                 } elseif ($trans['status'] === 'Dikembalikan') {
-                                                    echo '<span class="badge bg-success">Dikembalikan</span>';
+                                                    echo '<span class="btn bg-success" style="color: white;">Dikembalikan</span>';
                                                 } else {
-                                                    echo '<span class="badge bg-warning">Dipinjam</span>';
+                                                    echo '<span class="btn bg-warning btn-sm" style="color: white;">Dipinjam</span>';
                                                 }
                                                 ?>
                                             </td>
@@ -253,36 +254,36 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                 </div>
-                <!-- Grafik -->
-<div class="row mt-4">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Grafik Peminjaman per Bulan</h5>
+                        <!-- Grafik -->
+        <div class="row mt-4">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Grafik Peminjaman per Bulan</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="peminjaman_chart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <canvas id="peminjaman_chart"></canvas>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Grafik Barang Terpopuler</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="popular_items_chart"></canvas>
+                    </div>
+                </div>
             </div>
+            <script>
+                function previewPDF() {
+                // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
+                var url = '../fitur/cetak_riwayat_peminjaman.php';
+                window.open(url, '_blank');
+            }
+        </script>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Grafik Barang Terpopuler</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="popular_items_chart"></canvas>
-            </div>
-        </div>
-    </div>
-    <script>
-        function previewPDF() {
-        // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
-        var url = '../fitur/cetak_riwayat_peminjaman.php';
-        window.open(url, '_blank');
-    }
-</script>
-</div>
 
 <!-- Script untuk grafik -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
