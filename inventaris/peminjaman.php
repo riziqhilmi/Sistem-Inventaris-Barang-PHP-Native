@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $stmt->bind_param("isssss", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan);
         $stmt->execute();
 
-        // Update stok barang
         $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir - ? WHERE id_barang = ?";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("ii", $jumlah_pinjam, $id_barang);
@@ -55,12 +54,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 
-// Load data barang
+// Handle pengembalian barang
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['return'])) {
+    $id_peminjaman = $_POST['id_peminjaman'];
+    $tanggal_kembali = date('Y-m-d'); // Tanggal hari ini
+
+    $koneksi->begin_transaction();
+
+    try {
+        // Update status dan tanggal kembali
+        $query = "UPDATE peminjaman SET status = 'Dikembalikan', tanggal_kembali = ? WHERE id_peminjaman = ?";
+        $stmt = $koneksi->prepare($query);
+        $stmt->bind_param("si", $tanggal_kembali, $id_peminjaman);
+        $stmt->execute();
+
+        // Update stok barang
+        $query = "SELECT id_barang, jumlah_pinjam FROM peminjaman WHERE id_peminjaman = ?";
+        $stmt = $koneksi->prepare($query);
+        $stmt->bind_param("i", $id_peminjaman);
+        $stmt->execute();
+        $stmt->bind_result($id_barang, $jumlah_pinjam);
+        $stmt->fetch();
+        $stmt->close();
+
+        $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir + ? WHERE id_barang = ?";
+        $stmt = $koneksi->prepare($query);
+        $stmt->bind_param("ii", $jumlah_pinjam, $id_barang);
+        $stmt->execute();
+
+        $koneksi->commit();
+        $_SESSION['success'] = "Barang berhasil dikembalikan.";
+    } catch (Exception $e) {
+        $koneksi->rollback();
+        $_SESSION['error'] = "Terjadi kesalahan: " . $e->getMessage();
+    }
+
+    header('Location: peminjaman.php');
+    exit();
+}
+
+// Kode untuk menampilkan data peminjaman tetap sama
 $query = "SELECT id_barang, nama, merek FROM barang ORDER BY nama";
 $result = $koneksi->query($query);
 $barang_list = $result->fetch_all(MYSQLI_ASSOC);
 
-// Load data peminjaman
 $query = "SELECT p.*, b.nama, b.merek 
           FROM peminjaman p 
           JOIN barang b ON p.id_barang = b.id_barang 
@@ -78,6 +115,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 <body>
 
@@ -112,7 +150,8 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                 <!-- Form Input Peminjaman -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Form Peminjaman</h5>
+                        <h5 class="card-title mb-0"></h5>
+                        Form Peminjaman</h5>
                     </div>
                     <div class="card-body">
                         <form action="" method="POST">
@@ -138,10 +177,6 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <input type="date" class="form-control" name="tanggal_pinjam" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="tanggal_kembali" class="form-label">Tanggal Kembali</label>
-                                    <input type="date" class="form-control" name="tanggal_kembali" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
                                     <label for="jumlah_pinjam" class="form-label">Jumlah Pinjam</label>
                                     <input type="number" class="form-control" name="jumlah_pinjam" required min="1">
                                 </div>
@@ -150,74 +185,75 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                        </div>
-
-                        <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;">Simpan</button>
-                                
-                                <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
-                                <img src="../img/save.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
-                                Cetak Riwayat Harian </a>
+                            <button type="submit" name="submit" class="btn btn-primary float-right">Simpan</button>
                         </form>
                     </div>
                 </div>
 
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title mb-0">Riwayat Peminjaman</h5>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Tanggal Pinjam</th>
-                        <th>Tanggal Kembali</th>
-                        <th>Nama Peminjam</th>
-                        <th>Nama Barang</th>
-                        <th>Merek</th>
-                        <th>Jumlah Pinjam</th>
-                        <th>Keterangan</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($transactions as $index => $trans): ?>
-                        <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= date('d/m/Y', strtotime($trans['tanggal_pinjam'])) ?></td>
-                            <td><?= date('d/m/Y', strtotime($trans['tanggal_kembali'])) ?></td>
-                            <td><?= htmlspecialchars($trans['nama_peminjam']) ?></td>
-                            <td><?= htmlspecialchars($trans['nama']) ?></td>
-                            <td><?= htmlspecialchars($trans['merek']) ?></td>
-                            <td><?= $trans['jumlah_pinjam'] ?></td>
-                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
-                            <td>
-                                <?php 
-                                $today = new DateTime();
-                                $kembali = new DateTime($trans['tanggal_kembali']);
-                                if($today > $kembali) {
-                                    echo '<span class="badge bg-danger">Terlambat</span>';
-                                } else {
-                                    echo '<span class="badge bg-success">Dipinjam</span>';
-                                }
-                                ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    <?php if(empty($transactions)): ?>
-                        <tr>
-                            <td colspan="9" class="text-center">Tidak ada data peminjaman</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-                 
-<!-- Grafik -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Riwayat Peminjaman</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Pinjam</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Nama Peminjam</th>
+                                        <th>Nama Barang</th>
+                                        <th>Merek</th>
+                                        <th>Jumlah Pinjam</th>
+                                        <th>Keterangan</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($transactions as $index => $trans): ?>
+                                        <tr>
+                                            <td><?= $index + 1 ?></td>
+                                            <td><?= date('d/m/Y', strtotime($trans['tanggal_pinjam'])) ?></td>
+                                            <td><?= $trans['tanggal_kembali'] ? date('d/m/Y', strtotime($trans['tanggal_kembali'])) : '-' ?></td>
+                                            <td><?= htmlspecialchars($trans['nama_peminjam']) ?></td>
+                                            <td><?= htmlspecialchars($trans['nama']) ?></td>
+                                            <td><?= htmlspecialchars($trans['merek']) ?></td>
+                                            <td><?= $trans['jumlah_pinjam'] ?></td>
+                                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
+                                            <td>
+                                                <?php 
+                                                if ($trans['status'] === 'Terlambat') {
+                                                    echo '<span class="badge bg-danger">Terlambat</span>';
+                                                } elseif ($trans['status'] === 'Dikembalikan') {
+                                                    echo '<span class="badge bg-success">Dikembalikan</span>';
+                                                } else {
+                                                    echo '<span class="badge bg-warning">Dipinjam</span>';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <?php if ($trans['status'] === 'Dipinjam'): ?>
+                                                    <form action="" method="POST" style="display:inline;">
+                                                        <input type="hidden" name="id_peminjaman" value="<?= $trans['id_peminjaman'] ?>">
+                                                        <button type="submit" name="return" class="btn btn-danger btn-sm">Kembalikan</button>
+                                                    </form>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    <?php if(empty($transactions)): ?>
+                                        <tr>
+                                        <td colspan="10" class="text-center">Tidak ada data peminjaman</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Grafik -->
 <div class="row mt-4">
     <div class="col-lg-6">
         <div class="card">
@@ -349,3 +385,12 @@ new Chart(ctxPopular, {
     }
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
