@@ -255,138 +255,138 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
                         <!-- Grafik -->
-        <div class="row mt-4">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Grafik Peminjaman per Bulan</h5>
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Grafik Peminjaman per Bulan</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="peminjaman_chart"></canvas>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <canvas id="peminjaman_chart"></canvas>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">Grafik Barang Terpopuler</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="popular_items_chart"></canvas>
+                            </div>
+                        </div>
                     </div>
+                    <script>
+                        function previewPDF() {
+                        // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
+                        var url = '../fitur/cetak_riwayat_peminjaman.php';
+                        window.open(url, '_blank');
+                    }
+                </script>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Grafik Barang Terpopuler</h5>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="popular_items_chart"></canvas>
-                    </div>
-                </div>
-            </div>
+
+            <!-- Script untuk grafik -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
             <script>
-                function previewPDF() {
-                // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
-                var url = '../fitur/cetak_riwayat_peminjaman.php';
-                window.open(url, '_blank');
-            }
-        </script>
-        </div>
+            <?php
+            $query_monthly = "SELECT 
+                DATE_FORMAT(tanggal_pinjam, '%Y-%m') as bulan,
+                COUNT(*) as total_peminjaman
+                FROM peminjaman
+                GROUP BY DATE_FORMAT(tanggal_pinjam, '%Y-%m')
+                ORDER BY bulan DESC
+                LIMIT 6";
+            $monthly_data = $koneksi->query($query_monthly)->fetch_all(MYSQLI_ASSOC);
+            $monthly_data = array_reverse($monthly_data);
 
-<!-- Script untuk grafik -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
+            // Data untuk grafik barang terpopuler
+            $query_popular = "SELECT 
+                b.nama,
+                COUNT(*) as total_dipinjam
+                FROM peminjaman p
+                JOIN barang b ON p.id_barang = b.id_barang
+                GROUP BY p.id_barang
+                ORDER BY total_dipinjam DESC
+                LIMIT 5";
+            $popular_data = $koneksi->query($query_popular)->fetch_all(MYSQLI_ASSOC);
+            ?>
 
-<?php
-$query_monthly = "SELECT 
-    DATE_FORMAT(tanggal_pinjam, '%Y-%m') as bulan,
-    COUNT(*) as total_peminjaman
-    FROM peminjaman
-    GROUP BY DATE_FORMAT(tanggal_pinjam, '%Y-%m')
-    ORDER BY bulan DESC
-    LIMIT 6";
-$monthly_data = $koneksi->query($query_monthly)->fetch_all(MYSQLI_ASSOC);
-$monthly_data = array_reverse($monthly_data);
-
-// Data untuk grafik barang terpopuler
-$query_popular = "SELECT 
-    b.nama,
-    COUNT(*) as total_dipinjam
-    FROM peminjaman p
-    JOIN barang b ON p.id_barang = b.id_barang
-    GROUP BY p.id_barang
-    ORDER BY total_dipinjam DESC
-    LIMIT 5";
-$popular_data = $koneksi->query($query_popular)->fetch_all(MYSQLI_ASSOC);
-?>
-
-// Grafik Peminjaman per Bulan
-const ctxMonthly = document.getElementById('peminjaman_chart').getContext('2d');
-new Chart(ctxMonthly, {
-    type: 'line',
-    data: {
-        labels: <?= json_encode(array_map(function($item) {
-            return date('M Y', strtotime($item['bulan'] . '-01'));
-        }, $monthly_data)) ?>,
-        datasets: [{
-            label: 'Jumlah Peminjaman',
-            data: <?= json_encode(array_map(function($item) {
-                return $item['total_peminjaman'];
-            }, $monthly_data)) ?>,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-            fill: false
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
+            // Grafik Peminjaman per Bulan
+            const ctxMonthly = document.getElementById('peminjaman_chart').getContext('2d');
+            new Chart(ctxMonthly, {
+                type: 'line',
+                data: {
+                    labels: <?= json_encode(array_map(function($item) {
+                        return date('M Y', strtotime($item['bulan'] . '-01'));
+                    }, $monthly_data)) ?>,
+                    datasets: [{
+                        label: 'Jumlah Peminjaman',
+                        data: <?= json_encode(array_map(function($item) {
+                            return $item['total_peminjaman'];
+                        }, $monthly_data)) ?>,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-});
+            });
 
-// Grafik Barang Terpopuler
-const ctxPopular = document.getElementById('popular_items_chart').getContext('2d');
-new Chart(ctxPopular, {
-    type: 'bar',
-    data: {
-        labels: <?= json_encode(array_map(function($item) {
-            return $item['nama'];
-        }, $popular_data)) ?>,
-        datasets: [{
-            label: 'Frekuensi Peminjaman',
-            data: <?= json_encode(array_map(function($item) {
-                return $item['total_dipinjam'];
-            }, $popular_data)) ?>,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
+            // Grafik Barang Terpopuler
+            const ctxPopular = document.getElementById('popular_items_chart').getContext('2d');
+            new Chart(ctxPopular, {
+                type: 'bar',
+                data: {
+                    labels: <?= json_encode(array_map(function($item) {
+                        return $item['nama'];
+                    }, $popular_data)) ?>,
+                    datasets: [{
+                        label: 'Frekuensi Peminjaman',
+                        data: <?= json_encode(array_map(function($item) {
+                            return $item['total_dipinjam'];
+                        }, $popular_data)) ?>,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-});
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            });
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             </div>
         </div>
     </div>

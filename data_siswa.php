@@ -103,7 +103,7 @@ include ("koneksi.php");
                             ?>
                           
                             
-                                <tr>
+                                    <tr>
                                         <td><?php echo $no; ?></td>
                                         <td><?php echo $nama; ?></td>
                                         <td><?php echo $nis; ?></td>
@@ -113,13 +113,11 @@ include ("koneksi.php");
                                         <td><?php echo $tglLahir; ?></td>
                                         <td><?php echo $agama; ?></td>
                                         <td><?php echo $alamat; ?></td>
+
                                         <td>
-                                            <!-- Tombol Edit -->
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editTeacherModal<?php echo $row['id_siswa']; ?>">
                                                 Edit
                                             </button>
-
-                                            <!-- Tombol Hapus -->
                                             <a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus Siswa ini?');" class="btn btn-danger btn-sm">
                                                 Hapus
                                             </a>

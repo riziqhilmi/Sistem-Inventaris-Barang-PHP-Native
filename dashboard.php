@@ -4,7 +4,7 @@ session_start(); // Memulai session
 // Cek apakah user sudah login
 if (!isset($_SESSION['user_id'])) {
     // Jika belum login, redirect ke halaman login
-    header('Location: login.php');
+    header('Location: login2.php');
     exit();
 }
 ?>
