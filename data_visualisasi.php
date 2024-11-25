@@ -19,6 +19,8 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 <body>
 
+
+
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->

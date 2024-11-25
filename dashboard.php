@@ -20,8 +20,7 @@ if (!isset($_SESSION['user_id'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>$(document).ready(function () {
-    showGraph();
-});
+            showGraph();});
 
 function showGraph() {
     $.post("bar_encode.php", function (data) {
@@ -55,6 +54,7 @@ function showGraph() {
         });
     });
 }
+
 </script> <!-- Panggil file bar.js di sini -->
 </head>
 <body>
