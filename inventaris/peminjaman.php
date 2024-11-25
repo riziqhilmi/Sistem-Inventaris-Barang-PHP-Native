@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $koneksi->begin_transaction();
 
     try {
-        // Cek stok barang sebelum meminjam
         $cek_stok_query = "SELECT jumlah_akhir FROM barang WHERE id_barang = ?";
         $cek_stmt = $koneksi->prepare($cek_stok_query);
         $cek_stmt->bind_param("i", $id_barang);
@@ -32,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception("Jumlah pinjaman melebihi stok yang tersedia.");
         }
 
-        // Insert data peminjaman
         $query = "INSERT INTO peminjaman (id_barang, nama_peminjam, tanggal_pinjam, tanggal_kembali, jumlah_pinjam, keterangan) 
                  VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($query);
@@ -54,21 +52,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     }
 }
 
-// Handle pengembalian barang
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['return'])) {
     $id_peminjaman = $_POST['id_peminjaman'];
-    $tanggal_kembali = date('Y-m-d'); // Tanggal hari ini
+    $tanggal_kembali = date('Y-m-d'); 
 
     $koneksi->begin_transaction();
 
     try {
-        // Update status dan tanggal kembali
         $query = "UPDATE peminjaman SET status = 'Dikembalikan', tanggal_kembali = ? WHERE id_peminjaman = ?";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("si", $tanggal_kembali, $id_peminjaman);
         $stmt->execute();
 
-        // Update stok barang
         $query = "SELECT id_barang, jumlah_pinjam FROM peminjaman WHERE id_peminjaman = ?";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("i", $id_peminjaman);
@@ -92,12 +87,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['return'])) {
     header('Location: peminjaman.php');
     exit();
 }
+$query_ruangan = "SELECT id_ruangan, nama_ruangan FROM ruangan ORDER BY nama_ruangan";
+$result_ruangan = $koneksi->query($query_ruangan);
+$ruangan_list = $result_ruangan->fetch_all(MYSQLI_ASSOC);
 
-// Kode untuk menampilkan data peminjaman tetap sama
-$query = "SELECT id_barang, nama, merek FROM barang ORDER BY nama";
-$result = $koneksi->query($query);
-$barang_list = $result->fetch_all(MYSQLI_ASSOC);
+$barang_list = [];
 
+if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
+    $id_ruangan = $_GET['id_ruangan'];
+    $query = "SELECT id_barang, nama, merek FROM barang WHERE ruangan = (SELECT nama_ruangan FROM ruangan WHERE id_ruangan = ?) ORDER BY nama";
+    $stmt = $koneksi->prepare($query);
+    $stmt->bind_param("i", $id_ruangan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $barang_list = $result->fetch_all(MYSQLI_ASSOC);
+    }
 $query = "SELECT p.*, b.nama, b.merek 
           FROM peminjaman p 
           JOIN barang b ON p.id_barang = b.id_barang 
@@ -157,10 +161,23 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     <div class="card-body">
                         <form action="" method="POST">
                             <div class="row">
+                            <div class="col-md-6 mb-3">
+                                    <label for="id_ruangan" class="form-label">Pilih Ruangan</label>
+                                    <select class="form-select" id="id_ruangan" onchange="filterBarang(this.value)">
+                                        <option value="">Pilih Ruangan</option>
+                                        <?php foreach ($ruangan_list as $ruangan): ?>
+                                            <option value="<?= $ruangan['id_ruangan'] ?>"
+                                                <?= (isset($_GET['id_ruangan']) && $_GET['id_ruangan'] == $ruangan['id_ruangan']) ? 'selected' : '' ?>>
+                                                <?= htmlspecialchars($ruangan['nama_ruangan']) ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+
                                 <div class="col-md-6 mb-3">
                                     <label for="id_barang" class="form-label">Pilih Barang</label>
-                                    <select class="form-select" name="id_barang" required>
-                                        <option value="">Pilih Barang</option>
+                                    <select class="form-select" name="id_barang" id="id_barang" required>
+                                        <option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>
                                         <?php foreach ($barang_list as $barang): ?>
                                             <option value="<?= $barang['id_barang'] ?>">
                                                 <?= htmlspecialchars($barang['nama']) ?> - 
@@ -277,6 +294,14 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
                     <script>
+                        function filterBarang(ruanganId) {
+                                if (ruanganId) {
+                                    window.location.href = 'peminjaman.php?id_ruangan=' + ruanganId;
+                                } else {
+                                    $('#id_barang').html('<option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>');
+                                }
+                            }
+                        
                         function previewPDF() {
                         // Ganti URL ini dengan URL yang sesuai untuk file PHP Anda
                         var url = '../fitur/cetak_riwayat_peminjaman.php';
