@@ -9,6 +9,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-primary" style="height: 100vh;">
         <div class="sidebar-header d-flex flex-column align-items-center justify-content-center text-center">
             <img src="/project/img/logo_sd.png" alt="Logo" class="logo-white mb-2" width="90" height="100">
+            <a href="/project/dashboard.php" class="text-decoration-none text-white">
             <span class="fs-4 shiny-text">SD PASAREJO 1</span>
         </div>
         <style>
@@ -63,53 +64,51 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="/project/dashboard.php"
-                    class="nav-link text-white <?php echo ($current_page == 'dashboard.php') ? 'active-main' : ''; ?>">
-                   
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="/project/data_guru.php"
-                    class="nav-link text-white <?php echo ($current_page == 'data_guru.php') ? 'active-main' : ''; ?>">
-                    <img src="/project/img/guru.png" alt="Icon" class ="icon_sidebar" style="width: 20px; height: 20px; margin-left: 8px;">
-                    Data Guru
-                </a>
-            </li>
-            <li>
-                <a href="/project/data_siswa.php"
-                    class="nav-link text-white <?php echo ($current_page == 'data_siswa.php') ? 'active-main' : ''; ?>">
-                    Data Siswa
-                </a>
-            </li>
-            <li>
-                <a href="/project/data_kelas.php"
-                    class="nav-link text-white <?php echo ($current_page == 'data_kelas.php') ? 'active-main' : ''; ?>">
-                    Data Kelas
-                </a>
-            </li>
-            <li>
-                <!-- Menu Inventaris -->
+                <!-- Menu Data Master -->
                 <a href="#inventarisSubMenu"
-                    class="nav-link text-white <?php echo (in_array($current_page, ['barang.php', 'barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'active-main' : ''; ?>"
+                    class="nav-link text-white <?php echo (in_array($current_page, ['data_guru.php', 'data_siswa.php', 'data_kelas.php', 'barang.php'])) ? 'active-main' : ''; ?>"
                     data-bs-toggle="collapse">
-                    Inventaris
+                    Data Master
                 </a>
-                <ul class="collapse <?php echo (in_array($current_page, ['barang.php', 'barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'show' : ''; ?>"
+                <ul class="collapse <?php echo (in_array($current_page, ['data_guru.php', 'data_siswa.php', 'data_kelas.php', 'barang.php'])) ? 'show' : ''; ?>"
                     id="inventarisSubMenu">
                     <li>
-                        <a href="<?php echo $base_url; ?>/inventaris/barang.php"
-                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang.php') ? '' : ''; ?>">Barang</a>
+                        <a href="<?php echo $base_url; ?>/data_guru.php"
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'data_guru.php') ? '' : ''; ?>">Data Guru</a>
                     </li>
                     <li>
+                        <a href="<?php echo $base_url; ?>/data_siswa.php"
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'data_siswa.php') ? '' : ''; ?>">Data Siswa
+                            </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_url; ?>/data_kelas.php"
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'data_kelas.php') ? '' : ''; ?>">Data Ruangan
+                            </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $base_url; ?>/inventaris/barang.php"
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang.php') ? '' : ''; ?>">Data Barang</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <!-- Menu transaksi -->
+                <a href="#laporanSubMenu"
+                    class="nav-link text-white <?php echo (in_array($current_page, ['barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'active-main' : ''; ?>"
+                    data-bs-toggle="collapse">
+                    Transaksi
+                </a>
+                <ul class="collapse <?php echo (in_array($current_page, ['barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'show' : ''; ?>"
+                    id="laporanSubMenu">
+                    <li>
                         <a href="<?php echo $base_url; ?>/inventaris/barang_masuk.php"
-                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_masuk.php') ? '' : ''; ?>">Barang
-                            Masuk</a>
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_masuk.php') ? '' : ''; ?>">Barang Masuk</a>
                     </li>
                     <li>
                         <a href="<?php echo $base_url; ?>/inventaris/barang_keluar.php"
-                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_keluar.php') ? '' : ''; ?>">Barang
-                            Keluar</a>
+                            class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_keluar.php') ? '' : ''; ?>">Barang Keluar</a>
                     </li>
                     <li>
                         <a href="<?php echo $base_url; ?>/inventaris/peminjaman.php"
@@ -143,10 +142,11 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     </li>
                 </ul>
             </li>
+            <!-- Menu visualisasi -->
             <li>
                 <a href="/project/data_visualisasi.php"
                     class="nav-link text-white <?php echo ($current_page == 'data_visualisasi.php') ? 'active-main' : ''; ?>">
-                    Data Visualisasi
+                    Visualisasi
                 </a>
             </li>
         </ul>
