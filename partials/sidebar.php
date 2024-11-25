@@ -7,9 +7,28 @@ $base_url = "/project";
 <script src="https://cdn.jsdelivr.net/npm/sidebar.js"></script>
 <div class="col-md-2 sidebar bg-dark sticky-top p-0">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-primary" style="height: 100vh;">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <img src="/project/img/logo_sd.png" alt="Logo" class="rounded-circle logo-white" width="40" height="40">
-            <span class="fs-4 ms-2">SD Pasarejo 1</span>
+    <div class="sidebar-header d-flex flex-column align-items-center justify-content-center text-center">
+    <img src="/project/img/logo_sd.png" alt="Logo" class="rounded-circle logo-white mb-2" width="80" height="80">
+    <span class="fs-4 shiny-text">SD PASAREJO 1</span>
+</div>
+            <style>
+  .shiny-text {
+    font-weight: bold;
+    background: linear-gradient(90deg, #000000, #C62828, #4adeff);
+    background-size: 200% auto;
+    color: white;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+</style>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
