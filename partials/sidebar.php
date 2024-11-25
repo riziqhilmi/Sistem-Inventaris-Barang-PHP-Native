@@ -8,7 +8,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 <div class="col-md-2 sidebar bg-dark sticky-top p-0">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-primary" style="height: 100vh;">
         <div class="sidebar-header d-flex flex-column align-items-center justify-content-center text-center">
-            <img src="/project/img/logo_sd.png" alt="Logo" class="rounded-circle logo-white mb-2" width="80" height="80">
+            <img src="/project/img/logo_sd.png" alt="Logo" class="logo-white mb-2" width="90" height="100">
             <span class="fs-4 shiny-text">SD PASAREJO 1</span>
         </div>
         <style>
