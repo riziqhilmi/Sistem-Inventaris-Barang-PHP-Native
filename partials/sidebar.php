@@ -47,12 +47,14 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
             <li>
                 <a href="/project/dashboard.php"
                     class="nav-link text-white <?php echo ($current_page == 'dashboard.php') ? 'active-main' : ''; ?>">
+                   
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="/project/data_guru.php"
                     class="nav-link text-white <?php echo ($current_page == 'data_guru.php') ? 'active-main' : ''; ?>">
+                    <img src="/project/img/guru.png" alt="Icon" class ="icon_sidebar" style="width: 20px; height: 20px; margin-left: 8px;">
                     Data Guru
                 </a>
             </li>
