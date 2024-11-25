@@ -72,7 +72,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     <i class="bi bi-collection"></i> Data Master
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['data_guru.php', 'data_siswa.php', 'data_kelas.php', 'barang.php'])) ? 'show' : ''; ?>"
-                    id="inventarisSubMenu">
+                    id="inventarisSubMenu" data-bs-parent=".nav">
                     <li>
                         <a href="<?php echo $base_url; ?>/data_guru.php"
                             class="nav-link text-white ms-3 <?php echo ($current_page == 'data_guru.php') ? '' : ''; ?>">Data Guru</a>
@@ -102,7 +102,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     <i class="bi bi-layout-wtf"></i> Transaksi
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'show' : ''; ?>"
-                    id="transaksiSubMenu">
+                    id="transaksiSubMenu" data-bs-parent=".nav">
                     <li>
                         <a href="<?php echo $base_url; ?>/inventaris/barang_masuk.php"
                             class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_masuk.php') ? '' : ''; ?>">Barang Masuk</a>
@@ -125,7 +125,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     <i class="bi bi-envelope"></i> Laporan
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['laporan_siswa.php', 'laporan_guru.php', 'laporan_inventaris.php'])) ? 'show' : ''; ?>"
-                    id="laporanSubMenu">
+                    id="laporanSubMenu" data-bs-parent=".nav">
                     <li>
                         <a href="<?php echo $base_url; ?>/laporan/laporan_siswa.php"
                             class="nav-link text-white ms-3 <?php echo ($current_page == 'laporan_siswa.php') ? '' : ''; ?>">Laporan
