@@ -123,6 +123,12 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="/project/data_visualisasi.php"
+                    class="nav-link text-white <?php echo ($current_page == 'data_visualisasi.php') ? 'active-main' : ''; ?>">
+                    Data Visualisasi
+                </a>
+            </li>
         </ul>
         <hr>
         <a href="/project/fitur/logout.php" class="btn btn-outline-light">Logout</a>
