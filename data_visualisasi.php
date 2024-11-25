@@ -22,11 +22,6 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
 
-<<<<<<< HEAD
-
-
-<div class="container-fluid">
-=======
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -37,7 +32,6 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="container">
                     <h1 class="mb-4">Data Visualisasi</h1>
                     <div class="container">
->>>>>>> b6c28327eed63d7ba8e6c6114d3574853acf777e
     <div class="row">
         <!-- Card 1 -->
         <div class="col-lg-4 col-md-6 mb-3">
