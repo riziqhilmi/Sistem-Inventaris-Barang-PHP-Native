@@ -4,13 +4,14 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <div class="col-md-2 sidebar bg-dark sticky-top p-0">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-primary" style="height: 100vh;">
         <div class="sidebar-header d-flex flex-column align-items-center justify-content-center text-center">
             <img src="/project/img/logo_sd.png" alt="Logo" class="logo-white mb-2" width="90" height="100">
             <a href="/project/dashboard.php" class="text-decoration-none text-white">
-            <span class="fs-4 shiny-text">SD PASAREJO 1</span>
+            <span class="fs-4 shiny-text">SDN PASAREJO 1</span>
         </div>
         <style>
             .shiny-text {
@@ -68,7 +69,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                 <a href="#inventarisSubMenu"
                     class="nav-link text-white <?php echo (in_array($current_page, ['data_guru.php', 'data_siswa.php', 'data_kelas.php', 'barang.php'])) ? 'active-main' : ''; ?>"
                     data-bs-toggle="collapse">
-                    Data Master
+                    <i class="bi bi-collection"></i> Data Master
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['data_guru.php', 'data_siswa.php', 'data_kelas.php', 'barang.php'])) ? 'show' : ''; ?>"
                     id="inventarisSubMenu">
@@ -95,13 +96,13 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 
             <li>
                 <!-- Menu transaksi -->
-                <a href="#laporanSubMenu"
+                <a href="#transaksiSubMenu"
                     class="nav-link text-white <?php echo (in_array($current_page, ['barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'active-main' : ''; ?>"
                     data-bs-toggle="collapse">
-                    Transaksi
+                    <i class="bi bi-layout-wtf"></i> Transaksi
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['barang_masuk.php', 'barang_keluar.php', 'peminjaman.php'])) ? 'show' : ''; ?>"
-                    id="laporanSubMenu">
+                    id="transaksiSubMenu">
                     <li>
                         <a href="<?php echo $base_url; ?>/inventaris/barang_masuk.php"
                             class="nav-link text-white ms-3 <?php echo ($current_page == 'barang_masuk.php') ? '' : ''; ?>">Barang Masuk</a>
@@ -121,7 +122,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                 <a href="#laporanSubMenu"
                     class="nav-link text-white <?php echo (in_array($current_page, ['laporan_siswa.php', 'laporan_guru.php', 'laporan_inventaris.php'])) ? 'active-main' : ''; ?>"
                     data-bs-toggle="collapse">
-                    Laporan
+                    <i class="bi bi-envelope"></i> Laporan
                 </a>
                 <ul class="collapse <?php echo (in_array($current_page, ['laporan_siswa.php', 'laporan_guru.php', 'laporan_inventaris.php'])) ? 'show' : ''; ?>"
                     id="laporanSubMenu">
@@ -142,13 +143,14 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                     </li>
                 </ul>
             </li>
-            <!-- Menu visualisasi -->
+            <!-- Menu Visualisasi -->
             <li>
                 <a href="/project/data_visualisasi.php"
-                    class="nav-link text-white <?php echo ($current_page == 'data_visualisasi.php') ? 'active-main' : ''; ?>">
-                    Visualisasi
+                class="nav-link text-white <?php echo ($current_page == 'data_visualisasi.php') ? 'active-main' : ''; ?>">
+                <i class="bi bi-bar-chart-line"></i> Visualisasi
                 </a>
             </li>
+
         </ul>
         <hr>
         <a href="/project/fitur/logout.php" class="btn btn-outline-light">Logout</a>
