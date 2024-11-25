@@ -205,7 +205,7 @@ include ("koneksi.php");
 
                 <!-- Modal for Adding Teacher -->
                 <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+        <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="addTeacherLabel">Tambah Data guru</h5>
@@ -213,22 +213,24 @@ include ("koneksi.php");
                             </div>
                             <div class="modal-body">
                                 <form action="fitur/tambah_guru.php" method="POST">
-    <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" name="nama" required>
+                                <div class="row mb-3">
+    <div class="col-md-6">
+        <label for="nama_barang" class="form-label">Nama</label>
+        <input type="text" class="form-control" name="nama_barang" required>
     </div>
     
-    <div class="mb-3">
-        <label for="nip" class="form-label">NIP</label>
-        <input type="text" class="form-control" name="nip" required>
+    <div class="col-md-6">
+    <label for="nip" class="form-label">NIP</label>
+    <input type="text" class="form-control" name="nip" required>
     </div>
     
-    <div class="mb-3">
+    
+    <div class="col-md-6">
         <label for="kontak" class="form-label">Kontak</label>
         <input type="text" class="form-control" name="kontak" required>
     </div>
-    
-    <div class="mb-3">
+
+    <div class="col-md-6">
         <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
         <input type="text" class="form-control" name="tempat_lahir" required>
     </div>
