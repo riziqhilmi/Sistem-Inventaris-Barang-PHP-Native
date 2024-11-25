@@ -41,6 +41,24 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
             .sidebar .nav-link.ms-3 {
                 color: white !important;
             }
+
+              /* Default styling untuk ikon */
+    .icon_sidebar {
+        width: 20px;
+        height: 20px;
+        margin-left: 8px;
+        transition: filter 0.3s ease; /* Tambahkan transisi untuk efek halus */
+    }
+
+    /* Warna default (ikon tetap putih) */
+    .nav-link .icon_sidebar {
+        filter: invert(0); /* Ikon putih */
+    }
+
+    /* Ketika menu aktif, ubah warna ikon menjadi hitam */
+    .nav-link.active-main .icon_sidebar {
+        filter: invert(1); /* Ikon hitam */
+    }
         </style>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
