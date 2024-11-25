@@ -1,0 +1,8 @@
+.small-card {
+    max-width: 350  px; /* Atur lebar maksimal card */
+    margin: auto; /* Pusatkan jika card lebih kecil */
+}
+.card-img-top {
+    height: 250px; /* Atur tinggi gambar agar proporsional */
+    object-fit: cover; /* Pastikan gambar tidak terdistorsi */
+}
