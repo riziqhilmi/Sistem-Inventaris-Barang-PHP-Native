@@ -20,8 +20,46 @@ include ("koneksi.php");
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+
+<style>
+  .disable-scroll {
+    overflow: hidden !important;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init(); // Inisialisasi AOS
+
+    document.addEventListener('aos:in', (event) => {
+    // Ketika animasi dimulai, nonaktifkan scroll
+    document.body.classList.add('disable-scroll');
+});
+
+document.addEventListener('aos:out', (event) => {
+    // Ketika animasi selesai, aktifkan kembali scroll
+    document.body.classList.remove('disable-scroll');
+});
+
+AOS.init({
+    startEvent: 'DOMContentLoaded', // Pastikan animasi dimulai setelah halaman dimuat
+    once: true, // Hanya jalankan animasi sekali
+});
+
+const tableContainer = document.querySelector('.table-responsive');
+document.addEventListener('aos:in', () => {
+    tableContainer.classList.add('disable-scroll');
+});
+
+document.addEventListener('aos:out', () => {
+    tableContainer.classList.remove('disable-scroll');
+});
+
+
+</script>
 
 <div class="container-fluid">
     <div class="row">
@@ -84,7 +122,7 @@ include ("koneksi.php");
                             ?>
                           
                             
-                                <tr>
+                                <tr data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?php echo $no * 100; ?>">
                                     <td><?php echo $no; ?></td>
                                     <td><?php echo $nama; ?></td>
                                     <td><?php echo $ket; ?></td>
