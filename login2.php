@@ -36,7 +36,7 @@ session_start();
             <input type="password" name="password" id="login" placeholder="Password" />
           </div>
           <input type="button" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
-          <a href="#" class="forgot">Forgot Password</a>
+         
         </form>
 
         <form action="" class="sign-up-form" method="post">

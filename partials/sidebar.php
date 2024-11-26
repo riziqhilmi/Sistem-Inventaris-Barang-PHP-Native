@@ -94,15 +94,16 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 
             <!-- Laporan -->
             <li>
-                <a href="#laporanSubMenu" class="nav-link text-white d-flex align-items-center <?php echo (in_array($current_page, ['laporan_barang_keluar.php', 'laporan_peminjaman.php', 'laporan_barang_masuk.php'])) ? 'active-main' : ''; ?>" data-bs-toggle="collapse">
+                <a href="#laporanSubMenu" class="nav-link text-white d-flex align-items-center <?php echo (in_array($current_page, ['laporan_barang_keluar.php', 'laporan_peminjaman.php', 'laporan_barang_masuk.php', 'laporan_barang.php'])) ? 'active-main' : ''; ?>" data-bs-toggle="collapse">
                     <i class="bi bi-envelope"></i> Laporan
                     <i class="bi bi-chevron-down ms-auto arrow-icon"></i>
                 </a>
-                <ul class="collapse <?php echo (in_array($current_page, ['laporan_barang_keluar.php', 'laporan_peminjaman.php', 'laporan_barang_masuk.php'])) ? 'show' : ''; ?>" 
+                <ul class="collapse <?php echo (in_array($current_page, ['laporan_barang_keluar.php', 'laporan_peminjaman.php', 'laporan_barang_masuk.php', 'laporan_barang.php'])) ? 'show' : ''; ?>" 
                 id="laporanSubMenu" data-bs-parent=".nav">
-                <li><a href="<?php echo $base_url; ?>/laporan/laporan_barang_masuk.php" class="nav-link text-white ms-3">Laporan Barang Masuk</a></li>
+                    <li><a href="<?php echo $base_url; ?>/laporan/laporan_barang_masuk.php" class="nav-link text-white ms-3">Laporan Barang Masuk</a></li>
                     <li><a href="<?php echo $base_url; ?>/laporan/laporan_barang_keluar.php" class="nav-link text-white ms-3">Laporan Barang Keluar</a></li>
                     <li><a href="<?php echo $base_url; ?>/laporan/laporan_peminjaman.php" class="nav-link text-white ms-3">Laporan Peminjaman</a></li>
+                    <li><a href="<?php echo $base_url; ?>/laporan/laporan_barang.php" class="nav-link text-white ms-3">Laporan Barang</a></li>
                 </ul>
             </li>
 
