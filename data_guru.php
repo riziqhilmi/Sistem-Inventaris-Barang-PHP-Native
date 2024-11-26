@@ -20,8 +20,15 @@ include ("koneksi.php");
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init(); // Inisialisasi AOS
+</script>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -93,7 +100,7 @@ include ("koneksi.php");
                             ?>
                           
                             
-                                <tr>
+                                <tr data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?php echo $no * 100; ?>">
                                     <td><?php echo $no; ?></td>
                                     <td><?php echo $nama; ?></td>
                                     <td><?php echo $nip; ?></td>
