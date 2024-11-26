@@ -11,14 +11,23 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 <div class="col-md-2 sidebar bg-dark sticky-top p-0">
     <div class="d-flex flex-column p-3 text-white bg-primary" style="height: 100vh;">
         <!-- Header Sidebar -->
-        <div class="sidebar-header text-center">
-            <img src="<?php echo $base_url; ?>/img/logo_sd.png" alt="Logo" class="logo-white mb-2" width="90" height="100">
-            <a href="<?php echo $base_url; ?>/dashboard.php" class="text-decoration-none text-white">
-                <span class="fs-4 shiny-text">SDN PASAREJO 1</span>
-            </a>
-        </div>
+        <div class="sidebar-header d-flex flex-column align-items-center justify-content-center">
+        <img src="<?php echo $base_url; ?>/img/logo_sd.png" alt="Logo" class="logo-white mb-2" width="90" height="100">
+         <a href="<?php echo $base_url; ?>/dashboard.php" class="text-decoration-none text-white">
+            <span class="fs-4 shiny-text text-center">SDN PASAREJO 1</span>
+         </a>
+    </div>
 
         <style>
+            .sidebar-header {
+            display: flex;
+            flex-direction: column; /* Susun secara vertikal */
+            align-items: center;    /* Sejajarkan secara horizontal */
+            justify-content: center; /* Sejajarkan secara vertikal */
+            height: 150px; /* Sesuaikan tinggi kontainer */
+            }
+
+
             .shiny-text {
                 font-weight: bold;
                 background: linear-gradient(90deg, #000000, #C62828, #4adeff);
