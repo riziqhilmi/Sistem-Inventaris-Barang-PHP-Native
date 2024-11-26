@@ -25,9 +25,41 @@ include ("koneksi.php");
 
 <body>
 
+<style>
+  .disable-scroll {
+    overflow: hidden !important;
+}
+</style>
+
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
     AOS.init(); // Inisialisasi AOS
+
+    document.addEventListener('aos:in', (event) => {
+    // Ketika animasi dimulai, nonaktifkan scroll
+    document.body.classList.add('disable-scroll');
+});
+
+document.addEventListener('aos:out', (event) => {
+    // Ketika animasi selesai, aktifkan kembali scroll
+    document.body.classList.remove('disable-scroll');
+});
+
+AOS.init({
+    startEvent: 'DOMContentLoaded', // Pastikan animasi dimulai setelah halaman dimuat
+    once: true, // Hanya jalankan animasi sekali
+});
+
+const tableContainer = document.querySelector('.table-responsive');
+document.addEventListener('aos:in', () => {
+    tableContainer.classList.add('disable-scroll');
+});
+
+document.addEventListener('aos:out', () => {
+    tableContainer.classList.remove('disable-scroll');
+});
+
+
 </script>
 
 <div class="container-fluid">
