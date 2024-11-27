@@ -17,6 +17,25 @@ session_start();
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <title>Sign in & Sign up Form</title>
+
+  <style>
+    /* Tambahkan transisi halus ke semua tombol */
+.input-btn-field, 
+.btnn {
+  transition: all 0.3s ease-in-out;
+  transform: scale(1);
+}
+
+/* Efek hover pada tombol */
+.input-btn-field:hover, 
+.btnn:hover {
+  background-color: #4caf50; /* Ganti warna sesuai preferensi */
+  color: #ffffff; /* Warna teks saat hover */
+  transform: scale(1.1); /* Zoom in */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3); /* Tambahkan bayangan */
+}
+
+  </style>
 </head>
 
 <body>
