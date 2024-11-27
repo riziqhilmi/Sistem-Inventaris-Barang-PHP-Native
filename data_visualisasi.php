@@ -26,6 +26,7 @@ if (!isset($_SESSION['user_id'])) {
         <div class="row">
             <!-- Sidebar -->
             <?php include 'partials/sidebar.php'; ?>
+            
 
             <!-- Main Content -->
             <div class="col-md-10 p-4">
@@ -40,8 +41,8 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="card-body">
                                         <h4 class="card-title">Data Visualisasi Guru</h4>
 
-                                        <a href="javascript:void(0);" onclick="dsvGuru()" class="btn  btn-primary btn-right">Lihat
-                                            Selengkapnya <img src="img/panah.png" alt="Ikon"
+                                        <a href="javascript:void(0);" onclick="dsvGuru()" class="btn  btn-primary btn-right"><strong>Lihat
+                                            Selengkapnya</strong> <img src="img/panah.png" alt="Ikon"
                                                 style="width: 27px; height: 27px; margin-left: 4px;"></a>
                                     </div>
                                 </div>
@@ -52,8 +53,8 @@ if (!isset($_SESSION['user_id'])) {
                                     <img src="img/data_siswa.png" class="card-img-top" alt="jpg">
                                     <div class="card-body">
                                         <h4 class="card-title">Data Visualisasi Siswa</h4>
-                                        <a href="javascript:void(0);" onclick="dsvSiswa()" class="btn  btn-primary btn-right">Lihat
-                                            Selengkapnya <img src="img/panah.png" alt="Ikon"
+                                        <a href="javascript:void(0);" onclick="dsvSiswa()" class="btn  btn-primary btn-right"><strong>Lihat
+                                            Selengkapnya</strong> <img src="img/panah.png" alt="Ikon"
                                                 style="width: 27px; height: 27px; margin-left: 4px;"></a>
                                     </div>
                                 </div>
@@ -66,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
                                         <h4 class="card-title">Data Visualisasi Barang</h4>
 
                                         <a href="javascript:void(0);" onclick="dsvBarang()"
-                                            class="btn  btn-primary btn-right">Lihat Selengkapnya <img src="img/panah.png" alt="Ikon"
+                                            class="btn  btn-primary btn-right"><strong>Lihat Selengkapnya</strong> <img src="img/panah.png" alt="Ikon"
                                                 style="width: 27px; height: 27px; margin-left: 4px;"></a>
                                     </div>
                                 </div>
@@ -80,7 +81,7 @@ if (!isset($_SESSION['user_id'])) {
                                     <div class="card-body">
                                         <h4 class="card-title">Data Visualisasi Barang Masuk</h4>
                                         <a href="javascript:void(0);" onclick="dsvBarangMasuk()"
-                                            class="btn  btn-primary btn-right">Lihat Selengkapnya<img src="img/panah.png" alt="Ikon"
+                                            class="btn  btn-primary btn-right"><strong>Lihat Selengkapnya</strong><img src="img/panah.png" alt="Ikon"
                                             style="width: 27px; height: 27px; margin-left: 4px;">
                                             </a>
                                     </div>
@@ -94,7 +95,7 @@ if (!isset($_SESSION['user_id'])) {
                                         <h4 class="card-title">Data Visualisasi Barang Keluar</h4>
 
                                         <a href="javascript:void(0);" onclick="dsvBarangKeluar()"
-                                            class="btn btn-primary btn-right">Lihat Selengkapnya
+                                            class="btn btn-primary btn-right"><strong>Lihat Selengkapnya</strong>
                                             <img src="img/panah.png" alt="Ikon"
                                                 style="width: 27px; height: 27px; margin-left: 4px;">
                                         </a>
@@ -109,8 +110,8 @@ if (!isset($_SESSION['user_id'])) {
                                         <h4 class="card-title">Data Visualisasi Peminjaman</h4>
 
                                         <a href="javascript:void(0);" onclick="dsvPeminjaman()"
-                                            class="btn btn-primary btn-right">
-                                            Lihat Selengkapnya
+                                            class="btn btn-primary btn-right"><strong>
+                                            Lihat Selengkapnya</strong>
                                             <img src="img/panah.png" alt="Ikon"
                                                 style="width: 27px; height: 27px; margin-left: 4px;">
                                         </a>
