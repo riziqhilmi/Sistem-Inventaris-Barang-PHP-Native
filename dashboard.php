@@ -40,6 +40,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
         $(document).ready(function () {
             showGraph();
@@ -85,6 +86,28 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 });
             });
         }
+
+        function updateTime() {
+        var currentDate = new Date();
+        var day = currentDate.toLocaleString('id-ID', { weekday: 'long' }); // Get day name
+        var date = currentDate.getDate(); // Get day number
+        var month = currentDate.toLocaleString('id-ID', { month: 'long' }); // Get month name
+        var year = currentDate.getFullYear(); // Get year
+        var hours = currentDate.getHours(); // Get hours
+        var minutes = currentDate.getMinutes(); // Get minutes
+        var seconds = currentDate.getSeconds(); // Get seconds
+        
+        // Ensure two-digit format for minutes and seconds
+        minutes = (minutes < 10) ? '0' + minutes : minutes;
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+        
+        // Display the full date and time
+        document.getElementById('current-day').textContent = day + ', ' + date + ' ' + month + ' ' + year;
+        document.getElementById('current-time').textContent = hours + ':' + minutes + ':' + seconds;
+    }
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
     </script>
 
 <style>
@@ -138,6 +161,35 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
         transform: translateX(-50%); /* Moves the wave across 50% */
     }
 }
+
+  /* Styling for the Time Section */
+  #current-time {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Flexbox adjustment for the row containing Time and Graph */
+    .row.mb-4 {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Set the width for the Time and Graph columns */
+    .col-lg-4 {
+        flex: 0 0 33.33333%;
+        max-width: 33.33333%;
+    }
+
+    .col-lg-8 {
+        flex: 0 0 66.66666%;
+        max-width: 66.66666%;
+    }
+
+    .col-md-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
     </style>
 
 </head>
@@ -153,7 +205,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
             <!-- Dashboard Header -->
             <div class="row mb-4">
-                <div class="col-md-15 position-relative"> <!-- Add position-relative here -->
+                <div class="col-md-15 position-relative">
                     <h1 class="text-start">Welcome, <?php echo htmlspecialchars($user_name); ?>!</h1>
                     <!-- Wave Animation Behind Text -->
                     <div class="wave-container">
@@ -205,16 +257,38 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 </div>
             </div>
 
-            <!-- Graph Section -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
+            <!-- Dashboard Section with Date and Time -->
+            <div class="row mb-4">
+                <!-- Left Column: Date and Time -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h5>Date and Time</h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <h4 id="current-day"></h4> <!-- Display day, date, month, year here -->
+                            <h3 id="current-time"></h3> <!-- Display current time here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Graph -->
+                <div class="col-lg-8 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h5>Grafik Data Barang</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
 
 </body>  
 </html>
