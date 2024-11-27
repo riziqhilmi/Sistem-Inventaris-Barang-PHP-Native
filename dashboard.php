@@ -111,6 +111,11 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     </script>
 
 <style>
+
+h1.text-start {
+    color: white; /* Set the text color to white */
+}
+
         /* CSS untuk memberi warna latar belakang pada setiap card */
         .card-guru {
             background-color: #f7d7a3; /* Warna kuning muda untuk Data Guru */
@@ -148,18 +153,8 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     left: 0;
     width: 200%; /* Stretch the wave across the width */
     height: 80px; /* Match the height of the container */
-    background: linear-gradient(90deg, #49e2ff 25%, #f7d7a3 50%, #a3d8f7 75%);
+    background: #0d6efd;
     animation: waveAnimation 5s linear infinite;
-}
-
-/* Animasi Gelombang */
-@keyframes waveAnimation {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%); /* Moves the wave across 50% */
-    }
 }
 
   /* Styling for the Time Section */
