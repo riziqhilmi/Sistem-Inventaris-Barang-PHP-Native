@@ -36,7 +36,7 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Card 1 -->
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card small-card">
-                <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
+                <img src="img/data_guru.png" class="card-img-top" alt="jpg">
                 <div class="card-body">
                     <h4 class="card-title">Data Visualisasi Guru</h4>
                     
@@ -47,7 +47,7 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Card 2 -->
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card small-card">
-                <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
+                <img src="img/data_siswa.png" class="card-img-top" alt="jpg">
                 <div class="card-body">
                     <h4 class="card-title">Data Visualisasi Siswa</h4>
                     <a href="javascript:void(0);" onclick="dsvSiswa()" class="btn btn-primary">Lihat Selengkapnya...</a>
@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Card 3 -->
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card small-card">
-                <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
+                <img src="img/data_barang.png" class="card-img-top" alt="jpg">
                 <div class="card-body">
                     <h4 class="card-title">Data Visualisasi Barang</h4>
                     
@@ -73,7 +73,6 @@ if (!isset($_SESSION['user_id'])) {
                 <img src="img/barang_masuk.png" class="card-img-top" alt="jpg">
                 <div class="card-body">
                     <h4 class="card-title">Data Visualisasi Barang Masuk</h4>
-                   <a href="#" id="showGrafikBarangMasuk" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#grafikModal">Tampilkan Grafik</a>
                     <a href="javascript:void(0);" onclick="dsvBarangMasuk()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
