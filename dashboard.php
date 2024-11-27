@@ -108,6 +108,36 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
         .card-body {
             padding: 20px;
         }
+        /* CSS untuk Wave Animasi */
+.wave-container {
+    position: absolute; /* Absolute positioning to place it behind the text */
+    bottom: -10px; /* Adjust vertical position */
+    left: 0;
+    width: 100%; /* Ensure it covers the entire width */
+    height: 80px; /* Adjust the height of the wave */
+    overflow: hidden;
+    z-index: -1; /* Ensure it's behind the text */
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%; /* Stretch the wave across the width */
+    height: 80px; /* Match the height of the container */
+    background: linear-gradient(90deg, #49e2ff 25%, #f7d7a3 50%, #a3d8f7 75%);
+    animation: waveAnimation 5s linear infinite;
+}
+
+/* Animasi Gelombang */
+@keyframes waveAnimation {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Moves the wave across 50% */
+    }
+}
     </style>
 
 </head>
@@ -123,8 +153,12 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
             <!-- Dashboard Header -->
             <div class="row mb-4">
-                <div class="col-md-5">
+                <div class="col-md-15 position-relative"> <!-- Add position-relative here -->
                     <h1 class="text-start">Welcome, <?php echo htmlspecialchars($user_name); ?>!</h1>
+                    <!-- Wave Animation Behind Text -->
+                    <div class="wave-container">
+                        <div class="wave"></div>
+                    </div>
                 </div>
             </div>
 
@@ -142,7 +176,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 
                 <!-- Number of Students -->
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center">
+                    <div class="card text-center card-siswa">
                         <div class="card-body">
                             <h5 class="card-title">Jumlah Siswa</h5>
                             <p class="display-4"><?php echo $data_siswa; ?></p>
@@ -152,7 +186,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 
                 <!-- Digital Books -->
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center">
+                    <div class="card text-center card-ruangan">
                         <div class="card-body">
                             <h5 class="card-title">Jumlah Ruangan</h5>
                             <p class="display-4"><?php echo $data_ruangan; ?></p>
@@ -162,7 +196,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
                 <!-- Interactive Content -->
                 <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center">
+                    <div class="card text-center card-barang">
                         <div class="card-body">
                             <h5 class="card-title">Jumlah Barang</h5>
                             <p class="display-4"><?php echo $data_barang; ?></p>
@@ -171,17 +205,13 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 </div>
             </div>
 
-            <!-- Learning Content Section -->
-            <div class="row mb-4">
-
-            </div>
-
             <!-- Graph Section -->
             <div class="row">
                 <div class="col-lg-12">
                     <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
                 </div>
             </div>
+
         </div>
     </div>
 </div>
