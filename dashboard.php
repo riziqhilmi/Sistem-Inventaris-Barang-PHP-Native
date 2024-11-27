@@ -44,6 +44,14 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     <script>
         $(document).ready(function () {
             showGraph();
+            
+            // Call the scroll animation function
+            $(window).on('scroll', function() {
+                animateOnScroll();
+            });
+
+            // Initial check for elements in viewport on page load
+            animateOnScroll();
         });
 
         function showGraph() {
@@ -88,33 +96,84 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
         }
 
         function updateTime() {
-        var currentDate = new Date();
-        var day = currentDate.toLocaleString('id-ID', { weekday: 'long' }); // Get day name
-        var date = currentDate.getDate(); // Get day number
-        var month = currentDate.toLocaleString('id-ID', { month: 'long' }); // Get month name
-        var year = currentDate.getFullYear(); // Get year
-        var hours = currentDate.getHours(); // Get hours
-        var minutes = currentDate.getMinutes(); // Get minutes
-        var seconds = currentDate.getSeconds(); // Get seconds
-        
-        // Ensure two-digit format for minutes and seconds
-        minutes = (minutes < 10) ? '0' + minutes : minutes;
-        seconds = (seconds < 10) ? '0' + seconds : seconds;
-        
-        // Display the full date and time
-        document.getElementById('current-day').textContent = day + ', ' + date + ' ' + month + ' ' + year;
-        document.getElementById('current-time').textContent = hours + ':' + minutes + ':' + seconds;
-    }
+            var currentDate = new Date();
+            var day = currentDate.toLocaleString('id-ID', { weekday: 'long' }); // Get day name
+            var date = currentDate.getDate(); // Get day number
+            var month = currentDate.toLocaleString('id-ID', { month: 'long' }); // Get month name
+            var year = currentDate.getFullYear(); // Get year
+            var hours = currentDate.getHours(); // Get hours
+            var minutes = currentDate.getMinutes(); // Get minutes
+            var seconds = currentDate.getSeconds(); // Get seconds
 
-    // Update the time every second
-    setInterval(updateTime, 1000);
+            // Ensure two-digit format for minutes and seconds
+            minutes = (minutes < 10) ? '0' + minutes : minutes;
+            seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+            // Display the full date and time
+            document.getElementById('current-day').textContent = day + ', ' + date + ' ' + month + ' ' + year;
+            document.getElementById('current-time').textContent = hours + ':' + minutes + ':' + seconds;
+        }
+
+        // Update the time every second
+        setInterval(updateTime, 1000);
+
+        // Check if element is in viewport
+        function isInViewport(element) {
+            var rect = element.getBoundingClientRect();
+            return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+        }
+
+        // Function to animate elements when they are in the viewport
+        function animateOnScroll() {
+            $('.card').each(function () {
+                if (isInViewport(this)) {
+                    $(this).addClass('fade-in');
+                }
+            });
+        }
+
+        // Function to check if element is in the viewport
+        function isInViewport(element) {
+            var rect = element.getBoundingClientRect();
+            return rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+        }
+
+        // Function to animate elements when they are in the viewport
+        function animateOnScroll() {
+            $('.card').each(function () {
+                if (isInViewport(this)) {
+                    $(this).addClass('fade-in');
+                }
+            });
+        }
     </script>
 
-<style>
+    <style>
+        h1.text-start {
+            color: white; /* Set the text color to white */
+        }
 
-h1.text-start {
-    color: white; /* Set the text color to white */
-}
+        /* Animation for fade-in effect */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px); /* Start from below */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* End at original position */
+            }
+        }
+
+        /* Apply the animation to the table/card */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Styling for the cards */
+        .card-body {
+            padding: 20px;
+        }
 
         /* CSS untuk memberi warna latar belakang pada setiap card */
         .card-guru {
@@ -133,60 +192,56 @@ h1.text-start {
             background-color: #f7a3e1; /* Warna merah muda untuk Data Barang */
         }
 
-        .card-body {
-            padding: 20px;
-        }
         /* CSS untuk Wave Animasi */
-.wave-container {
-    position: absolute; /* Absolute positioning to place it behind the text */
-    bottom: -10px; /* Adjust vertical position */
-    left: 0;
-    width: 100%; /* Ensure it covers the entire width */
-    height: 80px; /* Adjust the height of the wave */
-    overflow: hidden;
-    z-index: -1; /* Ensure it's behind the text */
-}
+        .wave-container {
+            position: absolute; /* Absolute positioning to place it behind the text */
+            bottom: -10px; /* Adjust vertical position */
+            left: 0;
+            width: 100%; /* Ensure it covers the entire width */
+            height: 80px; /* Adjust the height of the wave */
+            overflow: hidden;
+            z-index: -1; /* Ensure it's behind the text */
+        }
 
-.wave {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200%; /* Stretch the wave across the width */
-    height: 80px; /* Match the height of the container */
-    background: #0d6efd;
-    animation: waveAnimation 5s linear infinite;
-}
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%; /* Stretch the wave across the width */
+            height: 80px; /* Match the height of the container */
+            background: #0d6efd;
+            animation: waveAnimation 5s linear infinite;
+        }
 
-  /* Styling for the Time Section */
-  #current-time {
-        font-size: 2.5em;
-        font-weight: bold;
-        color: #333;
-    }
+        /* Styling for the Time Section */
+        #current-time {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
 
-    /* Flexbox adjustment for the row containing Time and Graph */
-    .row.mb-4 {
-        display: flex;
-        flex-wrap: wrap;
-    }
+        /* Flexbox adjustment for the row containing Time and Graph */
+        .row.mb-4 {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-    /* Set the width for the Time and Graph columns */
-    .col-lg-4 {
-        flex: 0 0 33.33333%;
-        max-width: 33.33333%;
-    }
+        /* Set the width for the Time and Graph columns */
+        .col-lg-4 {
+            flex: 0 0 33.33333%;
+            max-width: 33.33333%;
+        }
 
-    .col-lg-8 {
-        flex: 0 0 66.66666%;
-        max-width: 66.66666%;
-    }
+        .col-lg-8 {
+            flex: 0 0 66.66666%;
+            max-width: 66.66666%;
+        }
 
-    .col-md-6 {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
     </style>
-
 </head>
 <body>
 
@@ -283,7 +338,6 @@ h1.text-start {
         </div>
     </div>
 </div>
-
 
 </body>  
 </html>
