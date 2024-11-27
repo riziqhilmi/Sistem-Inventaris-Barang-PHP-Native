@@ -1,12 +1,33 @@
 <?php
-session_start(); // Memulai session
+session_start(); // Start session
 
-// Cek apakah user sudah login
+// Menyertakan koneksi database
+include('koneksi.php');
+
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    // Jika belum login, redirect ke halaman login
+    // If not logged in, redirect to login page
     header('Location: login2.php');
     exit();
 }
+
+// Sample data for the dashboard
+$user_name = $_SESSION['username']; // Username from the session
+// Query to get the count of teachers
+$result_guru = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM guru");
+$data_guru = mysqli_fetch_assoc($result_guru)['total'];
+
+// Query to get the count of students
+$result_siswa = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM siswa");
+$data_siswa = mysqli_fetch_assoc($result_siswa)['total'];
+
+// Query to get the count of rooms
+$result_ruangan = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM ruangan");
+$data_ruangan = mysqli_fetch_assoc($result_ruangan)['total'];
+
+// Query to get the count of items (barang)
+$result_barang = mysqli_query($koneksi, "SELECT COUNT(*) AS total FROM barang");
+$data_barang = mysqli_fetch_assoc($result_barang)['total'];
 ?>
 
 <!DOCTYPE html>
@@ -19,43 +40,76 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>$(document).ready(function () {
-            showGraph();});
+    <script>
+        $(document).ready(function () {
+            showGraph();
+        });
 
-function showGraph() {
-    $.post("bar_encode.php", function (data) {
-        console.log(data);
-        var id = [];
-        var jual = [];
+        function showGraph() {
+            $.post("bar_encode.php", function (data) {
+                console.log(data);
+                var id = [];
+                var jual = [];
 
-        for (var i in data) {
-            id.push(data[i].nama);
-            jual.push(data[i].jumlah_akhir);
+                for (var i in data) {
+                    id.push(data[i].nama);
+                    jual.push(data[i].jumlah_akhir);
+                }
+
+                var chartdata = {
+                    labels: id,
+                    datasets: [
+                        {
+                            label: 'Nama Barang',
+                            backgroundColor: '#49e2ff',
+                            hoverBackgroundColor: '#CCCCCC',
+                            hoverBorderColor: '#666666',
+                            data: jual
+                        }
+                    ]
+                };
+
+                var graphTarget = $("#graphCanvas");
+
+                // Create the bar chart with animation options
+                var barGraph = new Chart(graphTarget, {
+                    type: 'bar',
+                    data: chartdata,
+                    options: {
+                        responsive: true,
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeOutBounce',
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+
+<style>
+        /* CSS untuk memberi warna latar belakang pada setiap card */
+        .card-guru {
+            background-color: #f7d7a3; /* Warna kuning muda untuk Data Guru */
         }
 
-        var chartdata = {
-            labels: id,
-            datasets: [
-                {
-                    label: 'Nama Barang',
-                    backgroundColor: '#49e2ff',
-                    hoverBackgroundColor: '#CCCCCC',
-                    hoverBorderColor: '#666666',
-                    data: jual
-                }
-            ]
-        };
+        .card-siswa {
+            background-color: #a3d8f7; /* Warna biru muda untuk Data Siswa */
+        }
 
-        var graphTarget = $("#graphCanvas");
+        .card-ruangan {
+            background-color: #d9f7a3; /* Warna hijau muda untuk Data Ruangan */
+        }
 
-        var barGraph = new Chart(graphTarget, {
-            type: 'bar',
-            data: chartdata
-        });
-    });
-}
+        .card-barang {
+            background-color: #f7a3e1; /* Warna merah muda untuk Data Barang */
+        }
 
-</script> <!-- Panggil file bar.js di sini -->
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -66,20 +120,71 @@ function showGraph() {
         
         <!-- Main Content -->
         <div class="col-md-10 p-4">
-            <div class="container">
-                <h1 class="mb-4">Dashboard</h1>
 
-                <!-- Graph -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <canvas id="graphCanvas"></canvas> <!-- Canvas untuk grafik -->
+            <!-- Dashboard Header -->
+            <div class="row mb-4">
+                <div class="col-md-5">
+                    <h1 class="text-start">Welcome, <?php echo htmlspecialchars($user_name); ?>!</h1>
+                </div>
+            </div>
+
+            <!-- Dashboard Statistics -->
+            <div class="row mb-4">
+                <!-- Number of Teachers -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card text-center card-guru">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah Guru</h5>
+                            <p class="display-4"><?php echo $data_guru; ?></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Number of Students -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah Siswa</h5>
+                            <p class="display-4"><?php echo $data_siswa; ?></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Digital Books -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah Ruangan</h5>
+                            <p class="display-4"><?php echo $data_ruangan; ?></p>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Interactive Content -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">Jumlah Barang</h5>
+                            <p class="display-4"><?php echo $data_barang; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Content Section -->
+            <div class="row mb-4">
+
+            </div>
+
+            <!-- Graph Section -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-</body>
+</body>  
 </html>
