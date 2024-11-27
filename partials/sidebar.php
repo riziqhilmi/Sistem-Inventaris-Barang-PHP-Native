@@ -7,6 +7,8 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Tambahkan FontAwesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
 <div class="col-md-2 sidebar bg-dark sticky-top p-0">
     <div class="d-flex flex-column p-3 text-white bg-primary" style="height: 100vh;">
@@ -56,6 +58,34 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
             .arrow-icon {
                 transition: transform 0.3s ease;
             }
+
+/* Warna default submenu */
+.sidebar .nav .collapse a.nav-link {
+    color: white; /* Teks submenu default putih */
+    font-weight: normal; /* Teks default normal */
+}
+
+/* Warna submenu yang aktif */
+.sidebar .nav .collapse a.nav-link.active-submenu {
+    color: black !important; /* Teks submenu aktif hitam */
+    font-weight: bold; /* Teks tebal untuk submenu aktif */
+}
+
+/* Gunakan FontAwesome untuk panah */
+.sidebar .nav .collapse a.nav-link.active-submenu::after {
+    content: '\f107'; /* Unicode untuk ikon panah ke bawah dari FontAwesome */
+    font-family: 'Font Awesome 5 Free'; /* Gunakan FontAwesome */
+    font-weight: 900; /* Pastikan ikon terlihat tebal */
+    margin-left: 10px; /* Jarak antara teks dan ikon */
+    color: black; /* Warna ikon (sesuai teks submenu aktif) */
+    transition: transform 0.3s ease; /* Animasi untuk ikon panah */
+}
+
+/* Submenu yang tidak aktif tidak memiliki ikon */
+.sidebar .nav .collapse a.nav-link:not(.active-submenu)::after {
+    content: '';
+}
+
         </style>
 
         <hr>
@@ -135,4 +165,58 @@ document.querySelectorAll('.nav-link[data-bs-toggle="collapse"]').forEach(functi
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Ambil semua link submenu
+    const subMenuLinks = document.querySelectorAll('.sidebar .nav .collapse a.nav-link');
+
+    // Periksa URL saat ini
+    const currentURL = window.location.href;
+
+    // Tandai submenu yang sesuai dengan URL saat ini
+    subMenuLinks.forEach(link => {
+        if (link.href === currentURL) {
+            link.classList.add('active-submenu');
+        }
+    });
+
+    // Tambahkan event listener untuk klik pada submenu
+    subMenuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            // Hapus kelas 'active-submenu' dari semua submenu
+            subMenuLinks.forEach(item => item.classList.remove('active-submenu'));
+
+            // Tambahkan kelas 'active-submenu' ke submenu yang diklik
+            this.classList.add('active-submenu');
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Ambil semua link submenu
+    const subMenuLinks = document.querySelectorAll('.sidebar .nav .collapse a.nav-link');
+
+    // Periksa URL saat ini
+    const currentURL = window.location.href;
+
+    // Tandai submenu yang sesuai dengan URL saat ini
+    subMenuLinks.forEach(link => {
+        if (link.href === currentURL) {
+            link.classList.add('active-submenu');
+        }
+    });
+
+    // Tambahkan event listener untuk klik pada submenu
+    subMenuLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            // Hapus kelas 'active-submenu' dari semua submenu
+            subMenuLinks.forEach(item => item.classList.remove('active-submenu'));
+
+            // Tambahkan kelas 'active-submenu' ke submenu yang diklik
+            this.classList.add('active-submenu');
+        });
+    });
+});
+
+
 </script>
