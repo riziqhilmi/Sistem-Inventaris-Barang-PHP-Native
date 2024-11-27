@@ -59,89 +59,89 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                 transition: transform 0.3s ease;
             }
 
-/* Warna default submenu */
-.sidebar .nav .collapse a.nav-link {
-    color: white; /* Teks submenu default putih */
-    font-weight: normal; /* Teks default normal */
-}
+            /* Warna default submenu */
+            .sidebar .nav .collapse a.nav-link {
+                color: white; /* Teks submenu default putih */
+                font-weight: normal; /* Teks default normal */
+            }
 
-/* Warna submenu yang aktif */
-.sidebar .nav .collapse a.nav-link.active-submenu {
-    color: black !important; /* Teks submenu aktif hitam */
-    font-weight: bold; /* Teks tebal untuk submenu aktif */
-}
+            /* Warna submenu yang aktif */
+            .sidebar .nav .collapse a.nav-link.active-submenu {
+                color: black !important; /* Teks submenu aktif hitam */
+                font-weight: bold; /* Teks tebal untuk submenu aktif */
+            }
 
-/* Gunakan FontAwesome untuk panah */
-.sidebar .nav .collapse a.nav-link.active-submenu::after {
-    content: '\f107'; /* Unicode untuk ikon panah ke bawah dari FontAwesome */
-    font-family: 'Font Awesome 5 Free'; /* Gunakan FontAwesome */
-    font-weight: 900; /* Pastikan ikon terlihat tebal */
-    margin-left: 10px; /* Jarak antara teks dan ikon */
-    color: black; /* Warna ikon (sesuai teks submenu aktif) */
-    transition: transform 0.3s ease; /* Animasi untuk ikon panah */
-}
+            /* Gunakan FontAwesome untuk panah */
+            .sidebar .nav .collapse a.nav-link.active-submenu::after {
+                content: '\f107'; /* Unicode untuk ikon panah ke bawah dari FontAwesome */
+                font-family: 'Font Awesome 5 Free'; /* Gunakan FontAwesome */
+                font-weight: 900; /* Pastikan ikon terlihat tebal */
+                margin-left: 10px; /* Jarak antara teks dan ikon */
+                color: black; /* Warna ikon (sesuai teks submenu aktif) */
+                transition: transform 0.3s ease; /* Animasi untuk ikon panah */
+            }
 
-/* Submenu yang tidak aktif tidak memiliki ikon */
-.sidebar .nav .collapse a.nav-link:not(.active-submenu)::after {
-    content: '';
-}
+            /* Submenu yang tidak aktif tidak memiliki ikon */
+            .sidebar .nav .collapse a.nav-link:not(.active-submenu)::after {
+                content: '';
+            }
 
-/* Styling untuk teks di menu sidebar */
-.sidebar .nav-link {
-    transition: all 0.3s ease; /* Tambahkan transisi untuk animasi smooth */
-}
+            /* Styling untuk teks di menu sidebar */
+            .sidebar .nav-link {
+                transition: all 0.3s ease; /* Tambahkan transisi untuk animasi smooth */
+            }
 
-/* Efek hover pada menu */
-.sidebar .nav-link:hover {
-    transform: scale(1.1); /* Membesarkan teks sedikit */
-    color: #ffeb3b; /* Mengubah warna teks saat hover */
-    font-weight: bold; /* Membuat teks menjadi tebal */
-}
+            /* Efek hover pada menu */
+            .sidebar .nav-link:hover {
+                transform: scale(1.1); /* Membesarkan teks sedikit */
+                color: #ffeb3b; /* Mengubah warna teks saat hover */
+                font-weight: bold; /* Membuat teks menjadi tebal */
+            }
 
-/* Animasi untuk menu aktif */
-.sidebar .nav-link.active-main {
-    background-color: white;
-    color: black !important;
-    border-radius: 10px;
-    font-weight: bold;
-}
+            /* Animasi untuk menu aktif */
+            .sidebar .nav-link.active-main {
+                background-color: white;
+                color: black !important;
+                border-radius: 10px;
+                font-weight: bold;
+            }
 
-/* Menambahkan efek untuk submenu */
-.sidebar .nav .collapse a.nav-link {
-    color: white; /* Teks submenu default putih */
-    font-weight: normal; /* Teks default normal */
-    transition: all 0.3s ease; /* Transisi halus */
-}
+            /* Menambahkan efek untuk submenu */
+            .sidebar .nav .collapse a.nav-link {
+                color: white; /* Teks submenu default putih */
+                font-weight: normal; /* Teks default normal */
+                transition: all 0.3s ease; /* Transisi halus */
+            }
 
-/* Efek hover untuk submenu */
-.sidebar .nav .collapse a.nav-link:hover {
-    transform: scale(1.05); /* Sedikit perbesaran pada submenu */
-    color: #ffeb3b; /* Mengubah warna teks submenu */
-}
+            /* Efek hover untuk submenu */
+            .sidebar .nav .collapse a.nav-link:hover {
+                transform: scale(1.05); /* Sedikit perbesaran pada submenu */
+                color: #ffeb3b; /* Mengubah warna teks submenu */
+            }
 
-/* Warna submenu yang aktif */
-.sidebar .nav .collapse a.nav-link.active-submenu {
-    color: black !important; /* Teks submenu aktif hitam */
-    font-weight: bold; /* Teks tebal untuk submenu aktif */
-}
+            /* Warna submenu yang aktif */
+            .sidebar .nav .collapse a.nav-link.active-submenu {
+                color: black !important; /* Teks submenu aktif hitam */
+                font-weight: bold; /* Teks tebal untuk submenu aktif */
+            }
 
-/* Warna submenu yang aktif dengan ikon panah */
-.sidebar .nav .collapse a.nav-link.active-submenu::after {
-    content: '\f107'; /* Unicode untuk ikon panah ke bawah dari FontAwesome */
-    font-family: 'Font Awesome 5 Free'; /* Gunakan FontAwesome */
-    font-weight: 900; /* Pastikan ikon terlihat tebal */
-    margin-left: 10px; /* Jarak antara teks dan ikon */
-    color: black; /* Warna ikon (sesuai teks submenu aktif) */
-    transition: transform 0.3s ease; /* Animasi untuk ikon panah */
-}
+            /* Warna submenu yang aktif dengan ikon panah */
+            .sidebar .nav .collapse a.nav-link.active-submenu::after {
+                content: '\f107'; /* Unicode untuk ikon panah ke bawah dari FontAwesome */
+                font-family: 'Font Awesome 5 Free'; /* Gunakan FontAwesome */
+                font-weight: 900; /* Pastikan ikon terlihat tebal */
+                margin-left: 10px; /* Jarak antara teks dan ikon */
+                color: black; /* Warna ikon (sesuai teks submenu aktif) */
+                transition: transform 0.3s ease; /* Animasi untuk ikon panah */
+            }
 
-/* Submenu yang tidak aktif tidak memiliki ikon */
-.sidebar .nav .collapse a.nav-link:not(.active-submenu)::after {
-    content: '';
-}
+            /* Submenu yang tidak aktif tidak memiliki ikon */
+            .sidebar .nav .collapse a.nav-link:not(.active-submenu)::after {
+                content: '';
+            }
 
 
-        </style>
+                    </style>
 
         <hr>
 

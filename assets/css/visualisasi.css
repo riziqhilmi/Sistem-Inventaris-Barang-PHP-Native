@@ -6,3 +6,12 @@
     height: 250px; /* Atur tinggi gambar agar proporsional */
     object-fit: cover; /* Pastikan gambar tidak terdistorsi */
 }
+
+.btn-right {
+display: flex;
+align-items: center; /* Agar teks dan gambar sejajar */
+justify-content: flex-end; /* Memastikan tombol tetap rapi */
+position: relative;
+float: right; /* Memindahkan tombol ke kanan */
+}
+
