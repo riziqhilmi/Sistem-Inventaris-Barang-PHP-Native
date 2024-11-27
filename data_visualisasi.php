@@ -38,9 +38,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Data visualisasi guru</h4>
+                    <h4 class="card-title">Data Visualisasi Guru</h4>
                     
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="javascript:void(0);" onclick="dsvGuru()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -49,9 +49,8 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Data visualisasi siswa</h4>
-                    
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h4 class="card-title">Data Visualisasi Siswa</h4>
+                    <a href="javascript:void(0);" onclick="dsvSiswa()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -60,9 +59,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Data visualisasi barang</h4>
+                    <h4 class="card-title">Data Visualisasi Barang</h4>
                     
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="javascript:void(0);" onclick="dsvBarang()"  class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -73,9 +72,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Data visualisasi barang masuk</h4>
+                    <h4 class="card-title">Data Visualisasi Barang Masuk</h4>
                    
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="javascript:void(0);" onclick="dsvBarangMasuk()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -84,9 +83,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Data visualisasi barang keluar</h4>
+                    <h4 class="card-title">Data Visualisasi Barang Keluar</h4>
                   
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="javascript:void(0);" onclick="dsvBarangKeluar()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -95,9 +94,9 @@ if (!isset($_SESSION['user_id'])) {
             <div class="card small-card">
                 <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
                 <div class="card-body">
-                    <h4 class="card-title">Peminjaman</h4>
+                    <h4 class="card-title">Data Visualisasi Peminjaman</h4>
                    
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="javascript:void(0);" onclick="dsvPeminjaman()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
         </div>
@@ -105,17 +104,40 @@ if (!isset($_SESSION['user_id'])) {
 </div>
 
                  
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <canvas id="lineChart"></canvas>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+                    
 
 
 </body>
+<script>
 
+function dsvBarang() {
+    var url = '../project/fitur/visualisasi_barang.php';
+    window.open(url, '_blank');
+}
+function dsvGuru() {
+    var url = '../project/fitur/visual_guru.php';
+    window.open(url, '_blank');
+}
+
+function dsvSiswa() {
+    var url = '../project/fitur/visual_siswa.php';
+    window.open(url, '_blank');
+}
+
+function dsvBarangMasuk() {
+    var url = '../project/fitur/visual_barang_masuk.php';
+    window.open(url, '_blank');
+}
+
+function dsvBarangKeluar() {
+    var url = '../project/fitur/visual_barang_keluar.php';
+    window.open(url, '_blank');
+}
+
+function dsvPeminjaman() {
+    var url = '../project/fitur/visual_peminjaman.php';
+    window.open(url, '_blank');
+}
+
+</script>
 </html>
