@@ -70,10 +70,10 @@ if (!isset($_SESSION['user_id'])) {
         <!-- Card 4 -->
         <div class="col-lg-4 col-md-6 mb-3">
             <div class="card small-card">
-                <img src="img/vector_visual.jpg" class="card-img-top" alt="jpg">
+                <img src="img/barang_masuk.png" class="card-img-top" alt="jpg">
                 <div class="card-body">
                     <h4 class="card-title">Data Visualisasi Barang Masuk</h4>
-                   
+                   <a href="#" id="showGrafikBarangMasuk" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#grafikModal">Tampilkan Grafik</a>
                     <a href="javascript:void(0);" onclick="dsvBarangMasuk()" class="btn btn-primary">Lihat Selengkapnya...</a>
                 </div>
             </div>
@@ -103,7 +103,20 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 </div>
 
-                 
+ <!-- Modal -->
+    <div class="modal fade" id="grafikModal" tabindex="-1" aria-labelledby="grafikModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="grafikModalLabel">Grafik Barang Masuk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>                 
                     
 
 
