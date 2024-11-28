@@ -48,13 +48,13 @@ session_start();
           <h2 class="title">Sign in</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="text" name="username" id="username" placeholder="Username" />
+            <input type="text" name="username" id="username" placeholder="Username" required  />
           </div>
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" name="password" id="login" placeholder="Password" />
+            <input type="password" name="password" id="login" placeholder="Password" required  />
           </div>
-          <input type="button" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
+          <input type="submit" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
          
         </form>
 
@@ -105,7 +105,8 @@ session_start();
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <?php unset($_SESSION['error']);
-    } ?>
+    } 
+    ?>
   </div>
 
 
