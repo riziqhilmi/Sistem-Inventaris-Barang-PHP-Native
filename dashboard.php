@@ -206,6 +206,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 .card-custom:hover {
     transform: translateY(-5px); /* Efek Hover */
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    color: #f0f0f0; /* Teks menjadi lebih terang */
 }
 
 .icon-container {
@@ -255,6 +256,63 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     .title {
         font-size: 12px;
     }
+}
+
+/* Keyframes untuk fade-in dengan slide-up */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Mulai dari bawah */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Berhenti pada posisi awal */
+    }
+}
+
+/* Keyframes untuk efek zoom */
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8); /* Mulai dari ukuran lebih kecil */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1); /* Berhenti pada ukuran normal */
+    }
+}
+
+/* Animasi untuk kartu */
+.card-custom {
+    opacity: 0; /* Awalnya transparan */
+    animation-duration: 0.8s; /* Durasi animasi */
+    animation-timing-function: ease-out; /* Efek pelan di akhir */
+    animation-fill-mode: forwards; /* Tetap pada posisi akhir */
+}
+
+/* Gunakan kelas berbeda untuk animasi spesifik */
+.card-fade-in {
+    animation-name: fadeInUp;
+}
+
+.card-zoom-in {
+    animation-name: zoomIn;
+}
+
+.card-custom:nth-child(1) {
+    animation-delay: 0.2s; /* Kartu pertama animasi lebih cepat */
+}
+
+.card-custom:nth-child(2) {
+    animation-delay: 0.4s; /* Kartu kedua animasi sedikit terlambat */
+}
+
+.card-custom:nth-child(3) {
+    animation-delay: 0.6s; /* Kartu ketiga */
+}
+
+.card-custom:nth-child(4) {
+    animation-delay: 0.8s; /* Kartu keempat */
 }
 
         /* CSS untuk Wave Animasi */
@@ -332,7 +390,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
             <div class="row mb-4">
     <!-- Kartu Jumlah Guru -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center">
+        <div class="card-custom text-center card-fade-in">
             <div class="icon-container bg-primary text-white">
                 <i class="fas fa-chalkboard-teacher"></i>
             </div>
@@ -343,7 +401,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
     <!-- Kartu Jumlah Siswa -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center">
+        <div class="card-custom text-center card-zoom-in">
             <div class="icon-container bg-success text-white">
                 <i class="fas fa-user-graduate"></i>
             </div>
@@ -354,7 +412,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
     <!-- Kartu Jumlah Ruangan -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center">
+        <div class="card-custom text-center card-fade-in">
             <div class="icon-container bg-warning text-white">
                 <i class="fas fa-door-open"></i>
             </div>
@@ -365,7 +423,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
     <!-- Kartu Jumlah Barang -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center">
+        <div class="card-custom text-center card-zoom-in">
             <div class="icon-container bg-danger text-white">
                 <i class="fas fa-boxes"></i>
             </div>
