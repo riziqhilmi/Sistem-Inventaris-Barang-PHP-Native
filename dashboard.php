@@ -192,6 +192,71 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
             background-color: #f7a3e1; /* Warna merah muda untuk Data Barang */
         }
 
+        .card-custom {
+    background: linear-gradient(135deg, #0d6efd, #85BDF0); /* Gradien warna */
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 15px; /* Mengurangi padding */
+    position: relative;
+    height: 150px; /* Tinggi kartu lebih kecil */
+}
+
+.card-custom:hover {
+    transform: translateY(-5px); /* Efek Hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+}
+
+.icon-container {
+    width: 50px; /* Ukuran ikon lebih kecil */
+    height: 50px; /* Ukuran ikon lebih kecil */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px; /* Ukuran font ikon lebih kecil */
+    margin: 0 auto 10px;
+}
+
+.title {
+    font-size: 14px; /* Ukuran judul lebih kecil */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.display-value {
+    font-size: 1.8rem; /* Ukuran angka lebih kecil */
+    font-weight: bold;
+    margin: 0;
+}
+
+.description {
+    font-size: 12px; /* Ukuran deskripsi lebih kecil */
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+    .card-custom {
+        height: 120px; /* Tinggi kartu lebih kecil pada layar kecil */
+    }
+
+    .icon-container {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .display-value {
+        font-size: 1.5rem;
+    }
+
+    .title {
+        font-size: 12px;
+    }
+}
+
         /* CSS untuk Wave Animasi */
         .wave-container {
             position: absolute; /* Absolute positioning to place it behind the text */
@@ -264,48 +329,52 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
                 </div>
             </div>
 
-            <!-- Dashboard Statistics -->
             <div class="row mb-4">
-                <!-- Number of Teachers -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center card-guru">
-                        <div class="card-body">
-                            <h5 class="card-title">Jumlah Guru</h5>
-                            <p class="display-4"><?php echo $data_guru; ?></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Number of Students -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center card-siswa">
-                        <div class="card-body">
-                            <h5 class="card-title">Jumlah Siswa</h5>
-                            <p class="display-4"><?php echo $data_siswa; ?></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Digital Books -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center card-ruangan">
-                        <div class="card-body">
-                            <h5 class="card-title">Jumlah Ruangan</h5>
-                            <p class="display-4"><?php echo $data_ruangan; ?></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Content -->
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <div class="card text-center card-barang">
-                        <div class="card-body">
-                            <h5 class="card-title">Jumlah Barang</h5>
-                            <p class="display-4"><?php echo $data_barang; ?></p>
-                        </div>
-                    </div>
-                </div>
+    <!-- Kartu Jumlah Guru -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card-custom text-center">
+            <div class="icon-container bg-primary text-white">
+                <i class="fas fa-chalkboard-teacher"></i>
             </div>
+            <h5 class="title">Jumlah Guru</h5>
+            <p class="display-value"><?php echo $data_guru; ?></p>
+        </div>
+    </div>
+
+    <!-- Kartu Jumlah Siswa -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card-custom text-center">
+            <div class="icon-container bg-success text-white">
+                <i class="fas fa-user-graduate"></i>
+            </div>
+            <h5 class="title">Jumlah Siswa</h5>
+            <p class="display-value"><?php echo $data_siswa; ?></p>
+        </div>
+    </div>
+
+    <!-- Kartu Jumlah Ruangan -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card-custom text-center">
+            <div class="icon-container bg-warning text-white">
+                <i class="fas fa-door-open"></i>
+            </div>
+            <h5 class="title">Jumlah Ruangan</h5>
+            <p class="display-value"><?php echo $data_ruangan; ?></p>
+        </div>
+    </div>
+
+    <!-- Kartu Jumlah Barang -->
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card-custom text-center">
+            <div class="icon-container bg-danger text-white">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <h5 class="title">Jumlah Barang</h5>
+            <p class="display-value"><?php echo $data_barang; ?></p>
+        </div>
+    </div>
+</div>
+
 
             <!-- Dashboard Section with Date and Time -->
             <div class="row mb-4">
