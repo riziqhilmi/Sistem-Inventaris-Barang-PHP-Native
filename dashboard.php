@@ -195,20 +195,54 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     padding: 10px; /* Reduce padding for a more compact layout */
 }
 
+/* Styling untuk card jumlah guru */
 .card-guru {
-    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Ungu ke biru */
+    background: linear-gradient(135deg, #4CAF50, #8BC34A); /* Gradient hijau */
+    color: white; /* Text color */
+    position: relative;
 }
 
+/* Styling untuk card jumlah siswa */
 .card-siswa {
-    background: linear-gradient(135deg, #42e695, #3bb2b8); /* Hijau ke teal */
+    background: linear-gradient(135deg, #2196F3, #03A9F4); /* Gradient biru */
+    color: white;
+    position: relative;
 }
 
+/* Styling untuk card jumlah ruangan */
 .card-ruangan {
-    background: linear-gradient(135deg, #ffaf7b, #d76d77); /* Orange ke merah muda */
+    background: linear-gradient(135deg, #FF9800, #FFC107); /* Gradient oranye */
+    color: white;
+    position: relative;
 }
 
+/* Styling untuk card jumlah barang */
 .card-barang {
-    background: linear-gradient(135deg, #ff6a00, #ee0979); /* Oranye ke merah */
+    background: linear-gradient(135deg, #F44336, #E91E63); /* Gradient merah */
+    color: white;
+    position: relative;
+}
+
+/* Icon Styling: Make icons white */
+.card-icon i {
+    color: white; /* Set icon color to white */
+}
+
+/* Optional: Add subtle background images */
+.card-guru::before, 
+.card-siswa::before, 
+.card-ruangan::before, 
+.card-barang::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.1; /* Make the background subtle */
+    z-index: 0; /* Ensure it's behind the content */
 }
 
 /* Hover Effects */
