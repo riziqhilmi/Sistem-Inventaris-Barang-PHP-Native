@@ -172,25 +172,17 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
         /* Styling for the cards */
         .card-body {
-            padding: 20px;
+            display: flex;
+            padding: 8px;
+            display: flex; /* Use flexbox to arrange text and icon */
+    justify-content: space-between; /* Space between text and icon */
+    align-items: center; /* Vertically align items */
         }
 
-        /* CSS untuk memberi warna latar belakang pada setiap card */
-        .card-guru {
-            background-color: #f7d7a3; /* Warna kuning muda untuk Data Guru */
-        }
-
-        .card-siswa {
-            background-color: #a3d8f7; /* Warna biru muda untuk Data Siswa */
-        }
-
-        .card-ruangan {
-            background-color: #d9f7a3; /* Warna hijau muda untuk Data Ruangan */
-        }
-
-        .card-barang {
-            background-color: #f7a3e1; /* Warna merah muda untuk Data Barang */
-        }
+        /* Text Left */
+.text-left {
+    text-align: left; /* Align text to the left */
+}
 
         .card-custom {
     background: linear-gradient(135deg, #0d6efd, #85BDF0); /* Gradien warna */
@@ -200,7 +192,25 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     padding: 15px; /* Mengurangi padding */
     position: relative;
-    height: 150px; /* Tinggi kartu lebih kecil */
+    height: 120px; /* Reduce height */
+    padding: 10px; /* Reduce padding for a more compact layout */
+}
+
+/* Card Icon Styling */
+.card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Icon adjustment */
+.card-icon i {
+    font-size: 24px; /* Smaller icon size */
 }
 
 .card-custom:hover {
@@ -210,13 +220,13 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 }
 
 .icon-container {
-    width: 50px; /* Ukuran ikon lebih kecil */
-    height: 50px; /* Ukuran ikon lebih kecil */
+    width: 40px; /* Smaller icon container */
+    height: 40px;
+    font-size: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px; /* Ukuran font ikon lebih kecil */
     margin: 0 auto 10px;
 }
 
@@ -255,6 +265,96 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 
     .title {
         font-size: 12px;
+    }
+}
+
+/* Update untuk memperbesar teks pada 4 card */
+.card-custom .display-4 {
+    font-size: 3rem; /* Ukuran angka lebih besar */
+    font-weight: bold;
+}
+
+.card-custom .card-text {
+    font-size: 1.2rem; /* Ukuran teks lebih besar */
+}
+
+
+/* Styling untuk current-day (hari, tanggal, bulan, tahun) */
+#current-day {
+    font-size: 1.2rem; /* Ukuran teks lebih kecil */
+    font-weight: 300; /* Teks tipis */
+    margin-bottom: 5px; /* Memberikan sedikit jarak di bawahnya */
+    color: rgba(0, 0, 0, 0.7); /* Memberikan warna teks lebih lembut (hitam tipis) */
+}
+
+/* Styling untuk current-time (waktu) */
+#current-time {
+    font-size: 2.5rem; /* Ukuran teks lebih besar untuk waktu */
+    font-weight: bold; /* Teks lebih tebal untuk waktu */
+    color: #333; /* Warna waktu lebih gelap untuk menonjol */
+}
+
+/* Responsif untuk perangkat kecil */
+@media (max-width: 768px) {
+    #current-day {
+        font-size: 1rem; /* Ukuran teks lebih kecil untuk layar kecil */
+    }
+
+    #current-time {
+        font-size: 2rem; /* Ukuran waktu sedikit lebih kecil pada layar kecil */
+    }
+}
+
+/* Styling untuk card pada layout date and time agar tetap responsif */
+@media (max-width: 768px) {
+    .card-custom .display-4 {
+        font-size: 2.5rem; /* Ukuran angka lebih kecil pada layar kecil */
+    }
+
+    .card-custom .card-text {
+        font-size: 1rem; /* Ukuran teks lebih kecil pada layar kecil */
+    }
+
+    #current-day {
+        font-size: 1.5rem; /* Ukuran teks hari, tanggal, bulan lebih kecil */
+    }
+
+    #current-time {
+        font-size: 2rem; /* Ukuran waktu lebih kecil */
+    }
+}
+
+/* Styling khusus untuk card Date and Time */
+#card-date-time .card-body {
+    display: flex;
+    flex-direction: column; /* Menampilkan elemen secara kolom (atas ke bawah) */
+    align-items: center; /* Menyelaraskan elemen di tengah secara horizontal */
+    justify-content: center; /* Menyelaraskan elemen di tengah secara vertikal */
+}
+
+/* Styling untuk current-day (hari, tanggal, bulan, tahun) */
+#card-date-time #current-day {
+    font-size: 1.2rem; /* Ukuran teks lebih kecil */
+    font-weight: 300; /* Teks tipis */
+    margin-bottom: 5px; /* Memberikan sedikit jarak di bawahnya */
+    color: rgba(0, 0, 0, 0.7); /* Memberikan warna teks lebih lembut (hitam tipis) */
+}
+
+/* Styling untuk current-time (waktu) */
+#card-date-time #current-time {
+    font-size: 2.5rem; /* Ukuran teks lebih besar untuk waktu */
+    font-weight: bold; /* Teks lebih tebal untuk waktu */
+    color: #333; /* Warna waktu lebih gelap untuk menonjol */
+}
+
+/* Responsif untuk perangkat kecil */
+@media (max-width: 768px) {
+    #card-date-time #current-day {
+        font-size: 1rem; /* Ukuran teks lebih kecil untuk layar kecil */
+    }
+
+    #card-date-time #current-time {
+        font-size: 2rem; /* Ukuran waktu sedikit lebih kecil pada layar kecil */
     }
 }
 
@@ -388,78 +488,96 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
             </div>
 
             <div class="row mb-4">
-    <!-- Kartu Jumlah Guru -->
+    <!-- Jumlah Guru -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center card-fade-in">
-            <div class="icon-container bg-primary text-white">
-                <i class="fas fa-chalkboard-teacher"></i>
+        <div class="card text-center card-custom card-guru">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <!-- Text Left -->
+                <div class="text-left">
+                    <p class="display-4"><?php echo $data_guru; ?></p>
+                    <p class="card-text">Jumlah Guru</p>
+                </div>
+                <!-- Icon Right -->
+                <div class="card-icon bg-primary text-white mb-3">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
             </div>
-            <h5 class="title">Jumlah Guru</h5>
-            <p class="display-value"><?php echo $data_guru; ?></p>
         </div>
     </div>
 
-    <!-- Kartu Jumlah Siswa -->
+    <!-- Jumlah Siswa -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center card-zoom-in">
-            <div class="icon-container bg-success text-white">
-                <i class="fas fa-user-graduate"></i>
+        <div class="card text-center card-custom card-siswa">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="text-left">
+                    <p class="display-4"><?php echo $data_siswa; ?></p>
+                    <p class="card-text">Jumlah Siswa</p>
+                </div>
+                <div class="card-icon bg-success text-white mb-3">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
             </div>
-            <h5 class="title">Jumlah Siswa</h5>
-            <p class="display-value"><?php echo $data_siswa; ?></p>
         </div>
     </div>
 
-    <!-- Kartu Jumlah Ruangan -->
+    <!-- Jumlah Ruangan -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center card-fade-in">
-            <div class="icon-container bg-warning text-white">
-                <i class="fas fa-door-open"></i>
+        <div class="card text-center card-custom card-ruangan">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="text-left">
+                    <p class="display-4"><?php echo $data_ruangan; ?></p>
+                    <p class="card-text">Jumlah Ruangan</p>
+                </div>
+                <div class="card-icon bg-warning text-white mb-3">
+                    <i class="fas fa-door-open"></i>
+                </div>
             </div>
-            <h5 class="title">Jumlah Ruangan</h5>
-            <p class="display-value"><?php echo $data_ruangan; ?></p>
         </div>
     </div>
 
-    <!-- Kartu Jumlah Barang -->
+    <!-- Jumlah Barang -->
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card-custom text-center card-zoom-in">
-            <div class="icon-container bg-danger text-white">
-                <i class="fas fa-boxes"></i>
+        <div class="card text-center card-custom card-barang">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="text-left">
+                    <p class="display-4"><?php echo $data_barang; ?></p>
+                    <p class="card-text">Jumlah Barang</p>
+                </div>
+                <div class="card-icon bg-danger text-white mb-3">
+                    <i class="fas fa-boxes"></i>
+                </div>
             </div>
-            <h5 class="title">Jumlah Barang</h5>
-            <p class="display-value"><?php echo $data_barang; ?></p>
         </div>
     </div>
 </div>
 
 
-            <!-- Dashboard Section with Date and Time -->
-            <div class="row mb-4">
-                <!-- Left Column: Date and Time -->
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header text-center">
-                            <h5>Date and Time</h5>
-                        </div>
-                        <div class="card-body text-center">
-                            <h4 id="current-day"></h4> <!-- Display day, date, month, year here -->
-                            <h3 id="current-time"></h3> <!-- Display current time here -->
-                        </div>
-                    </div>
-                </div>
+<div class="row mb-4">
+    <!-- Left Column: Date and Time -->
+    <div class="col-lg-4 col-md-6 mb-4" id="card-date-time">
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>Date and Time</h5>
+            </div>
+            <div class="card-body text-center">
+                <h4 id="current-day"></h4> <!-- Display day, date, month, year here -->
+                <h3 id="current-time"></h3> <!-- Display current time here -->
+            </div>
+        </div>
+    </div>
 
-                <!-- Right Column: Graph -->
-                <div class="col-lg-8 col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header text-center">
-                            <h5>Grafik Data Barang</h5>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
-                        </div>
-                    </div>
-                </div>
+    <!-- Right Column: Graph -->
+    <div class="col-lg-8 col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h5>Grafik Data Barang</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="graphCanvas" style="height: 400px; width: 100%;"></canvas> <!-- Canvas for the graph -->
+            </div>
+        </div>
+    </div>
+</div>
             </div>
 
         </div>
