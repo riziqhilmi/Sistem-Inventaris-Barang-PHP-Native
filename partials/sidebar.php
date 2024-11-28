@@ -7,6 +7,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="../assets/css/sidebar.css">
 <!-- Tambahkan FontAwesome CDN -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
@@ -141,9 +142,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
             }
 
 
-                    </style>
-
-        <hr>
+            </style>
 
         <!-- Menu Sidebar -->
         <ul class="nav nav-pills flex-column mb-auto">
