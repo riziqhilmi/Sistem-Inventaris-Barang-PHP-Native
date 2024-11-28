@@ -531,6 +531,13 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
             flex: 0 0 50%;
             max-width: 50%;
         }
+
+        .welcome-text {
+    font-size: 1.5rem; /* Ukuran teks lebih kecil */
+    font-weight: normal; /* Sesuaikan ketebalan teks jika perlu */
+    color: white; /* Warna teks tetap putih */
+    margin-bottom: 15px; /* Jarak bawah jika diperlukan */
+}
     </style>
 </head>
 <body>
@@ -546,7 +553,7 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
             <!-- Dashboard Header -->
             <div class="row mb-4">
                 <div class="col-md-15 position-relative">
-                    <h1 class="text-start">Welcome, <?php echo htmlspecialchars($user_name); ?>!</h1>
+                    <h1 class="text-start welcome-text">Welcome, <?php echo htmlspecialchars($user_name); ?>!</h1>
                     <!-- Wave Animation Behind Text -->
                     <div class="wave-container">
                         <div class="wave"></div>
