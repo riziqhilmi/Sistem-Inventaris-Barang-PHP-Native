@@ -185,7 +185,6 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
 }
 
         .card-custom {
-    background: linear-gradient(135deg, #0d6efd, #85BDF0); /* Gradien warna */
     color: white;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Shadow */
@@ -196,8 +195,42 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     padding: 10px; /* Reduce padding for a more compact layout */
 }
 
+.card-guru {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Ungu ke biru */
+}
+
+.card-siswa {
+    background: linear-gradient(135deg, #42e695, #3bb2b8); /* Hijau ke teal */
+}
+
+.card-ruangan {
+    background: linear-gradient(135deg, #ffaf7b, #d76d77); /* Orange ke merah muda */
+}
+
+.card-barang {
+    background: linear-gradient(135deg, #ff6a00, #ee0979); /* Oranye ke merah */
+}
+
+/* Hover Effects */
+.card-guru:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb); /* Biru ke ungu */
+}
+
+.card-siswa:hover {
+    background: linear-gradient(135deg, #3bb2b8, #42e695); /* Teal ke hijau */
+}
+
+.card-ruangan:hover {
+    background: linear-gradient(135deg, #d76d77, #ffaf7b); /* Merah muda ke orange */
+}
+
+.card-barang:hover {
+    background: linear-gradient(135deg, #ee0979, #ff6a00); /* Merah ke oranye */
+}
+
 /* Card Icon Styling */
 .card-icon {
+    color: white; /* Warna icon putih */
     display: inline-flex;
     align-items: center;
     justify-content: center;
