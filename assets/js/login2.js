@@ -74,11 +74,12 @@ function loginn() {
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
+      
       let data = JSON.parse(this.responseText);
-      if(data.status == "success") {
-        alert(data.message);
-        window.location.href = "dashboard.php"
+      if(data.status === "success") {
+        window.location.href = "dashboard.php";
       } else if(data.status == "error1" || data.status == "error2") {
+        console.log(this.responseText); 
         alert(data.message);
       }
     }

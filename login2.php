@@ -17,6 +17,7 @@ session_start();
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
   <title>Sign in & Sign up Form</title>
+  <link rel="icon" type="image/png" href="img/logo sd pasarejo.png">
 
   <style>
     /* Tambahkan transisi halus ke semua tombol */
@@ -54,7 +55,7 @@ session_start();
             <i class="fas fa-lock"></i>
             <input type="password" name="password" id="login" placeholder="Password" required  />
           </div>
-          <input type="submit" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
+          <input type="button" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
          
         </form>
 
