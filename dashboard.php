@@ -149,6 +149,13 @@ $data_barang = mysqli_fetch_assoc($result_barang)['total'];
     </script>
 
     <style>
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
         h1.text-start {
             color: white; /* Set the text color to white */
         }
