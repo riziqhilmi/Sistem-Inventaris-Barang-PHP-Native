@@ -176,7 +176,7 @@ function dsvPeminjaman() {
         </div>
         <div class="card-body">
             <h4 class="card-title">Data Visualisasi Siswa</h4>
-            <a href="javascript:void(0);" onclick="dsvGuru()" class="btn btn-primary btn-right">
+            <a href="javascript:void(0);" onclick="dsvSiswa()" class="btn btn-primary btn-right">
                 <strong>Lihat Selengkapnya</strong>
                 <img src="img/panah.png" alt="Ikon" style="width: 27px; height: 27px; margin-left: 4px;">
             </a>
