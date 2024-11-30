@@ -179,10 +179,11 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary float-right"  style="float: right;"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
-                                
+    
                             <a href="javascript:void(0);" onclick="previewPDF()" class="btn btn-success float-right" style="float: right;  margin-right: 10px;">
                             <img src="../img/printt.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">
                             Cetak Riwayat Harian </a>
+                            
                         </form>
                     </div>
                 </div>

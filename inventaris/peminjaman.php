@@ -204,10 +204,9 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                     <textarea class="form-control" name="keterangan" rows="3"></textarea>
                                 </div>
                             </div>
-                            <button type="submit" name="submit" class="btn btn-primary float-right"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
-                            <div class="d-flex justify-content-end my-3">
-                                <a href="../fitur/cetak_riwayat_peminjaman.php" class="btn btn-primary">Cetak Riwayat Peminjaman</a>
-                            </div>
+                            <button type="submit" name="submit" class="btn btn-primary float-right" style="float: right;"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>             
+                                <a href="../fitur/cetak_riwayat_peminjaman.php" class="btn btn-success float-right" style="float: right; margin-right: 10px;"> 
+                                <img src="../img/printt.png" alt="Icon" style="width:20px; height:20px; vertical-align:middle; margin-right:5px;">Cetak Riwayat Peminjaman</a>
                         </form>
                     </div>
                 </div>
