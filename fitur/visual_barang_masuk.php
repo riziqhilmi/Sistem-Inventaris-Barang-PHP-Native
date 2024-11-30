@@ -8,11 +8,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
 
-if (mysqli_connect_errno()){
+if (mysqli_connect_errno()) {
     echo "Koneksi database gagal : " . mysqli_connect_error();
 }
 
-// Query untuk mengambil jumlah barang masuk berdasarkan tanggal
+// Query untuk Line Chart (jumlah barang masuk per tanggal)
 $sql_barang_masuk = "SELECT tanggal, SUM(jumlah) as total_jumlah FROM barang_masuk GROUP BY tanggal";
 $result_barang_masuk = mysqli_query($koneksi, $sql_barang_masuk);
 
@@ -22,6 +22,18 @@ $data_barang_masuk = [];
 while ($row = mysqli_fetch_assoc($result_barang_masuk)) {
     $labels_barang_masuk[] = $row['tanggal'];
     $data_barang_masuk[] = $row['total_jumlah'];
+}
+
+// Query untuk Pie Chart (proporsi barang masuk per tanggal)
+$sql_barang_masuk_pie = "SELECT tanggal, SUM(jumlah) as total_jumlah FROM barang_masuk GROUP BY tanggal";
+$result_barang_masuk_pie = mysqli_query($koneksi, $sql_barang_masuk_pie);
+
+$labels_barang_masuk_pie = [];
+$data_barang_masuk_pie = [];
+
+while ($row = mysqli_fetch_assoc($result_barang_masuk_pie)) {
+    $labels_barang_masuk_pie[] = $row['tanggal'];
+    $data_barang_masuk_pie[] = $row['total_jumlah'];
 }
 
 mysqli_close($koneksi);
@@ -60,14 +72,21 @@ mysqli_close($koneksi);
     <div class="container">
         <h1 class="text-center my-4">Visualisasi Data Barang Masuk</h1>
 
-        <!-- Line Chart untuk jumlah barang masuk berdasarkan tanggal -->
+        <!-- Line Chart -->
         <div class="chart-container">
             <div class="chart-title">Jumlah Barang Masuk per Tanggal</div>
             <canvas id="lineChartBarangMasuk" width="400" height="200"></canvas>
         </div>
+
+        <!-- Pie Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Proporsi Barang Masuk per Tanggal</div>
+            <canvas id="pieChartBarangMasuk" width="400" height="200"></canvas>
+        </div>
     </div>
 
     <script>
+        // Line Chart
         const ctxLineBarangMasuk = document.getElementById('lineChartBarangMasuk').getContext('2d');
         const lineChartBarangMasuk = new Chart(ctxLineBarangMasuk, {
             type: 'line',
@@ -95,6 +114,48 @@ mysqli_close($koneksi);
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Pie Chart
+        const ctxPieBarangMasuk = document.getElementById('pieChartBarangMasuk').getContext('2d');
+        const pieChartBarangMasuk = new Chart(ctxPieBarangMasuk, {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode($labels_barang_masuk_pie); ?>,
+                datasets: [{
+                    label: 'Proporsi Barang Masuk',
+                    data: <?php echo json_encode($data_barang_masuk_pie); ?>,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Proporsi Barang Masuk per Tanggal'
                     }
                 }
             }
