@@ -215,8 +215,8 @@ include("koneksi.php");
                                                                         Kelamin</label>
                                                                     <select class="form-select" name="jenis_kelamin"
                                                                         required>
-                                                                        <option value="L" <?php echo ($jenis_kelamin == 'L') ? 'selected' : ''; ?>>Laki-laki</option>
-                                                                        <option value="P" <?php echo ($jenis_kelamin == 'P') ? 'selected' : ''; ?>>Perempuan</option>
+                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="mb-3">
@@ -315,8 +315,8 @@ include("koneksi.php");
                                             <div class="col-md-6">
                                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                                                 <select class="form-select" name="jenis_kelamin" required>
-                                                    <option value="L">Laki-laki</option>
-                                                    <option value="P">Perempuan</option>
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>
