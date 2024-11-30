@@ -205,6 +205,9 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary float-right"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>
+                            <div class="d-flex justify-content-end my-3">
+                                <a href="../fitur/cetak_riwayat_peminjaman.php" class="btn btn-primary">Cetak Riwayat Peminjaman</a>
+                            </div>
                         </form>
                     </div>
                 </div>

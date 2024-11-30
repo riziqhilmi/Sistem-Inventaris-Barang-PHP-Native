@@ -6,27 +6,42 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
+// Koneksi ke database
+$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
 
 if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
 }
 
-// Query untuk mengambil jumlah peminjaman berdasarkan bulan
-$sql_peminjaman = "SELECT MONTH(tanggal) as bulan, COUNT(*) as total_peminjaman FROM peminjaman GROUP BY bulan";
-$result_peminjaman = mysqli_query($koneksi, $sql_peminjaman);
+// Query untuk data peminjaman
+// Query untuk data peminjaman
+$sql_peminjaman = "SELECT tanggal_pinjam, nama_peminjam, SUM(jumlah_pinjam) AS total_pinjam 
+                   FROM peminjaman 
+                   GROUP BY tanggal_pinjam, nama_peminjam 
+                   LIMIT 0, 25;";
 
-$labels_peminjaman = [];
-$data_peminjaman = [];
+$result = mysqli_query($koneksi, $sql_peminjaman);
 
-while ($row = mysqli_fetch_assoc($result_peminjaman)) {
-    $labels_peminjaman[] = $row['bulan'];
-    $data_peminjaman[] = $row['total_peminjaman'];
+// Pastikan data direset sebelum digunakan
+$labels_tanggal = [];
+$data_jumlah_pinjam = [];
+$data_nama_peminjam = [];
+
+// Mengelompokkan data untuk chart
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $labels_tanggal[] = $row['tanggal_pinjam'];
+        $data_jumlah_pinjam[] = $row['total_pinjam'];
+        $data_nama_peminjam[] = $row['nama_peminjam'];
+    }
+} else {
+    echo "Tidak ada data.";
 }
 
+// Tutup koneksi
 mysqli_close($koneksi);
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,46 +75,97 @@ mysqli_close($koneksi);
     <div class="container">
         <h1 class="text-center my-4">Visualisasi Data Peminjaman</h1>
 
-        <!-- Line Chart untuk jumlah peminjaman berdasarkan bulan -->
+        <!-- Line Chart -->
         <div class="chart-container">
-            <div class="chart-title">Jumlah Peminjaman per Bulan</div>
-            <canvas id="lineChartPeminjaman" width="400" height="200"></canvas>
+            <div class="chart-title">Jumlah Peminjaman Berdasarkan Tanggal</div>
+            <canvas id="lineChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Jumlah Peminjaman per Nama Peminjam</div>
+            <canvas id="barChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Histogram -->
+        <div class="chart-container">
+            <div class="chart-title">Distribusi Jumlah Barang Dipinjam</div>
+            <canvas id="histogram" width="400" height="200"></canvas>
         </div>
     </div>
 
     <script>
-        const ctxLinePeminjaman = document.getElementById('lineChartPeminjaman').getContext('2d');
-        const lineChartPeminjaman = new Chart(ctxLinePeminjaman, {
+        // Line Chart: Jumlah Peminjaman Berdasarkan Tanggal
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        new Chart(ctxLine, {
             type: 'line',
             data: {
-                labels: <?php echo json_encode($labels_peminjaman); ?>,
+                labels: <?php echo json_encode($labels_tanggal); ?>,
                 datasets: [{
-                    label: 'Jumlah Peminjaman',
-                    data: <?php echo json_encode($data_peminjaman); ?>,
-                    fill: false,
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    label: 'Jumlah Barang Dipinjam',
+                    data: <?php echo json_encode($data_jumlah_pinjam); ?>,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
                     tension: 0.1
                 }]
             },
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Jumlah Peminjaman per Bulan'
-                    }
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Jumlah Barang Dipinjam Berdasarkan Tanggal' }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Bar Chart: Jumlah Peminjaman per Nama Peminjam
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($data_nama_peminjam); ?>,
+                datasets: [{
+                    label: 'Jumlah Barang Dipinjam',
+                    data: <?php echo json_encode($data_jumlah_pinjam); ?>,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Jumlah Barang Dipinjam per Nama Peminjam' }
+                },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Histogram: Distribusi Jumlah Barang Dipinjam
+        const ctxHistogram = document.getElementById('histogram').getContext('2d');
+        new Chart(ctxHistogram, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($labels_tanggal); ?>,
+                datasets: [{
+                    label: 'Distribusi Jumlah Barang Dipinjam',
+                    data: <?php echo json_encode($data_jumlah_pinjam); ?>,
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Distribusi Jumlah Barang Dipinjam' }
+                },
+                scales: { y: { beginAtZero: true } }
             }
         });
     </script>
 </body>
 </html>
-                   
