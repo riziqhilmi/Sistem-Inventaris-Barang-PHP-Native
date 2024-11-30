@@ -91,7 +91,8 @@ document.addEventListener('aos:out', () => {
 
                             <form class="d-flex mb-3" id="searchForm" method="GET">
                                 <input type="text" class="form-control form-control-sm me-2" name="query" placeholder="Cari guru..." style="width: 200px;" required>
-                                    <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                                    <button class="btn btn-primary btn-sm me-2" type="submit">Search</button>
+                                    <a class="btn btn-danger btn-sm" href="data_guru.php">Reset</a>
                             </form>
                             
                         </div>  

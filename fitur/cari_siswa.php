@@ -10,7 +10,7 @@ if (isset($_GET['query'])) {
     echo "Searching for: " . htmlspecialchars($_GET['query']) . "<br>"; 
     $search_query = mysqli_real_escape_string($koneksi, $_GET['query']);
     
-    $query = "SELECT * FROM siswa WHERE nama LIKE '%$search_query%' OR NIS LIKE '%$search_query%' OR NISN LIKE '%$search_query%'";
+    $query = "SELECT * FROM siswa WHERE nama LIKE '%$search_query%' OR NIS LIKE '%$search_query%' OR NISN LIKE '%$search_query%' OR jenis_kelamin LIKE '%$search_query%' OR tempat_lahir LIKE '%$search_query%'";
 } else {
     echo "<p>No search query provided.</p>";
     exit();
