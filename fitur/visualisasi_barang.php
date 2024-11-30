@@ -101,36 +101,61 @@ mysqli_close($koneksi);
             margin-top: 20px;
             text-align: center;
         }
-        
+
+        .chart-container {
+    margin: 20px 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.text-info {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    text-align: center;
+}
         
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
         <h1 class="mb-4 text-center">Data Visualisasi Barang</h1>
 
-        <!-- Bar Chart untuk jumlah barang berdasarkan kategori -->
-        <div class="chart-container">
-            <div class="chart-title">Jumlah Barang per Kategori</div>
-            <canvas id="barChart" width="400" height="200"></canvas>
+        <!-- Bar Chart dan Line Chart bersebelahan -->
+        <div class="row">
+            <!-- Bar Chart untuk jumlah barang berdasarkan kategori -->
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-title">Jumlah Barang per Kategori</div>
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+            <!-- Line Chart untuk tren barang masuk dan keluar -->
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <div class="chart-title">Tren Barang Masuk dan Keluar</div>
+                    <canvas id="lineChart" width="400" height="200"></canvas>
+                </div>
+            </div>
         </div>
 
         <!-- Pie Chart untuk kondisi barang -->
-        <div class="chart-container" style="max-width: 500px; margin: auto;">
-            <div class="chart-title">Kondisi Barang</div>
-            <canvas id="pieChart" width="400" height="200"></canvas>
-        </div>
-                <!-- Teks penjelasan untuk kondisi barang -->
-                <div class="text-info">
-            <p>Grafik di atas menunjukkan proporsi kondisi barang yang ada. Pastikan untuk memantau kondisi barang agar tetap dalam keadaan baik!</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart-container" style="max-width: 600px; margin: auto;">
+                    <div class="chart-title">Kondisi Barang</div>
+                    <canvas id="pieChart" width="400" height="200"></canvas>
+                </div>
+            </div>
         </div>
 
-        <!-- Line Chart untuk barang masuk dan keluar -->
-        <div class="chart-container">
-            <div class="chart-title">Tren Barang Masuk dan Keluar</div>
-            <canvas id="lineChart" width="400" height="200"></canvas>
+        <!-- Teks penjelasan untuk kondisi barang -->
+        <div class="text-info">
+            <p>Grafik di atas menunjukkan proporsi kondisi barang yang ada. Pastikan untuk memantau kondisi barang agar tetap dalam keadaan baik!</p>
         </div>
 
         <!-- Teks penjelasan untuk tren barang -->
