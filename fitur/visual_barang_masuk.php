@@ -24,16 +24,16 @@ while ($row = mysqli_fetch_assoc($result_barang_masuk)) {
     $data_barang_masuk[] = $row['total_jumlah'];
 }
 
-// Query untuk Pie Chart (proporsi barang masuk per tanggal)
-$sql_barang_masuk_pie = "SELECT tanggal, SUM(jumlah) as total_jumlah FROM barang_masuk GROUP BY tanggal";
-$result_barang_masuk_pie = mysqli_query($koneksi, $sql_barang_masuk_pie);
+// Query untuk Bar Chart (jumlah barang masuk per barang)
+$sql_barang = "SELECT b.nama, SUM(bm.jumlah) as total_jumlah FROM barang_masuk bm JOIN barang b ON bm.id_barang = b.id_barang GROUP BY b.nama";
+$result_barang = mysqli_query($koneksi, $sql_barang);
 
-$labels_barang_masuk_pie = [];
-$data_barang_masuk_pie = [];
+$labels_barang = [];
+$data_barang = [];
 
-while ($row = mysqli_fetch_assoc($result_barang_masuk_pie)) {
-    $labels_barang_masuk_pie[] = $row['tanggal'];
-    $data_barang_masuk_pie[] = $row['total_jumlah'];
+while ($row = mysqli_fetch_assoc($result_barang)) {
+    $labels_barang[] = $row['nama'];
+    $data_barang[] = $row['total_jumlah'];
 }
 
 mysqli_close($koneksi);
@@ -50,6 +50,7 @@ mysqli_close($koneksi);
     <style>
         body {
             background-color: #f8f9fa;
+            color: #343a40;
         }
         .chart-container {
             margin: 20px 0;
@@ -64,7 +65,6 @@ mysqli_close($koneksi);
             text-align: center;
             margin-bottom: 15px;
             font-weight: bold;
-            color: #343a40;
         }
     </style>
 </head>
@@ -78,11 +78,12 @@ mysqli_close($koneksi);
             <canvas id="lineChartBarangMasuk" width="400" height="200"></canvas>
         </div>
 
-        <!-- Pie Chart -->
+        <!-- Bar Chart -->
         <div class="chart-container">
-            <div class="chart-title">Proporsi Barang Masuk per Tanggal</div>
-            <canvas id="pieChartBarangMasuk" width="400" height="200"></canvas>
+            <div class="chart-title">Jumlah Barang Masuk per Barang</div>
+            <canvas id="barChartBarangMasuk" width="400" height="200"></canvas>
         </div>
+
     </div>
 
     <script>
@@ -119,31 +120,17 @@ mysqli_close($koneksi);
             }
         });
 
-        // Pie Chart
-        const ctxPieBarangMasuk = document.getElementById('pieChartBarangMasuk').getContext('2d');
-        const pieChartBarangMasuk = new Chart(ctxPieBarangMasuk, {
-            type: 'pie',
+        // Bar Chart
+        const ctxBarBarangMasuk = document.getElementById('barChartBarangMasuk').getContext('2d');
+        const barChartBarangMasuk = new Chart(ctxBarBarangMasuk, {
+            type: 'bar',
             data: {
-                labels: <?php echo json_encode($labels_barang_masuk_pie); ?>,
+                labels: <?php echo json_encode($labels_barang); ?>,
                 datasets: [{
-                    label: 'Proporsi Barang Masuk',
-                    data: <?php echo json_encode($data_barang_masuk_pie); ?>,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    label: 'Jumlah Barang Masuk',
+                    data: <?php echo json_encode($data_barang); ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
             },
@@ -155,7 +142,12 @@ mysqli_close($koneksi);
                     },
                     title: {
                         display: true,
-                        text: 'Proporsi Barang Masuk per Tanggal'
+                        text: 'Jumlah Barang Masuk per Barang'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }

@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
+$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
 
 if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
@@ -24,6 +24,18 @@ while ($row = mysqli_fetch_assoc($result_siswa)) {
     $data_siswa[] = $row['jumlah'];
 }
 
+// Query untuk mengambil jumlah siswa berdasarkan tahun lahir
+$sql_tahun_lahir = "SELECT YEAR(tgl_lahir) as tahun, COUNT(*) as jumlah FROM siswa GROUP BY tahun";
+$result_tahun_lahir = mysqli_query($koneksi, $sql_tahun_lahir);
+
+$labels_tahun_lahir = [];
+$data_tahun_lahir = [];
+
+while ($row = mysqli_fetch_assoc($result_tahun_lahir)) {
+    $labels_tahun_lahir[] = $row['tahun'];
+    $data_tahun_lahir[] = $row['jumlah'];
+}
+
 mysqli_close($koneksi);
 ?>
 
@@ -38,6 +50,7 @@ mysqli_close($koneksi);
     <style>
         body {
             background-color: #f8f9fa;
+            color: #343a40;
         }
         .chart-container {
             margin: 20px 0;
@@ -52,7 +65,6 @@ mysqli_close($koneksi);
             text-align: center;
             margin-bottom: 15px;
             font-weight: bold;
-            color: #343a40;
         }
     </style>
 </head>
@@ -60,14 +72,56 @@ mysqli_close($koneksi);
     <div class="container">
         <h1 class="text-center my-4">Visualisasi Data Siswa</h1>
 
+        <!-- Pie Chart untuk jumlah siswa berdasarkan jenis kelamin -->
+        <div class="chart-container">
+            <div class="chart-title">Distribusi Siswa Berdasarkan Jenis Kelamin</div>
+            <canvas id="pieChartSiswa" width="400" height="200"></canvas>
+        </div>
+
         <!-- Bar Chart untuk jumlah siswa berdasarkan jenis kelamin -->
         <div class="chart-container">
             <div class="chart-title">Jumlah Siswa Berdasarkan Jenis Kelamin</div>
             <canvas id="barChartSiswa" width="400" height="200"></canvas>
         </div>
+
+        <!-- Line Chart untuk jumlah siswa berdasarkan tahun lahir -->
+        <div class="chart-container">
+            <div class="chart-title">Jumlah Siswa Berdasarkan Tahun Lahir</div>
+            <canvas id="lineChartTahunLahir" width="400" height="200"></canvas>
+        </div>
     </div>
 
     <script>
+        // Pie Chart untuk distribusi siswa berdasarkan jenis kelamin
+        const ctxPieSiswa = document.getElementById('pieChartSiswa').getContext('2d');
+        const pieChartSiswa = new Chart(ctxPieSiswa, {
+            type: 'pie',
+            data: {
+                labels: <?php echo json_encode($labels_siswa); ?>,
+                datasets: [{
+                    label: 'Jumlah Siswa',
+                    data: <?php echo json_encode($data_siswa); ?>,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)'
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribusi Siswa Berdasarkan Jenis Kelamin'
+                    }
+                }
+            }
+        });
+
+        // Bar Chart untuk jumlah siswa berdasarkan jenis kelamin
         const ctxBarSiswa = document.getElementById('barChartSiswa').getContext('2d');
         const barChartSiswa = new Chart(ctxBarSiswa, {
             type: 'bar',
@@ -96,6 +150,39 @@ mysqli_close($koneksi);
                     title: {
                         display: true,
                         text: 'Jumlah Siswa Berdasarkan Jenis Kelamin'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Line Chart untuk jumlah siswa berdasarkan tahun lahir
+        const ctxLineTahunLahir = document.getElementById('lineChartTahunLahir').getContext('2d');
+        const lineChartTahunLahir = new Chart(ctxLineTahunLahir, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($labels_tahun_lahir); ?>,
+                datasets: [{
+                    label: 'Jumlah Siswa',
+                    data: <?php echo json_encode($data_tahun_lahir); ?>,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Jumlah Siswa Berdasarkan Tahun Lahir'
                     }
                 },
                 scales: {

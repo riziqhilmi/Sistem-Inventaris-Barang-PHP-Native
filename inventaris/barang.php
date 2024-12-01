@@ -28,43 +28,6 @@ include("../koneksi.php");
 
 <body>
 
-  <style>
-    .disable-scroll {
-      overflow: hidden !important;
-    }
-  </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init(); // Inisialisasi AOS
-
-    document.addEventListener('aos:in', (event) => {
-      // Ketika animasi dimulai, nonaktifkan scroll
-      document.body.classList.add('disable-scroll');
-    });
-
-    document.addEventListener('aos:out', (event) => {
-      // Ketika animasi selesai, aktifkan kembali scroll
-      document.body.classList.remove('disable-scroll');
-    });
-
-    AOS.init({
-      startEvent: 'DOMContentLoaded', // Pastikan animasi dimulai setelah halaman dimuat
-      once: true, // Hanya jalankan animasi sekali
-    });
-
-    const tableContainer = document.querySelector('.table-responsive');
-    document.addEventListener('aos:in', () => {
-      tableContainer.classList.add('disable-scroll');
-    });
-
-    document.addEventListener('aos:out', () => {
-      tableContainer.classList.remove('disable-scroll');
-    });
-
-
-  </script>
-
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
@@ -116,11 +79,52 @@ include("../koneksi.php");
                   $no = 1;
 
                   // Tentukan jumlah item per halaman
-                  $items_per_page = 10;
-                  // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
-                  $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-                  $offset = ($page - 1) * $items_per_page;
-                  // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
+$items_per_page = 10;
+
+// Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+
+// Hitung offset untuk query SQL
+$offset = ($page - 1) * $items_per_page;
+
+// Periksa apakah ada pencarian
+$query = isset($_GET['query']) ? $_GET['query'] : '';
+if ($query) {
+    $query = mysqli_real_escape_string($koneksi, $query);
+    $sql = "SELECT * FROM barang 
+            WHERE nama LIKE '%$query%' 
+               OR merek LIKE '%$query%'
+               OR kategori LIKE '%$query%' 
+               OR ruangan LIKE '%$query%' 
+               OR kondisi LIKE '%$query%' 
+               OR jumlah_awal LIKE '%$query%' 
+               OR jumlah_akhir LIKE '%$query%' 
+               OR tgl LIKE '%$query%' 
+               OR keterangan LIKE '%$query%' 
+            LIMIT $items_per_page OFFSET $offset";
+    $count_query = "SELECT COUNT(*) as total 
+                    FROM barang 
+                    WHERE nama LIKE '%$query%' 
+                       OR merek LIKE '%$query%' 
+                       OR kategori LIKE '%$query%' 
+                       OR ruangan LIKE '%$query%' 
+                       OR kondisi LIKE '%$query%' 
+                       OR jumlah_awal LIKE '%$query%' 
+                       OR jumlah_akhir LIKE '%$query%' 
+                       OR tgl LIKE '%$query%' 
+                       OR keterangan LIKE '%$query%'";
+} else {
+    $sql = "SELECT * FROM barang LIMIT $items_per_page OFFSET $offset";
+    $count_query = "SELECT COUNT(*) as total FROM barang";
+}
+
+// Hitung total item dan total halaman
+$result = mysqli_query($koneksi, $count_query);
+$total_items = mysqli_fetch_assoc($result)['total'];
+$total_pages = ceil($total_items / $items_per_page);
+
+// Eksekusi query untuk data barang
+$result = mysqli_query($koneksi, $sql);
                
                   $result = mysqli_query($koneksi, $sql);
 
@@ -140,7 +144,7 @@ include("../koneksi.php");
                     $total_items = mysqli_fetch_assoc($count_result)['total'];
                     $total_pages = ceil($total_items / $items_per_page);
                     ?>
-                    <tr data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?php echo $no * 100; ?>">
+                    <tr>
                       <td><?php echo $no; ?></td>
                       <td><?php echo $nama; ?></td>
                       <td><?php echo $merk; ?></td>
@@ -173,88 +177,93 @@ include("../koneksi.php");
                     </tr>
 
                     <!-- Modal Edit Data barang -->
-                    <div class="modal fade" id="editTeacherModal<?php echo $row['id_barang']; ?>" tabindex="-1"
-                      aria-labelledby="editTeacherLabel<?php echo $row['id_barang']; ?>" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_barang']; ?>">Edit Data barang
-                            </h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <form action="../fitur/edit_barang.php" method="POST">
-                              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
-                              <div class="mb-3">
-                                <label for="nama" class="form-label">Nama barang</label>
-                                <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>"
-                                  required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="merek" class="form-label">Merek</label>
-                                <input type="text" class="form-control" name="merek" value="<?php echo $row['merek']; ?>"
-                                  required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="kategori" class="form-label">Kategori</label>
-                                <input type="text" class="form-control" name="kategori"
-                                  value="<?php echo $row['kategori']; ?>" required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="ruangan" class="form-label">Ruangan</label>
-                                <select class="form-select" name="ruangan" required>
-                                  <?php
-                                  $query_kelas = "SELECT nama_ruangan FROM ruangan";
-                                  $result_kelas_edit = $koneksi->query($query_kelas);
-                                  echo '<option value="">Pilih Ruangan</option>';
+<div class="modal fade" id="editTeacherModal<?php echo $row['id_barang']; ?>" tabindex="-1"
+  aria-labelledby="editTeacherLabel<?php echo $row['id_barang']; ?>" aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- Increased the width with modal-lg -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_barang']; ?>">Edit Data barang</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="../fitur/edit_barang.php" method="POST">
+          <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
 
-                                  if ($result_kelas_edit->num_rows > 0) {
-                                    while ($row_kelas = $result_kelas_edit->fetch_assoc()) {
-                                      $selected = (isset($row['ruangan']) && $row['ruangan'] == $row_kelas['nama_ruangan']) ? 'selected' : '';
-                                      echo '<option value="' . $row_kelas['nama_ruangan'] . '" ' . $selected . '>' . $row_kelas['nama_ruangan'] . '</option>';
-                                    }
-                                  } else {
-                                    echo '<option value="">Tidak ada data ruang tersedia</option>';
-                                  }
-                                  ?>
-                                </select>
-                              </div>
-                              <div class="mb-3">
-                                <label for="kondisi" class="form-label">Kondisi</label>
-                                <select class="form-select" name="kondisi" required>
-                                  <option value="Baik" <?php echo ($kondisi == 'B') ? 'selected' : ''; ?>>Baik</option>
-                                  <option value="Rusak Ringan" <?php echo ($kondisi == 'R') ? 'selected' : ''; ?>>Rusak
-                                    Ringan</option>
-                                  <option value="Rusak Berat" <?php echo ($kondisi == 'RB') ? 'selected' : ''; ?>>Rusak
-                                    Berat</option>
-                                </select>
-                              </div>
-                              <div class="mb-3">
-                                <label for="jumlah_awal" class="form-label">Jumlah Awal</label>
-                                <input type="text" class="form-control" name="jumlah_awal"
-                                  value="<?php echo $row['jumlah_awal']; ?>" required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="jumlah_akhir" class="form-label">Jumlah Akhir</label>
-                                <input type="text" class="form-control" name="jumlah_akhir"
-                                  value="<?php echo $row['jumlah_akhir']; ?>" required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="tgl" class="form-label">TGL Pengadaan</label>
-                                <input type="date" class="form-control" name="tgl" value="<?php echo $row['tgl']; ?>"
-                                  required>
-                              </div>
-                              <div class="mb-3">
-                                <label for="ket" class="form-label">Keterangan</label>
-                                <input type="text" class="form-control" name="ket"
-                                  value="<?php echo $row['keterangan']; ?>" required>
-                              </div>
-                              <button type="submit" class="btn btn-primary">Simpan</button>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="nama" class="form-label">Nama barang</label>
+              <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="merek" class="form-label">Merek</label>
+              <input type="text" class="form-control" name="merek" value="<?php echo $row['merek']; ?>" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="kategori" class="form-label">Kategori</label>
+              <input type="text" class="form-control" name="kategori" value="<?php echo $row['kategori']; ?>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="ruangan" class="form-label">Ruangan</label>
+              <select class="form-select" name="ruangan" required>
+                <?php
+                $query_kelas = "SELECT nama_ruangan FROM ruangan";
+                $result_kelas_edit = $koneksi->query($query_kelas);
+                echo '<option value="">Pilih Ruangan</option>';
+
+                if ($result_kelas_edit->num_rows > 0) {
+                  while ($row_kelas = $result_kelas_edit->fetch_assoc()) {
+                    $selected = (isset($row['ruangan']) && $row['ruangan'] == $row_kelas['nama_ruangan']) ? 'selected' : '';
+                    echo '<option value="' . $row_kelas['nama_ruangan'] . '" ' . $selected . '>' . $row_kelas['nama_ruangan'] . '</option>';
+                  }
+                } else {
+                  echo '<option value="">Tidak ada data ruang tersedia</option>';
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="jumlah_awal" class="form-label">Jumlah Awal</label>
+              <input type="text" class="form-control" name="jumlah_awal" value="<?php echo $row['jumlah_awal']; ?>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="jumlah_akhir" class="form-label">Jumlah Akhir</label>
+              <input type="text" class="form-control" name="jumlah_akhir" value="<?php echo $row['jumlah_akhir']; ?>" required>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="tgl" class="form-label">TGL Pengadaan</label>
+              <input type="date" class="form-control" name="tgl" value="<?php echo $row['tgl']; ?>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="kondisi" class="form-label">Kondisi</label>
+              <select class="form-select" name="kondisi" required>
+                <option value="Baik" <?php echo ($kondisi == 'B') ? 'selected' : ''; ?>>Baik</option>
+                <option value="Rusak Ringan" <?php echo ($kondisi == 'R') ? 'selected' : ''; ?>>Rusak Ringan</option>
+                <option value="Rusak Berat" <?php echo ($kondisi == 'RB') ? 'selected' : ''; ?>>Rusak Berat</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="ket" class="form-label">Keterangan</label>
+            <input type="text" class="form-control" name="ket" value="<?php echo $row['keterangan']; ?>" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
                     <?php
                     $no++;
                   }
