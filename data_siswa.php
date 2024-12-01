@@ -83,8 +83,6 @@ include("koneksi.php");
                                         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
                                         if ($query != '') {
-                                            // $query = mysqli_real_escape_string($koneksi, $query);
-                                            // echo "<script>console.log('Hehehehehehehhehehehe')</script>";
                                             $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
                                         } else {
                                             $sql = "SELECT * FROM siswa";
@@ -96,11 +94,8 @@ include("koneksi.php");
                                         $no = 1;
 
                                         $items_per_page = 10;
-                                        // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
                                         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                         $offset = ($page - 1) * $items_per_page;
-                                        // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
-                                        // $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
                                         $result = mysqli_query($koneksi, $sql);
 
                                         while ($row = mysqli_fetch_array($result)) {
@@ -120,7 +115,7 @@ include("koneksi.php");
                                                 <td><?php echo $nama; ?></td>
                                                 <td><?php echo $nis; ?></td>
                                                 <td><?php echo $nisn; ?></td>
-                                                <td><?php echo ($jenis_kelamin === 'L') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                                <td><?php echo ($jenis_kelamin === 'Laki-laki') ? 'Laki-laki' : 'Perempuan'; ?></td>
                                                 <td><?php echo $tempatLahir; ?></td>
                                                 <td><?php echo $tglLahir; ?></td>
                                                 <td><?php echo $agama; ?></td>
@@ -175,12 +170,12 @@ include("koneksi.php");
                                                                         value="<?php echo $row['NISN']; ?>" required>
                                                                 </div>
                                                                 <div class="mb-3">
-                                                                    <label for="jenis_kelamin" class="form-label">Jenis
+                                                                    <label for="j_kelamin" class="form-label">Jenis
                                                                         Kelamin</label>
-                                                                    <select class="form-select" name="jenis_kelamin"
+                                                                    <select class="form-select" name="j_kelamin"
                                                                         required>
-                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                                                                        <option value="Laki-laki" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                                                        <option value="Perempuan" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="mb-3">
