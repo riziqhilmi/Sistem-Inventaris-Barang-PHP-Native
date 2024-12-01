@@ -130,59 +130,228 @@ include("../koneksi.php");
                                         <td><?php echo $row['tgl']; ?></td>
                                         <td><?php echo $row['keterangan']; ?></td>
                                         <td>
-                                            <!-- Tombol Edit -->
-                                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#editTeacherModal<?php echo $row['id_barang']; ?>">
-                                                Edit
-                                            </button>
-                                            <!-- Tombol Hapus -->
-                                            <a href="../fitur/hapus_barang.php?id=<?php echo $row['id_barang']; ?>"
-                                               onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?');"
-                                               class="btn btn-danger btn-sm">
-                                                Hapus
-                                            </a>
-                                            <!-- Tombol Cetak Barcode -->
-                                            <a href="../fitur/generate_barcode.php?id=<?php echo $row['id_barang']; ?>"
-                                               target="_blank" class="btn btn-info btn-sm mt-1">
-                                                Cetak Barcode
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    $no++;
-                                }
-                                ?>
-                            </table>
+                        <!-- Tombol Edit -->
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                          data-bs-target="#editTeacherModal<?php echo $row['id_barang']; ?>">
+                          Edit
+                        </button>
+                        <!-- Tombol Hapus -->
+                        <a href="../fitur/hapus_barang.php?id=<?php echo $row['id_barang']; ?>"
+                          onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?');"
+                          class="btn btn-danger btn-sm">
+                          Hapus
+                        </a>
+                        <!-- Tombol Cetak Barcode -->
+                        <a href="../fitur/generate_barcode.php?id=<?php echo $row['id_barang']; ?>" target="_blank"
+                          class="btn btn-info btn-sm mt-1">
+                          Cetak Barcode
+                        </a>
+
+                      </td>
+                    </tr>
+
+                    <!-- Modal Edit Data barang -->
+                    <div class="modal fade" id="editTeacherModal<?php echo $row['id_barang']; ?>" tabindex="-1"
+                      aria-labelledby="editTeacherLabel<?php echo $row['id_barang']; ?>" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_barang']; ?>">Edit Data barang
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="../fitur/edit_barang.php" method="POST">
+                              <input type="hidden" name="id_barang" value="<?php echo $row['id_barang']; ?>">
+                              <div class="mb-3">
+                                <label for="nama" class="form-label">Nama barang</label>
+                                <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>"
+                                  required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="merek" class="form-label">Merek</label>
+                                <input type="text" class="form-control" name="merek" value="<?php echo $row['merek']; ?>"
+                                  required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="kategori" class="form-label">Kategori</label>
+                                <input type="text" class="form-control" name="kategori"
+                                  value="<?php echo $row['kategori']; ?>" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="ruangan" class="form-label">Ruangan</label>
+                                <select class="form-select" name="ruangan" required>
+                                  <?php
+                                  $query_kelas = "SELECT nama_ruangan FROM ruangan";
+                                  $result_kelas_edit = $koneksi->query($query_kelas);
+                                  echo '<option value="">Pilih Ruangan</option>';
+
+                                  if ($result_kelas_edit->num_rows > 0) {
+                                    while ($row_kelas = $result_kelas_edit->fetch_assoc()) {
+                                      $selected = (isset($row['ruangan']) && $row['ruangan'] == $row_kelas['nama_ruangan']) ? 'selected' : '';
+                                      echo '<option value="' . $row_kelas['nama_ruangan'] . '" ' . $selected . '>' . $row_kelas['nama_ruangan'] . '</option>';
+                                    }
+                                  } else {
+                                    echo '<option value="">Tidak ada data ruang tersedia</option>';
+                                  }
+                                  ?>
+                                </select>
+                              </div>
+                              <div class="mb-3">
+                                <label for="kondisi" class="form-label">Kondisi</label>
+                                <select class="form-select" name="kondisi" required>
+                                  <option value="Baik" <?php echo ($kondisi == 'B') ? 'selected' : ''; ?>>Baik</option>
+                                  <option value="Rusak Ringan" <?php echo ($kondisi == 'R') ? 'selected' : ''; ?>>Rusak
+                                    Ringan</option>
+                                  <option value="Rusak Berat" <?php echo ($kondisi == 'RB') ? 'selected' : ''; ?>>Rusak
+                                    Berat</option>
+                                </select>
+                              </div>
+                              <div class="mb-3">
+                                <label for="jumlah_awal" class="form-label">Jumlah Awal</label>
+                                <input type="text" class="form-control" name="jumlah_awal"
+                                  value="<?php echo $row['jumlah_awal']; ?>" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="jumlah_akhir" class="form-label">Jumlah Akhir</label>
+                                <input type="text" class="form-control" name="jumlah_akhir"
+                                  value="<?php echo $row['jumlah_akhir']; ?>" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="tgl" class="form-label">TGL Pengadaan</label>
+                                <input type="date" class="form-control" name="tgl" value="<?php echo $row['tgl']; ?>"
+                                  required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="ket" class="form-label">Keterangan</label>
+                                <input type="text" class="form-control" name="ket"
+                                  value="<?php echo $row['keterangan']; ?>" required>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
+                          </div>
                         </div>
-                        <?php
-                        echo "<div class='d-flex justify-content-center align-items-center my-3'>";
-                        if ($page > 1) {
-                            echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
-                        } else {
-                            echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
-                        }
-                        echo "<div class='mx-2'>";
-                        for ($i = 1; $i <= $total_pages; $i++) {
-                            if ($i == $page) {
-                                echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
-                            } else {
-                                echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
-                            }
-                        }
-                        echo "</div>";
-                        if ($page < $total_pages) {
-                            echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
-                        } else {
-                            echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
-                        }
-                        echo "</div>";
-                        ?>
+                      </div>
                     </div>
-                </div>
+                    <?php
+                    $no++;
+                  }
+                  ?>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
+        <!-- /.container-fluid -->
+        <!-- Modal for Adding Item -->
+        <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addTeacherLabel">Tambah Data Barang</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="../fitur/tambah_barang.php" method="POST">
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="nama_barang" class="form-label">Nama Barang</label>
+                      <input type="text" class="form-control" name="nama_barang" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="merk" class="form-label">Merek</label>
+                      <input type="text" class="form-control" name="merk" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="kategori" class="form-label">Kategori</label>
+                      <input type="text" class="form-control" name="kategori" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="ruangan" class="form-label">Ruangan</label>
+                      <select class="form-select" name="ruangan" required>
+                        <?php
+                        $query_kelas = "SELECT nama_ruangan FROM ruangan";
+                        $result_kelas = $koneksi->query($query_kelas);
+                        if ($result_kelas->num_rows > 0) {
+                          while ($row_kelas = $result_kelas->fetch_assoc()) {
+                            echo '<option value="' . $row_kelas['nama_ruangan'] . '">' . $row_kelas['nama_ruangan'] . '</option>';
+                          }
+                        } else {
+                          echo '<option value="">Tidak ada data ruang tersedia</option>';
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="kondisi" class="form-label">Kondisi</label>
+                    <select class="form-select" name="kondisi" required>
+                      <option value="Baik">Baik</option>
+                      <option value="Rusak Ringan">Rusak Ringan</option>
+                      <option value="Rusak Berat">Rusak Berat</option>
+                    </select>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="jml_a" class="form-label">Jumlah Awal</label>
+                      <input type="text" class="form-control" name="jml_a" required>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="jml_ak" class="form-label">Jumlah Akhir</label>
+                      <input type="text" class="form-control" name="jml_ak" required>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="tgl" class="form-label">TGL Pengadaan</label>
+                    <input type="date" class="form-control" name="tgl" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="ket" class="form-label">Keterangan</label>
+                    <input type="text" class="form-control" name="ket" required>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <?php
+        echo "<div class='d-flex justify-content-center align-items-center my-3'>";
+        if ($page > 1) {
+          echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
+        } else {
+          echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
+        }
+        echo "<div class='mx-2'>";
+        for ($i = 1; $i <= $total_pages; $i++) {
+          if ($i == $page) {
+            // Halaman saat ini (diberi gaya berbeda)
+            echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
+          } else {
+            // Link ke halaman lain
+            echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
+          }
+        }
+        echo "</div>";
+        if ($page < $total_pages) {
+          echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
+        } else {
+          echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
+        }
+
+        echo "</div>";
+        ?>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 
 </html>
