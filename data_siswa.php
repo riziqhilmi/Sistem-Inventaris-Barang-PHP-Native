@@ -7,8 +7,7 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: login2.php');
     exit();
 }
-?>
-<?php
+
 include("koneksi.php");
 ?>
 
@@ -26,7 +25,6 @@ include("koneksi.php");
 </head>
 
 <body>
-
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
     <div class="container-fluid">
@@ -38,33 +36,22 @@ include("koneksi.php");
             <div class="col-md-10 p-4">
                 <div class="container">
                     <h1 class="mb-4">Data Siswa</h1>
-
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        <!-- Page Heading -->
                         <h1 class="h3 mb-2 text-gray-800">Daftar Siswa Pasarejo 1</h1>
-
-                        <!-- DataTales Example -->
                         <div class="card shadow mb-4">
-
-
                             <div class="card-body">
-
+                                <!-- Tombol tambah siswa dan pencarian -->
                                 <div class="d-flex justify-content-between mb-3">
-                                    <button type="button" class="btn btn-success btn-sm me-2" data-bs-toggle="modal"
-                                        data-bs-target="#addTeacherModal">
-                                        Tambah Data Siswa
-                                    </button>
-
-                                    <form class="d-flex mb-3" id="searchForm" method="GET">
-                                        <input type="text" class="form-control form-control-sm me-2" name="query"
-                                            placeholder="Cari Siswa..." style="width: 200px;" required>
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addTeacherModal">Tambah Data Siswa</button>
+                                    <form class="d-flex mb-3" method="GET">
+                                        <input type="text" class="form-control form-control-sm me-2" name="query" placeholder="Cari Siswa..." value="<?= htmlspecialchars(isset($_GET['query']) ? $_GET['query'] : ''); ?>" style="width: 200px;">
                                         <button class="btn btn-primary btn-sm me-2" type="submit">Search</button>
                                         <a class="btn btn-danger btn-sm" href="data_siswa.php">Reset</a>
                                     </form>
-
                                 </div>
 
+                                <!-- Tabel Data Siswa -->
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <tr>
@@ -80,145 +67,47 @@ include("koneksi.php");
                                             <th>Aksi</th>
                                         </tr>
                                         <?php
-                                        $query = isset($_GET['query']) ? $_GET['query'] : '';
-
-                                        if ($query != '') {
-                                            // $query = mysqli_real_escape_string($koneksi, $query);
-                                            // echo "<script>console.log('Hehehehehehehhehehehe')</script>";
-                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
-                                        } else {
-                                            $sql = "SELECT * FROM siswa";
+                                        $query = isset($_GET['query']) ? mysqli_real_escape_string($koneksi, $_GET['query']) : '';
+                                        $sql_base = "SELECT * FROM siswa";
+                                        if ($query) {
+                                            $sql_base .= " WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%' OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
                                         }
 
-                                        echo "<script>console.log(\"$sql\"  )</script>";
-
-                                        $result = mysqli_query($koneksi, $sql);
-                                        $no = 1;
-
                                         $items_per_page = 10;
-                                        // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
-                                        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+                                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                                         $offset = ($page - 1) * $items_per_page;
-                                        // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
-                                        // $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
-                                        $result = mysqli_query($koneksi, $sql);
 
-                                        while ($row = mysqli_fetch_array($result)) {
-                                            $nama = $row['nama'];
-                                            $nis = $row['NIS'];
-                                            $nisn = $row['NISN'];
-                                            $jenis_kelamin = $row['jenis_kelamin'];
-                                            $tempatLahir = $row['tempat_lahir'];
-                                            $tglLahir = $row['tgl_lahir'];
-                                            $agama = $row['agama'];
-                                            $alamat = $row['alamat'];
-                                            ?>
+                                        $sql_count = str_replace("*", "COUNT(*) as total", $sql_base);
+                                        $result_count = mysqli_query($koneksi, $sql_count);
+                                        $total_items = mysqli_fetch_assoc($result_count)['total'];
+                                        $total_pages = ceil($total_items / $items_per_page);
 
+                                        $sql_base .= " LIMIT $offset, $items_per_page";
+                                        $result = mysqli_query($koneksi, $sql_base);
 
-                                            <tr>
-                                                <td><?php echo $no; ?></td>
-                                                <td><?php echo $nama; ?></td>
-                                                <td><?php echo $nis; ?></td>
-                                                <td><?php echo $nisn; ?></td>
-                                                <td><?php echo ($jenis_kelamin === 'L') ? 'Laki-laki' : 'Perempuan'; ?></td>
-                                                <td><?php echo $tempatLahir; ?></td>
-                                                <td><?php echo $tglLahir; ?></td>
-                                                <td><?php echo $agama; ?></td>
-                                                <td><?php echo $alamat; ?></td>
-
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#editTeacherModal<?php echo $row['id_siswa']; ?>">
-                                                        Edit
-                                                    </button>
-                                                    <a href="fitur/hapus.php?id=<?php echo $row['id_siswa']; ?>"
-                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus Siswa ini?');"
-                                                        class="btn btn-danger btn-sm">
-                                                        Hapus
-                                                    </a>
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal Edit Data Siswa -->
-                                            <div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>"
-                                                tabindex="-1"
-                                                aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="editTeacherLabel<?php echo $row['id_siswa']; ?>">Edit
-                                                                Data Siswa</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="fitur/edit_siswa.php" method="POST">
-                                                                <input type="hidden" name="id_siswa"
-                                                                    value="<?php echo $row['id_siswa']; ?>">
-
-                                                                <div class="mb-3">
-                                                                    <label for="nama" class="form-label">Nama</label>
-                                                                    <input type="text" class="form-control" name="nama"
-                                                                        value="<?php echo $row['nama']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="nis" class="form-label">NIS</label>
-                                                                    <input type="text" class="form-control" name="nis"
-                                                                        value="<?php echo $row['NIS']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="nisn" class="form-label">NISN</label>
-                                                                    <input type="text" class="form-control" name="nisn"
-                                                                        value="<?php echo $row['NISN']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="jenis_kelamin" class="form-label">Jenis
-                                                                        Kelamin</label>
-                                                                    <select class="form-select" name="jenis_kelamin"
-                                                                        required>
-                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="tempat_lahir" class="form-label">Tempat
-                                                                        Lahir</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="tempat_lahir"
-                                                                        value="<?php echo $row['tempat_lahir']; ?>"
-                                                                        required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="tgl_lahir" class="form-label">Tanggal
-                                                                        Lahir</label>
-                                                                    <input type="date" class="form-control" name="tgl_lahir"
-                                                                        value="<?php echo $row['tgl_lahir']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="agama" class="form-label">Agama</label>
-                                                                    <input type="text" class="form-control" name="agama"
-                                                                        value="<?php echo $row['agama']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="alamat" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" name="alamat"
-                                                                        required><?php echo $row['alamat']; ?></textarea>
-                                                                </div>
-
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                            </form>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <?php
-                                            $no++;
+                                        if (mysqli_num_rows($result) > 0) {
+                                            $no = $offset + 1;
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "
+                                                <tr>
+                                                    <td>{$no}</td>
+                                                    <td>{$row['nama']}</td>
+                                                    <td>{$row['NIS']}</td>
+                                                    <td>{$row['NISN']}</td>
+                                                    <td>" . ($row['jenis_kelamin'] === 'L' ? 'Laki-laki' : 'Perempuan') . "</td>
+                                                    <td>{$row['tempat_lahir']}</td>
+                                                    <td>{$row['tgl_lahir']}</td>
+                                                    <td>{$row['agama']}</td>
+                                                    <td>{$row['alamat']}</td>
+                                                    <td>
+                                                        <button class='btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editTeacherModal{$row['id_siswa']}'>Edit</button>
+                                                        <a href='fitur/hapus.php?id={$row['id_siswa']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin ingin menghapus?');\">Hapus</a>
+                                                    </td>
+                                                </tr>";
+                                                $no++;
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='10' class='text-center'>Data tidak ditemukan</td></tr>";
                                         }
                                         ?>
                                     </table>
@@ -226,126 +115,25 @@ include("koneksi.php");
                             </div>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
 
-                    <script>
-                        $(document).ready(function () {
-                            $('#searchForm').on('submit', function (e) {
-                                e.preventDefault(); // Menghindari reload halaman
-                                var query = $('input[name="query"]').val(); // Mengambil nilai dari input
-
-                                $.ajax({
-                                    url: 'fitur/cari_siswa.php', // URL untuk memproses pencarian
-                                    method: 'GET',
-                                    data: { query: query },
-                                    success: function (response) {
-                                        $('#searchResults').html(response); // Menampilkan hasil di div searchResults
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error("Error:", error); // Menampilkan kesalahan jika ada
-                                    }
-                                });
-                            });
-                        });
-                    </script>
-
-                    <!-- Modal for Adding Teacher -->
-                    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addTeacherLabel">Tambah Data Siswa</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="fitur/tambah_siswa.php" method="POST">
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label for="nama" class="form-label">Nama</label>
-                                                <input type="text" class="form-control" name="nama" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="nis" class="form-label">NIS</label>
-                                                <input type="text" class="form-control" name="nis" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label for="nisn" class="form-label">NISN</label>
-                                                <input type="text" class="form-control" name="nisn" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
-                                                <select class="form-select" name="jenis_kelamin" required>
-                                                    <option value="Laki-laki">Laki-laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                                                <input type="text" class="form-control" name="tempat_lahir" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                                <input type="date" class="form-control" name="tgl_lahir" required>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="agama" class="form-label">Agama</label>
-                                            <input type="text" class="form-control" name="agama" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="alamat" class="form-label">Alamat</label>
-                                            <textarea class="form-control" name="alamat" required></textarea>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Navigasi Pagination -->
+                    <div class="d-flex justify-content-center">
+                        <?php if ($page > 1) : ?>
+                            <a href="?page=<?= $page - 1; ?>" class="btn btn-secondary mx-1">Sebelumnya</a>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                            <a href="?page=<?= $i; ?>" class="btn <?= ($i == $page) ? 'btn-primary' : 'btn-outline-secondary'; ?> mx-1"><?= $i; ?></a>
+                        <?php endfor; ?>
+                        <?php if ($page < $total_pages) : ?>
+                            <a href="?page=<?= $page + 1; ?>" class="btn btn-secondary mx-1">Berikutnya</a>
+                        <?php endif; ?>
                     </div>
-
-                    <?php
-                    echo "<div class='d-flex justify-content-center align-items-center my-3'>";
-                    if ($page > 1) {
-                        echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
-                    } else {
-                        echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
-                    }
-                    echo "<div class='mx-2'>";
-                    for ($i = 1; $i <= $items_per_page; $i++) {
-                        if ($i == $page) {
-                            // Halaman saat ini (diberi gaya berbeda)
-                            echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
-                        } else {
-                            // Link ke halaman lain
-                            echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
-                        }
-                    }
-                    echo "</div>";
-                    if ($page < $items_per_page) {
-                        echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
-                    } else {
-                        echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
-                    }
-
-                    echo "</div>";
-                    ?>
-
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
