@@ -6,13 +6,13 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
+$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
 
-if (mysqli_connect_errno()) {
+if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
 }
 
-// Query untuk Line Chart (jumlah barang masuk per tanggal)
+// Query untuk mengambil jumlah barang masuk berdasarkan tanggal
 $sql_barang_masuk = "SELECT tanggal, SUM(jumlah) as total_jumlah FROM barang_masuk GROUP BY tanggal";
 $result_barang_masuk = mysqli_query($koneksi, $sql_barang_masuk);
 
@@ -24,7 +24,7 @@ while ($row = mysqli_fetch_assoc($result_barang_masuk)) {
     $data_barang_masuk[] = $row['total_jumlah'];
 }
 
-// Query untuk Bar Chart (jumlah barang masuk per barang)
+// Query untuk mengambil jumlah barang masuk per barang
 $sql_barang = "SELECT b.nama, SUM(bm.jumlah) as total_jumlah FROM barang_masuk bm JOIN barang b ON bm.id_barang = b.id_barang GROUP BY b.nama";
 $result_barang = mysqli_query($koneksi, $sql_barang);
 
@@ -38,7 +38,6 @@ while ($row = mysqli_fetch_assoc($result_barang)) {
 
 mysqli_close($koneksi);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,40 +52,112 @@ mysqli_close($koneksi);
             color: #343a40;
         }
         .chart-container {
-            margin: 20px 0;
+            margin: 50px 0;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background-color: white;
             padding: 20px;
+            display: none;
         }
         .chart-title {
             text-align: center;
             margin-bottom: 15px;
             font-weight: bold;
         }
+        .page-title-container {
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 70px;
+        }
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+        .page-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .small-dropdown-container {
+            position: absolute;
+            top: 100%;
+            left: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .small-dropdown {
+            width: 250px;
+            font-size: 0.875rem;
+        }
+        .cancel-btn {
+            background-color: #e0e0e0;
+            color: #343a40;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cancel-btn:hover {
+            background-color: #d6d6d6;
+        }
+        .cancel-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Visualisasi Data Barang Masuk</h1>
+        <!-- Title -->
+        <div class="page-title-container">
+            <h1 class="page-title">VISUALISASI DATA BARANG MASUK</h1>
+            <p class="page-subtitle">Pantau data barang masuk Anda dengan grafik interaktif</p>
+            
+            <!-- Small Dropdown and Back Button Container -->
+            <div class="small-dropdown-container">
+                <a href="../data_visualisasi.php" class="cancel-btn" onclick="closeModal()">Kembali</a>
+                <select id="chartSelector" class="form-select form-select-sm small-dropdown">
+                    <option value="lineChartContainer">Jumlah Barang Masuk per Tanggal</option>
+                    <option value="barChartContainer">Jumlah Barang Masuk per Barang</option>
+                </select>
+            </div>
+        </div>
 
-        <!-- Line Chart -->
-        <div class="chart-container">
+        <!-- Line Chart untuk jumlah barang masuk berdasarkan tanggal -->
+        <div id="lineChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Barang Masuk per Tanggal</div>
             <canvas id="lineChartBarangMasuk" width="400" height="200"></canvas>
         </div>
 
-        <!-- Bar Chart -->
-        <div class="chart-container">
+        <!-- Bar Chart untuk jumlah barang masuk per barang -->
+        <div id="barChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Barang Masuk per Barang</div>
             <canvas id="barChartBarangMasuk" width="400" height="200"></canvas>
         </div>
-
     </div>
 
     <script>
+        // Fungsi untuk menampilkan diagram berdasarkan pilihan dropdown
+        document.getElementById('chartSelector').addEventListener('change', function() {
+            const charts = document.querySelectorAll('.chart-container');
+            charts.forEach(chart => chart.style.display = 'none');
+            document.getElementById(this.value).style.display = 'block';
+        });
+
+        // Tampilkan chart pertama secara default
+        document.getElementById('lineChartContainer').style.display = 'block';
+
         // Line Chart
         const ctxLineBarangMasuk = document.getElementById('lineChartBarangMasuk').getContext('2d');
         const lineChartBarangMasuk = new Chart(ctxLineBarangMasuk, {
@@ -152,6 +223,10 @@ mysqli_close($koneksi);
                 }
             }
         });
+
+        function closeModal() {
+            window.close();
+        }
     </script>
 </body>
 </html>
