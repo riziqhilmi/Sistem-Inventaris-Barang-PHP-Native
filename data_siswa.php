@@ -72,6 +72,7 @@ include("koneksi.php");
                                             <th>Nama</th>
                                             <th>NIS</th>
                                             <th>NISN</th>
+                                            <th>Kelas</th>
                                             <th>Jenis Kelamin</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
@@ -83,7 +84,7 @@ include("koneksi.php");
                                         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
                                         if ($query != '') {
-                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
+                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR  kelas LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
                                         } else {
                                             $sql = "SELECT * FROM siswa";
                                         }
@@ -97,18 +98,18 @@ include("koneksi.php");
                                         $offset = ($page - 1) * $items_per_page;
                                         
                                         if ($query != '') {
-                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%' OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%' LIMIT $items_per_page OFFSET $offset";
+                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%' OR NISN LIKE '%$query%' OR  kelas LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%' LIMIT $items_per_page OFFSET $offset";
                                         } else {
                                             $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
                                         }
 
                                         $result = mysqli_query($koneksi, $sql);
-                                        $no = $offset + 1; // Mulai nomor urut dari offset
-
+                                        $no = $offset + 1;
                                         while ($row = mysqli_fetch_array($result)) {
                                             $nama = $row['nama'];
                                             $nis = $row['NIS'];
                                             $nisn = $row['NISN'];
+                                            $kelas = $row['kelas'];
                                             $jenis_kelamin = $row['jenis_kelamin'];
                                             $tempatLahir = $row['tempat_lahir'];
                                             $tglLahir = $row['tgl_lahir'];
@@ -122,6 +123,7 @@ include("koneksi.php");
                                                 <td><?php echo $nama; ?></td>
                                                 <td><?php echo $nis; ?></td>
                                                 <td><?php echo $nisn; ?></td>
+                                                <td><?php echo $kelas; ?></td>
                                                 <td><?php echo ($jenis_kelamin === 'Laki-laki') ? 'Laki-laki' : 'Perempuan'; ?></td>
                                                 <td><?php echo $tempatLahir; ?></td>
                                                 <td><?php echo $tglLahir; ?></td>
@@ -162,6 +164,11 @@ include("koneksi.php");
                         <div class="col-md-6">
                             <label for="nis" class="form-label">NIS</label>
                             <input type="text" class="form-control" name="nis" value="<?php echo $row['NIS']; ?>" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <input type="text" class="form-control" name="kelas" value="<?php echo $row['kelas']; ?>" required>
                         </div>
                     </div>
 
@@ -233,6 +240,10 @@ include("koneksi.php");
                                             <div class="col-md-6">
                                                 <label for="nisn" class="form-label">NISN</label>
                                                 <input type="text" class="form-control" name="nisn" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="kelas" class="form-label">Kelas</label>
+                                                <input type="text" class="form-control" name="kelas" required>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>

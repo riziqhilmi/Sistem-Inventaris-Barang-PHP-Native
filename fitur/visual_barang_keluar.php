@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
+$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
 
 if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
@@ -52,14 +52,14 @@ mysqli_close($koneksi);
             color: #343a40;
         }
         .chart-container {
-            margin: 50px 0; /* Increased top and bottom margin */
+            margin: 50px 0;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background-color: white;
             padding: 20px;
-            display: none; /* Default: disembunyikan */
+            display: none;
         }
         .chart-title {
             text-align: center;
@@ -69,7 +69,7 @@ mysqli_close($koneksi);
         .page-title-container {
             position: relative;
             margin-top: 50px;
-            margin-bottom: 50px; /* Increased bottom margin */
+            margin-bottom: 70px;
         }
         .page-title {
             text-align: center;
@@ -96,13 +96,24 @@ mysqli_close($koneksi);
             width: 250px;
             font-size: 0.875rem;
         }
-        .btn-back {
+        .cancel-btn {
             background-color: #e0e0e0;
             color: #343a40;
             border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
-        .btn-back:hover {
+        .cancel-btn:hover {
             background-color: #d6d6d6;
+        }
+        .cancel-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -115,7 +126,7 @@ mysqli_close($koneksi);
             
             <!-- Small Dropdown and Back Button Container -->
             <div class="small-dropdown-container">
-                <a href="../data_visualisasi.php" class="btn btn-sm btn-back me-2">Kembali</a>
+                <a href="../data_visualisasi.php" class="cancel-btn" onclick="closeModal()">Kembali</a>
                 <select id="chartSelector" class="form-select form-select-sm small-dropdown">
                     <option value="lineChartContainer">Jumlah Barang Keluar per Tanggal</option>
                     <option value="barChartContainer">Jumlah Barang Keluar per Barang</option>
@@ -140,8 +151,8 @@ mysqli_close($koneksi);
         // Fungsi untuk menampilkan diagram berdasarkan pilihan dropdown
         document.getElementById('chartSelector').addEventListener('change', function() {
             const charts = document.querySelectorAll('.chart-container');
-            charts.forEach(chart => chart.style.display = 'none'); // Sembunyikan semua chart
-            document.getElementById(this.value).style.display = 'block'; // Tampilkan chart yang dipilih
+            charts.forEach(chart => chart.style.display = 'none');
+            document.getElementById(this.value).style.display = 'block';
         });
 
         // Tampilkan chart pertama secara default
@@ -212,6 +223,10 @@ mysqli_close($koneksi);
                 }
             }
         });
+
+        function closeModal() {
+        window.close();
+    }
     </script>
 </body>
 </html>
