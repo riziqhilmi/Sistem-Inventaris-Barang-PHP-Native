@@ -7,7 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Koneksi ke database
-$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
+$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
 
 if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
@@ -53,6 +53,18 @@ mysqli_close($koneksi);
             background-color: #f8f9fa;
             color: #343a40;
         }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #4CAF50;
+        }
+
         .chart-container {
             margin: 50px 0;
             position: relative;
@@ -86,36 +98,91 @@ mysqli_close($koneksi);
             color: #6c757d;
         }
         .small-dropdown-container {
-            position: absolute;
-            top: 100%;
-            left: 10px;
-            margin-top: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .small-dropdown {
-            width: 250px;
-            font-size: 0.875rem;
-        }
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+}
+
+.small-dropdown {
+    width: 250px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.small-dropdown:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px; /* Tambahkan jarak di atas */
+    margin-bottom: 20px;
+}
+
+.cancel-btn:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
         .cancel-btn {
-            background-color: #e0e0e0;
-            color: #343a40;
+            background-color: #4CAF50;
+            color: #fff;
             border: none;
             padding: 0.5rem 1rem;
             border-radius: 0.375rem;
             font-size: 0.875rem;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            margin-bottom: 20px;
         }
         .cancel-btn:hover {
-            background-color: #d6d6d6;
+            background-color: #45a049;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
         .cancel-btn:active {
             transform: translateY(1px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            background: linear-gradient(to bottom, #ffffff, #e8f5e9);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #388E3C;
         }
     </style>
 </head>
