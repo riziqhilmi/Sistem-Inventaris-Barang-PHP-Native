@@ -83,25 +83,27 @@ include("koneksi.php");
                                         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
                                         if ($query != '') {
-                                            // $query = mysqli_real_escape_string($koneksi, $query);
-                                            // echo "<script>console.log('Hehehehehehehhehehehe')</script>";
                                             $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%'OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%'";
                                         } else {
                                             $sql = "SELECT * FROM siswa";
                                         }
 
-                                        echo "<script>console.log(\"$sql\"  )</script>";
-
                                         $result = mysqli_query($koneksi, $sql);
-                                        $no = 1;
+                                        $total_rows = mysqli_num_rows($result); // Hitung total baris
 
+                                        // Pagination
                                         $items_per_page = 10;
-                                        // Ambil nomor halaman dari URL (default adalah 1 jika tidak ada)
                                         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                                         $offset = ($page - 1) * $items_per_page;
-                                        // Query untuk menampilkan data dengan LIMIT dan OFFSET untuk paginasi
-                                        // $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
+                                        
+                                        if ($query != '') {
+                                            $sql = "SELECT * FROM siswa WHERE nama LIKE '%$query%' OR NIS LIKE '%$query%' OR NISN LIKE '%$query%' OR jenis_kelamin LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR agama LIKE '%$query%' OR alamat LIKE '%$query%' LIMIT $items_per_page OFFSET $offset";
+                                        } else {
+                                            $sql = "SELECT * FROM siswa LIMIT $items_per_page OFFSET $offset";
+                                        }
+
                                         $result = mysqli_query($koneksi, $sql);
+                                        $no = $offset + 1; // Mulai nomor urut dari offset
 
                                         while ($row = mysqli_fetch_array($result)) {
                                             $nama = $row['nama'];
@@ -179,8 +181,10 @@ include("koneksi.php");
                                                                         Kelamin</label>
                                                                     <select class="form-select" name="jenis_kelamin"
                                                                         required>
-                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>
+                                                                            Laki-laki</option>
+                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>
+                                                                            Perempuan</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="mb-3">
@@ -188,13 +192,13 @@ include("koneksi.php");
                                                                         Lahir</label>
                                                                     <input type="text" class="form-control"
                                                                         name="tempat_lahir"
-                                                                        value="<?php echo $row['tempat_lahir']; ?>"
-                                                                        required>
+                                                                        value="<?php echo $row['tempat_lahir']; ?>" required>
                                                                 </div>
                                                                 <div class="mb-3">
                                                                     <label for="tgl_lahir" class="form-label">Tanggal
                                                                         Lahir</label>
-                                                                    <input type="date" class="form-control" name="tgl_lahir"
+                                                                    <input type="date" class="form-control"
+                                                                        name="tgl_lahir"
                                                                         value="<?php echo $row['tgl_lahir']; ?>" required>
                                                                 </div>
                                                                 <div class="mb-3">
@@ -205,51 +209,20 @@ include("koneksi.php");
                                                                 <div class="mb-3">
                                                                     <label for="alamat" class="form-label">Alamat</label>
                                                                     <textarea class="form-control" name="alamat"
-                                                                        required><?php echo $row['alamat']; ?></textarea>
+                                                                        rows="3" required><?php echo $row['alamat']; ?></textarea>
                                                                 </div>
-
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                <button type="submit" class="btn btn-primary">Simpan</button>
                                                             </form>
-
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <?php
-                                            $no++;
-                                        }
-                                        ?>
+                                            <!-- End Modal Edit Data Siswa -->
+                                            <?php $no++; } ?>
                                     </table>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.container-fluid -->
 
-                    <script>
-                        $(document).ready(function () {
-                            $('#searchForm').on('submit', function (e) {
-                                e.preventDefault(); // Menghindari reload halaman
-                                var query = $('input[name="query"]').val(); // Mengambil nilai dari input
-
-                                $.ajax({
-                                    url: 'fitur/cari_siswa.php', // URL untuk memproses pencarian
-                                    method: 'GET',
-                                    data: { query: query },
-                                    success: function (response) {
-                                        $('#searchResults').html(response); // Menampilkan hasil di div searchResults
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error("Error:", error); // Menampilkan kesalahan jika ada
-                                    }
-                                });
-                            });
-                        });
-                    </script>
-
-                    <!-- Modal for Adding Teacher -->
+                                <!-- Modal for Adding Teacher -->
                     <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel"
                         aria-hidden="true">
                         <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
@@ -311,41 +284,40 @@ include("koneksi.php");
                         </div>
                     </div>
 
-                    <?php
-                    echo "<div class='d-flex justify-content-center align-items-center my-3'>";
-                    if ($page > 1) {
-                        echo '<a href="?page=' . ($page - 1) . '" class="btn btn-secondary mx-1">Sebelumnya</a>';
-                    } else {
-                        echo '<span class="btn btn-secondary disabled mx-1">Sebelumnya</span>';
-                    }
-                    echo "<div class='mx-2'>";
-                    for ($i = 1; $i <= $items_per_page; $i++) {
-                        if ($i == $page) {
-                            // Halaman saat ini (diberi gaya berbeda)
-                            echo '<span class="btn btn-primary mx-1">' . $i . '</span>';
-                        } else {
-                            // Link ke halaman lain
-                            echo '<a href="?page=' . $i . '" class="btn btn-outline-secondary mx-1">' . $i . '</a>';
-                        }
-                    }
-                    echo "</div>";
-                    if ($page < $items_per_page) {
-                        echo '<a href="?page=' . ($page + 1) . '" class="btn btn-secondary mx-1">Berikutnya</a>';
-                    } else {
-                        echo '<span class="btn btn-secondary disabled mx-1">Berikutnya</span>';
-                    }
-
-                    echo "</div>";
-                    ?>
-
+                                <!-- Pagination -->
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        <?php
+                                        $total_pages = ceil($total_rows / $items_per_page);
+                                        $prev_page = $page - 1;
+                                        $next_page = $page + 1;
+                                        ?>
+                                        <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                                            <a class="page-link" href="?page=<?php echo $prev_page; ?>&query=<?php echo $query; ?>" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <?php for ($i = 1; $i <= $total_pages; $i++) : ?>
+                                            <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                                <a class="page-link" href="?page=<?php echo $i; ?>&query=<?php echo $query; ?>"><?php echo $i; ?></a>
+                                            </li>
+                                        <?php endfor; ?>
+                                        <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+                                            <a class="page-link" href="?page=<?php echo $next_page; ?>&query=<?php echo $query; ?>" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
