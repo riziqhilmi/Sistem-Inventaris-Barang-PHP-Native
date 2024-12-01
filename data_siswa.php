@@ -122,7 +122,7 @@ include("koneksi.php");
                                                 <td><?php echo $nama; ?></td>
                                                 <td><?php echo $nis; ?></td>
                                                 <td><?php echo $nisn; ?></td>
-                                                <td><?php echo ($jenis_kelamin === 'L') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                                <td><?php echo ($jenis_kelamin === 'Laki-laki') ? 'Laki-laki' : 'Perempuan'; ?></td>
                                                 <td><?php echo $tempatLahir; ?></td>
                                                 <td><?php echo $tglLahir; ?></td>
                                                 <td><?php echo $agama; ?></td>
@@ -169,8 +169,8 @@ include("koneksi.php");
                         <div class="col-md-6">
                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                             <select class="form-select" name="jenis_kelamin" required>
-                                <option value="L" <?php echo ($row['jenis_kelamin'] == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
-                                <option value="P" <?php echo ($row['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                                <option value="Laki-laki" <?php echo ($row['jenis_kelamin'] == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                <option value="Perempuan" <?php echo ($row['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                             </select>
                         </div>
                         <div class="col-md-6">
