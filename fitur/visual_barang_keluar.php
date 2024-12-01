@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
+$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
 
 if (mysqli_connect_errno()){
     echo "Koneksi database gagal : " . mysqli_connect_error();
@@ -52,39 +52,101 @@ mysqli_close($koneksi);
             color: #343a40;
         }
         .chart-container {
-            margin: 20px 0;
+            margin: 50px 0; /* Increased top and bottom margin */
             position: relative;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background-color: white;
             padding: 20px;
+            display: none; /* Default: disembunyikan */
         }
         .chart-title {
             text-align: center;
             margin-bottom: 15px;
             font-weight: bold;
         }
+        .page-title-container {
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 50px; /* Increased bottom margin */
+        }
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+        .page-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .small-dropdown-container {
+            position: absolute;
+            top: 100%;
+            left: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .small-dropdown {
+            width: 250px;
+            font-size: 0.875rem;
+        }
+        .btn-back {
+            background-color: #e0e0e0;
+            color: #343a40;
+            border: none;
+        }
+        .btn-back:hover {
+            background-color: #d6d6d6;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Visualisasi Data Barang Keluar</h1>
+        <!-- Title -->
+        <div class="page-title-container">
+            <h1 class="page-title">VISUALISASI DATA BARANG KELUAR</h1>
+            <p class="page-subtitle">Pantau data barang keluar Anda dengan grafik interaktif</p>
+            
+            <!-- Small Dropdown and Back Button Container -->
+            <div class="small-dropdown-container">
+                <a href="../data_visualisasi.php" class="btn btn-sm btn-back me-2">Kembali</a>
+                <select id="chartSelector" class="form-select form-select-sm small-dropdown">
+                    <option value="lineChartContainer">Jumlah Barang Keluar per Tanggal</option>
+                    <option value="barChartContainer">Jumlah Barang Keluar per Barang</option>
+                </select>
+            </div>
+        </div>
 
         <!-- Line Chart untuk jumlah barang keluar berdasarkan tanggal -->
-        <div class="chart-container">
+        <div id="lineChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Barang Keluar per Tanggal</div>
             <canvas id="lineChartBarangKeluar" width="400" height="200"></canvas>
         </div>
 
         <!-- Bar Chart untuk jumlah barang keluar per barang -->
-        <div class="chart-container">
+        <div id="barChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Barang Keluar per Barang</div>
             <canvas id="barChartBarangKeluar" width="400" height="200"></canvas>
         </div>
     </div>
 
     <script>
+        // Fungsi untuk menampilkan diagram berdasarkan pilihan dropdown
+        document.getElementById('chartSelector').addEventListener('change', function() {
+            const charts = document.querySelectorAll('.chart-container');
+            charts.forEach(chart => chart.style.display = 'none'); // Sembunyikan semua chart
+            document.getElementById(this.value).style.display = 'block'; // Tampilkan chart yang dipilih
+        });
+
+        // Tampilkan chart pertama secara default
+        document.getElementById('lineChartContainer').style.display = 'block';
+
         // Line Chart
         const ctxLineBarangKeluar = document.getElementById('lineChartBarangKeluar').getContext('2d');
         const lineChartBarangKeluar = new Chart(ctxLineBarangKeluar, {
@@ -118,8 +180,8 @@ mysqli_close($koneksi);
             }
         });
 
-                // Bar Chart
-                const ctxBarBarangKeluar = document.getElementById('barChartBarangKeluar').getContext('2d');
+        // Bar Chart
+        const ctxBarBarangKeluar = document.getElementById('barChartBarangKeluar').getContext('2d');
         const barChartBarangKeluar = new Chart(ctxBarBarangKeluar, {
             type: 'bar',
             data: {
