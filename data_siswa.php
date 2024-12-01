@@ -133,6 +133,68 @@ include("koneksi.php");
         </div>
     </div>
 
+    <!-- Modal for Adding Teacher -->
+    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg"> <!-- Make modal wider -->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addTeacherLabel">Tambah Data Siswa</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="fitur/tambah_siswa.php" method="POST">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="nama" class="form-label">Nama</label>
+                                                <input type="text" class="form-control" name="nama" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="nis" class="form-label">NIS</label>
+                                                <input type="text" class="form-control" name="nis" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="nisn" class="form-label">NISN</label>
+                                                <input type="text" class="form-control" name="nisn" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                                                <select class="form-select" name="jenis_kelamin" required>
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                                                <input type="text" class="form-control" name="tempat_lahir" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                                                <input type="date" class="form-control" name="tgl_lahir" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="agama" class="form-label">Agama</label>
+                                            <input type="text" class="form-control" name="agama" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="alamat" class="form-label">Alamat</label>
+                                            <textarea class="form-control" name="alamat" required></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
