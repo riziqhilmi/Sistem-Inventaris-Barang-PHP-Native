@@ -1,0 +1,6 @@
+.table-bordered .kolom th {
+    background-color: rgb(0, 102, 255);
+    color: white; /* Agar teks tetap terlihat dengan kontras */
+    text-align: center; /* Opsional, untuk merapikan teks */
+}
+
