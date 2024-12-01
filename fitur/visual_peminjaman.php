@@ -14,7 +14,6 @@ if (mysqli_connect_errno()){
 }
 
 // Query untuk data peminjaman
-// Query untuk data peminjaman
 $sql_peminjaman = "SELECT tanggal_pinjam, nama_peminjam, SUM(jumlah_pinjam) AS total_pinjam 
                    FROM peminjaman 
                    GROUP BY tanggal_pinjam, nama_peminjam 
@@ -40,7 +39,6 @@ if (mysqli_num_rows($result) > 0) {
 
 // Tutup koneksi
 mysqli_close($koneksi);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,48 +51,122 @@ mysqli_close($koneksi);
     <style>
         body {
             background-color: #f8f9fa;
+            color: #343a40;
         }
         .chart-container {
-            margin: 20px 0;
+            margin: 50px 0;
             position: relative;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             background-color: white;
             padding: 20px;
+            display: none;
         }
         .chart-title {
             text-align: center;
             margin-bottom: 15px;
             font-weight: bold;
+        }
+        .page-title-container {
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 70px;
+        }
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0056b3;
+            text-transform: uppercase;
+        }
+        .page-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .small-dropdown-container {
+            position: absolute;
+            top: 100%;
+            left: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .small-dropdown {
+            width: 250px;
+            font-size: 0.875rem;
+        }
+        .cancel-btn {
+            background-color: #e0e0e0;
             color: #343a40;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cancel-btn:hover {
+            background-color: #d6d6d6;
+        }
+        .cancel-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center my-4">Visualisasi Data Peminjaman</h1>
+        <!-- Title -->
+        <div class="page-title-container">
+            <h1 class="page-title">VISUALISASI DATA PEMINJAMAN</h1>
+            <p class="page-subtitle">Pantau data peminjaman Anda dengan grafik interaktif</p>
+            
+            <!-- Small Dropdown and Back Button Container -->
+            <div class="small-dropdown-container">
+                <a href="../data_visualisasi.php" class="cancel-btn" onclick="closeModal()">Kembali</a>
+                <select id="chartSelector" class="form-select form-select-sm small-dropdown">
+                    <option value="lineChartContainer">Peminjaman Berdasarkan Tanggal</option>
+                    <option value="barChartContainer">Peminjaman per Nama Peminjam</option>
+                    <option value="histogramContainer">Distribusi Jumlah Barang Dipinjam</option>
+                </select>
+            </div>
+        </div>
 
-        <!-- Line Chart -->
-        <div class="chart-container">
+        <!-- Line Chart untuk jumlah peminjaman berdasarkan tanggal -->
+        <div id="lineChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Peminjaman Berdasarkan Tanggal</div>
             <canvas id="lineChart" width="400" height="200"></canvas>
         </div>
 
-        <!-- Bar Chart -->
-        <div class="chart-container">
+        <!-- Bar Chart untuk jumlah peminjaman per nama peminjam -->
+        <div id="barChartContainer" class="chart-container">
             <div class="chart-title">Jumlah Peminjaman per Nama Peminjam</div>
             <canvas id="barChart" width="400" height="200"></canvas>
         </div>
 
-        <!-- Histogram -->
-        <div class="chart-container">
+        <!-- Histogram untuk distribusi jumlah barang dipinjam -->
+        <div id="histogramContainer" class="chart-container">
             <div class="chart-title">Distribusi Jumlah Barang Dipinjam</div>
             <canvas id="histogram" width="400" height="200"></canvas>
         </div>
     </div>
 
     <script>
+        // Fungsi untuk menampilkan diagram berdasarkan pilihan dropdown
+        document.getElementById('chartSelector').addEventListener('change', function() {
+            const charts = document.querySelectorAll('.chart-container');
+            charts.forEach(chart => chart.style.display = 'none');
+            document.getElementById(this.value).style.display = 'block';
+        });
+
+        // Tampilkan chart pertama secara default
+        document.getElementById('lineChartContainer').style.display = 'block';
+
         // Line Chart: Jumlah Peminjaman Berdasarkan Tanggal
         const ctxLine = document.getElementById('lineChart').getContext('2d');
         new Chart(ctxLine, {
@@ -166,6 +238,10 @@ mysqli_close($koneksi);
                 scales: { y: { beginAtZero: true } }
             }
         });
+
+        function closeModal() {
+            window.close();
+        }
     </script>
 </body>
 </html>
