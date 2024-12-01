@@ -213,8 +213,8 @@ ORDER BY p.tanggal_pinjam DESC" ;
         }
 
         .modal .print-btn {
-            /* background-color: #0000FF; /* Warna biru untuk tombol cetak */
-            /* color: #fff; */
+             background-color: #0000FF; /* Warna biru untuk tombol cetak */
+             color: #fff; 
         }
 
         .modal .cancel-btn {
@@ -282,7 +282,7 @@ ORDER BY p.tanggal_pinjam DESC" ;
 
             <!-- Tombol Cetak dan Cancel -->
             <div class="button-container">
-                <button type="submit" class="btn btn-primary print-btn">Cetak Laporan</button>
+                <button type="submit" class="btn print-btn">Cetak Laporan</button>
                 <button type="button" class="btn btn-danger cancel-btn" id="cancelBtn">Cancel</button>
             </div>
         </form>
