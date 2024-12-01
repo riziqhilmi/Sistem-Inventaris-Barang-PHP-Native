@@ -143,80 +143,65 @@ include("koneksi.php");
                                             </tr>
 
                                             <!-- Modal Edit Data Siswa -->
-                                            <div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>"
-                                                tabindex="-1"
-                                                aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="editTeacherLabel<?php echo $row['id_siswa']; ?>">Edit
-                                                                Data Siswa</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="fitur/edit_siswa.php" method="POST">
-                                                                <input type="hidden" name="id_siswa"
-                                                                    value="<?php echo $row['id_siswa']; ?>">
+<div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Added modal-lg for a wider form -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_siswa']; ?>">Edit Data Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="fitur/edit_siswa.php" method="POST">
+                    <input type="hidden" name="id_siswa" value="<?php echo $row['id_siswa']; ?>">
 
-                                                                <div class="mb-3">
-                                                                    <label for="nama" class="form-label">Nama</label>
-                                                                    <input type="text" class="form-control" name="nama"
-                                                                        value="<?php echo $row['nama']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="nis" class="form-label">NIS</label>
-                                                                    <input type="text" class="form-control" name="nis"
-                                                                        value="<?php echo $row['NIS']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="nisn" class="form-label">NISN</label>
-                                                                    <input type="text" class="form-control" name="nisn"
-                                                                        value="<?php echo $row['NISN']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="jenis_kelamin" class="form-label">Jenis
-                                                                        Kelamin</label>
-                                                                    <select class="form-select" name="jenis_kelamin"
-                                                                        required>
-                                                                        <option value="L" <?php echo ($jenis_kelamin == 'Laki-laki') ? 'selected' : ''; ?>>
-                                                                            Laki-laki</option>
-                                                                        <option value="P" <?php echo ($jenis_kelamin == 'Perempuan') ? 'selected' : ''; ?>>
-                                                                            Perempuan</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="tempat_lahir" class="form-label">Tempat
-                                                                        Lahir</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="tempat_lahir"
-                                                                        value="<?php echo $row['tempat_lahir']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="tgl_lahir" class="form-label">Tanggal
-                                                                        Lahir</label>
-                                                                    <input type="date" class="form-control"
-                                                                        name="tgl_lahir"
-                                                                        value="<?php echo $row['tgl_lahir']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="agama" class="form-label">Agama</label>
-                                                                    <input type="text" class="form-control" name="agama"
-                                                                        value="<?php echo $row['agama']; ?>" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="alamat" class="form-label">Alamat</label>
-                                                                    <textarea class="form-control" name="alamat"
-                                                                        rows="3" required><?php echo $row['alamat']; ?></textarea>
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary">Simpan</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nis" class="form-label">NIS</label>
+                            <input type="text" class="form-control" name="nis" value="<?php echo $row['NIS']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                            <select class="form-select" name="jenis_kelamin" required>
+                                <option value="L" <?php echo ($row['jenis_kelamin'] == 'Laki-laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                <option value="P" <?php echo ($row['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="agama" class="form-label">Agama</label>
+                            <input type="text" class="form-control" name="agama" value="<?php echo $row['agama']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" name="alamat" rows="3" required><?php echo $row['alamat']; ?></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
                                             <!-- End Modal Edit Data Siswa -->
                                             <?php $no++; } ?>
                                     </table>

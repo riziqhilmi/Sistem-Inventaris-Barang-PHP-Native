@@ -121,53 +121,61 @@ include ("koneksi.php");
                                     </tr>
 
                                     <!-- Modal Edit Data guru -->
-                                    <div class="modal fade" id="editTeacherModal<?php echo $row['id_guru']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_guru']; ?>" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_guru']; ?>">Edit Data Guru</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                <form action="fitur/edit_guru.php" method="POST">
-    <input type="hidden" name="id_guru" value="<?php echo $row['id_guru']; ?>">
-    
-    <div class="mb-3">
-        <label for="nama" class="form-label">Nama</label>
-        <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="nip" class="form-label">NIP</label>
-        <input type="text" class="form-control" name="nip" value="<?php echo $row['NIP']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="kontak" class="form-label">Kontak</label>
-        <input type="text" class="form-control" name="kontak" value="<?php echo $row['kontak']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-        <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-        <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="alamat" class="form-label">Alamat</label>
-        <textarea class="form-control" name="alamat" required><?php echo $row['alamat']; ?></textarea>
-    </div>
-    
-    <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <input type="text" class="form-control" name="status" value="<?php echo $row['status']; ?>" required>
-    </div>
+<div class="modal fade" id="editTeacherModal<?php echo $row['id_guru']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_guru']; ?>" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Added modal-lg for wider modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTeacherLabel<?php echo $row['id_guru']; ?>">Edit Data Guru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="fitur/edit_guru.php" method="POST">
+                    <input type="hidden" name="id_guru" value="<?php echo $row['id_guru']; ?>">
 
-    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="nama" class="form-label">Nama</label>
+                            <input type="text" class="form-control" name="nama" value="<?php echo $row['nama']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="nip" class="form-label">NIP</label>
+                            <input type="text" class="form-control" name="nip" value="<?php echo $row['NIP']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="kontak" class="form-label">Kontak</label>
+                            <input type="text" class="form-control" name="kontak" value="<?php echo $row['kontak']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
+                            <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <input type="text" class="form-control" name="status" value="<?php echo $row['status']; ?>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control" name="alamat" required><?php echo $row['alamat']; ?></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
     
 </form>
 
