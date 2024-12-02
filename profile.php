@@ -15,6 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_name = $_SESSION['username']; // Username from the session
 $user_email = $_SESSION['user_email'] ?? "email@example.com";
 $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gambar default jika tidak ada
+$user_description = $_SESSION['user_description'] ?? "This is a default description about the user."; // Deskripsi default jika tidak ada
 ?>
 
 <!DOCTYPE html>
@@ -36,61 +37,155 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
     <?php endif; ?>
 
     <style>
+        /* Background and overall styling */
+        body {
+            background: #f4f7fc;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
         .profile-container {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             display: flex;
-            align-items: center;
-            gap: 20px;
+            align-items: flex-start;
+            gap: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .profile-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .profile-photo {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #007bff;
+            border: 4px solid #6c63ff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .profile-details {
-            flex-grow: 1; /* Membuat kontainer informasi mengambil sisa ruang */
-        }
-
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .edit-btn {
-            color: white;
-            background: #007bff;
-            border-radius: 5px;
-            padding: 8px 15px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .edit-photo-btn {
+        .profile-photo-section .edit-btn {
             margin-top: 10px;
+            background: #6c63ff;
+            border: none;
+            padding: 12px 25px;
+            font-weight: bold;
+            color: white;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .edit-btn:hover {
-            background: #0056b3;
+        .profile-photo:hover {
             transform: scale(1.1);
         }
 
+        .profile-photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-photo-section:hover .edit-btn {
+            background-color: #4a42f5;
+        }
+
+        .profile-details {
+            flex-grow: 1;
+            padding-left: 20px;
+        }
+
         .profile-details h2 {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2f2f2f;
         }
 
         .profile-details p {
             margin-top: 5px;
             color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .profile-details .edit-btn {
+            background: #28a745;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 20px;
+            width: 160px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .profile-details .edit-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .modal-footer form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .modal-body input[type="file"] {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f0f4f8;
+            border: 1px solid #ccc;
+        }
+
+        .modal-header {
+            background: #6c63ff;
+            color: white;
+        }
+
+        .description-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex-basis: 40%;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .description-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2f2f2f;
+        }
+
+        .description-card p {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .profile-container .card-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
     </style>
 </head>
@@ -104,19 +199,27 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
             <!-- Main Content -->
             <div class="col-md-10 p-4">
                 <div class="container">
-                    <h1 class="mb-4">Profile</h1>
+                    <h1 class="mb-4" style="font-weight: bold; animation: fadeIn 0.6s forwards;">Profile</h1>
                     <div class="profile-container">
-                        <!-- Foto Profil -->
-                        <img src="<?php echo $user_photo; ?>" alt="Profile Photo" class="profile-photo">
-                        <div class="profile-details">
-                            <!-- Nama Pengguna dan Email -->
-                            <h2><?php echo htmlspecialchars($user_name); ?></h2> <!-- Menggunakan htmlspecialchars -->
-                            <p class="text-muted"><?php echo htmlspecialchars($user_email); ?></p> <!-- Menggunakan htmlspecialchars -->
+                        <!-- Foto Profil dan Tombol Pilih Foto Baru -->
+                        <div class="profile-photo-section">
+                            <img src="<?php echo $user_photo; ?>" alt="Profile Photo" class="profile-photo">
+                            <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#fileModal">
+                                Pilih Foto Baru
+                            </button>
                         </div>
-                        <!-- Tombol Edit Foto -->
-                        <button class="btn btn-primary edit-photo-btn" data-bs-toggle="modal" data-bs-target="#fileModal">
-                            Pilih Foto Baru
-                        </button>
+
+                        <!-- Detail Pengguna -->
+                        <div class="profile-details">
+                            <h2><?php echo htmlspecialchars($user_name); ?></h2>
+                            <p class="text-muted"><?php echo htmlspecialchars($user_email); ?></p>
+                        </div>
+                    </div>
+
+                    <!-- Card Deskripsi Pengguna -->
+                    <div class="description-card mt-4">
+                        <h3>Deskripsi Pengguna</h3>
+                        <p><?php echo htmlspecialchars($user_description); ?></p>
                     </div>
 
                     <!-- Modal untuk memilih file -->
