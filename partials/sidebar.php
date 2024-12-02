@@ -141,7 +141,26 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                 content: '';
             }
 
+            /* Styling untuk menu Profile */
+.profile-box {
+    border: 2px solid white; /* Kotak putih di sekeliling */
+    border-radius: 10px; /* Membuat sudut kotak melengkung */
+    padding: 10px; /* Ruang dalam kotak */
+    transition: all 0.3s ease; /* Animasi halus saat hover */
+}
 
+.profile-box:hover {
+    background-color: #ffeb3b; /* Ubah latar belakang saat hover */
+    color: black; /* Ubah warna teks saat hover */
+    transform: scale(1.05); /* Sedikit perbesaran pada hover */
+}
+
+.profile-box.active-main {
+    border-color: #ffeb3b; /* Warna border berubah jika aktif */
+    background-color: #ffffff; /* Latar belakang aktif */
+    color: black; /* Teks aktif */
+    font-weight: bold; /* Teks tebal */
+}
             </style>
 
         <!-- Menu Sidebar -->
@@ -198,6 +217,13 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
                 </a>
             </li>
         </ul>
+
+<!-- Profile Menu -->
+<div>
+    <a href="<?php echo $base_url; ?>/profile.php" class="nav-link profile-box text-white <?php echo ($current_page == 'profile.php') ? 'active-main' : ''; ?>">
+        <i class="bi bi-person-circle me-2"></i> Profile
+    </a>
+        </div>
 
         <hr>
         <a href="<?php echo $base_url; ?>/fitur/logout.php" class="btn btn-outline-light">Logout</a>
