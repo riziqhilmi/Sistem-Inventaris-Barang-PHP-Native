@@ -1,14 +1,18 @@
 <?php
 session_start();
 
-// Redirect jika belum login
+// Menyertakan koneksi database
+include('koneksi.php');
+
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    // If not logged in, redirect to login page
+    header('Location: login2.php');
     exit();
 }
 
-// Ambil informasi pengguna dari session atau database
-$user_name = $_SESSION['user_name'] ?? "Nama Pengguna";
+// Sample data for the dashboard
+$user_name = $_SESSION['username']; // Username from the session
 $user_email = $_SESSION['user_email'] ?? "email@example.com";
 $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gambar default jika tidak ada
 ?>
@@ -39,7 +43,6 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: 20px;
         }
 
@@ -51,9 +54,8 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
             border: 4px solid #007bff;
         }
 
-        .profile-info {
-            flex-grow: 1;
-            margin-left: 20px;
+        .profile-details {
+            flex-grow: 1; /* Membuat kontainer informasi mengambil sisa ruang */
         }
 
         .buttons-container {
@@ -81,6 +83,15 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
             background: #0056b3;
             transform: scale(1.1);
         }
+
+        .profile-details h2 {
+            margin-bottom: 5px;
+        }
+
+        .profile-details p {
+            margin-top: 5px;
+            color: #6c757d;
+        }
     </style>
 </head>
 
@@ -94,9 +105,14 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
             <div class="col-md-10 p-4">
                 <div class="container">
                     <h1 class="mb-4">Profile</h1>
-                    <div class="profile-container text-center">
+                    <div class="profile-container">
                         <!-- Foto Profil -->
                         <img src="<?php echo $user_photo; ?>" alt="Profile Photo" class="profile-photo">
+                        <div class="profile-details">
+                            <!-- Nama Pengguna dan Email -->
+                            <h2><?php echo htmlspecialchars($user_name); ?></h2> <!-- Menggunakan htmlspecialchars -->
+                            <p class="text-muted"><?php echo htmlspecialchars($user_email); ?></p> <!-- Menggunakan htmlspecialchars -->
+                        </div>
                         <!-- Tombol Edit Foto -->
                         <button class="btn btn-primary edit-photo-btn" data-bs-toggle="modal" data-bs-target="#fileModal">
                             Pilih Foto Baru
@@ -125,12 +141,6 @@ $user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gamba
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-8 mt-4">
-                        <h2><?php echo $user_name; ?></h2>
-                        <p class="text-muted"><?php echo $user_email; ?></p>
-                    </div>
-
 
                 </div>
             </div>
