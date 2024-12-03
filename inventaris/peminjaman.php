@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $tanggal_kembali = $_POST['tanggal_kembali'];
     $jumlah_pinjam = $_POST['jumlah_pinjam'];
     $keterangan = $_POST['keterangan'];
+    $created_by = $_SESSION['user_id']; // Ambil ID pengguna dari sesi
 
     $koneksi->begin_transaction();
 
@@ -31,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             throw new Exception("Jumlah pinjaman melebihi stok yang tersedia.");
         }
 
-        $query = "INSERT INTO peminjaman (id_barang, nama_peminjam, tanggal_pinjam, tanggal_kembali, jumlah_pinjam, keterangan) 
-                 VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO peminjaman (id_barang, nama_peminjam, tanggal_pinjam, tanggal_kembali, jumlah_pinjam, keterangan, created_by) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($query);
-        $stmt->bind_param("isssss", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan);
+        $stmt->bind_param("isssssi", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan, $created_by); // Tambahkan created_by
         $stmt->execute();
 
         $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir - ? WHERE id_barang = ?";
@@ -102,11 +103,12 @@ if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
     $result = $stmt->get_result();
     $barang_list = $result->fetch_all(MYSQLI_ASSOC);
     }
-$query = "SELECT p.*, b.nama, b.merek 
-          FROM peminjaman p 
-          JOIN barang b ON p.id_barang = b.id_barang 
-          ORDER BY p.tanggal_pinjam DESC 
-          LIMIT 10";
+    $query = "SELECT p.*, b.nama, b.merek, u.username 
+    FROM peminjaman p 
+    JOIN barang b ON p.id_barang = b.id_barang 
+    LEFT JOIN user u ON p.created_by = u.id_user 
+    ORDER BY p.tanggal_pinjam DESC 
+    LIMIT 10";
 $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 ?>
 
@@ -213,68 +215,70 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                 </div>
 
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Riwayat Peminjaman</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tanggal Pinjam</th>
-                                        <th>Tanggal Kembali</th>
-                                        <th>Nama Peminjam</th>
-                                        <th>Nama Barang</th>
-                                        <th>Merek</th>
-                                        <th>Jumlah Pinjam</th>
-                                        <th>Keterangan</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($transactions as $index => $trans): ?>
-                                        <tr>
-                                            <td><?= $index + 1 ?></td>
-                                            <td><?= date('d/m/Y', strtotime($trans['tanggal_pinjam'])) ?></td>
-                                            <td><?= $trans['tanggal_kembali'] ? date('d/m/Y', strtotime($trans['tanggal_kembali'])) : '-' ?></td>
-                                            <td><?= htmlspecialchars($trans['nama_peminjam']) ?></td>
-                                            <td><?= htmlspecialchars($trans['nama']) ?></td>
-                                            <td><?= htmlspecialchars($trans['merek']) ?></td>
-                                            <td><?= $trans['jumlah_pinjam'] ?></td>
-                                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
-                                            <td>
-                                                <?php 
-                                                if ($trans['status'] === 'Terlambat') {
-                                                    echo '<span class="btn bg-danger" style="color: white;">Terlambat</span>';
-                                                } elseif ($trans['status'] === 'Dikembalikan') {
-                                                    echo '<span class="btn bg-success" style="color: white;">Dikembalikan</span>';
-                                                } else {
-                                                    echo '<span class="btn bg-warning btn-sm" style="color: white;">Dipinjam</span>';
-                                                }
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($trans['status'] === 'Dipinjam'): ?>
-                                                    <form action="" method="POST" style="display:inline;">
-                                                        <input type="hidden" name="id_peminjaman" value="<?= $trans['id_peminjaman'] ?>">
-                                                        <button type="submit" name="return" class="btn btn-danger btn-sm">Kembalikan</button>
-                                                    </form>
-                                                <?php endif; ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    <?php if(empty($transactions)): ?>
-                                        <tr>
-                                        <td colspan="10" class="text-center">Tidak ada data peminjaman</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    <div class="card-header">
+        <h5 class="card-title mb-0">Riwayat Peminjaman</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal Pinjam</th>
+                        <th>Tanggal Kembali</th>
+                        <th>Nama Peminjam</th>
+                        <th>Nama Barang</th>
+                        <th>Merek</th>
+                        <th>Jumlah Pinjam</th>
+                        <th>Keterangan</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                        <th>Dibuat Oleh</th> <!-- Kolom untuk nama pembuat -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($transactions as $index => $trans): ?>
+                        <tr>
+                            <td><?= $index + 1 ?></td>
+                            <td><?= date('d/m/Y', strtotime($trans['tanggal_pinjam'])) ?></td>
+                            <td><?= $trans['tanggal_kembali'] ? date('d/m/Y', strtotime($trans['tanggal_kembali'])) : '-' ?></td>
+                            <td><?= htmlspecialchars($trans['nama_peminjam']) ?></td>
+                            <td><?= htmlspecialchars($trans['nama']) ?></td>
+                            <td><?= htmlspecialchars($trans['merek']) ?></td>
+                            <td><?= $trans['jumlah_pinjam'] ?></td>
+                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
+                            <td>
+                            <?php 
+                                if ($trans['status'] === 'Terlambat') {
+                                    echo '<span class="btn bg-danger" style="color: white;">Terlambat</span>';
+                                } elseif ($trans['status'] === 'Dikembalikan') {
+                                    echo '<span class="btn bg-success" style="color: white;">Dikembalikan</span>';
+                                } else {
+                                    echo '<span class="btn bg-warning btn-sm" style="color: white;">Dipinjam</span>';
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <?php if ($trans['status'] === 'Dipinjam'): ?>
+                                    <form action="" method="POST" style="display:inline;">
+                                        <input type="hidden" name="id_peminjaman" value="<?= $trans['id_peminjaman'] ?>">
+                                        <button type="submit" name="return" class="btn btn-danger btn-sm">Kembalikan</button>
+                                    </form>
+                                <?php endif; ?>
+                            </td>
+                            <td><?= htmlspecialchars($trans['username'] ?? 'Tidak Diketahui') ?></td> <!-- Menampilkan username atau 'Tidak Diketahui' -->
+                        </tr>
+                    <?php endforeach; ?>
+                    <?php if(empty($transactions)): ?>
+                        <tr>
+                            <td colspan="11" class="text-center">Tidak ada data peminjaman</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
                         <!-- Grafik -->
                 <div class="row mt-4">
                     <div class="col-lg-6">
