@@ -19,11 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $koneksi->begin_transaction();
 
     try {
-        // Memasukkan data ke tabel barang_masuk
-        $query = "INSERT INTO barang_masuk (id_barang, jumlah, tanggal, keterangan) 
-                 VALUES (?, ?, ?, ?)";
+       // Memasukkan data ke tabel barang_masuk
+       // Memasukkan data ke tabel barang_masuk
+        $query = "INSERT INTO barang_masuk (id_barang, jumlah, tanggal, keterangan, created_by) 
+        VALUES (?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($query);
-        $stmt->bind_param("iiss", $id_barang, $jumlah, $tanggal, $keterangan);
+        $stmt->bind_param("iissi", $id_barang, $jumlah, $tanggal, $keterangan, $_SESSION['user_id']);
         $stmt->execute();
 
         // Memperbarui jumlah_akhir di tabel barang
@@ -63,9 +64,10 @@ if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
     }
 
 // Mengambil data transaksi terakhir
-$query = "SELECT bm.*, b.nama, b.merek 
+$query = "SELECT bm.*, b.nama, b.merek, u.username 
           FROM barang_masuk bm 
-          JOIN barang b ON bm.id_barang = b.id_barang 
+          LEFT JOIN barang b ON bm.id_barang = b.id_barang 
+          LEFT JOIN user u ON bm.created_by = u.id_user 
           ORDER BY bm.tanggal DESC 
           LIMIT 10";
 $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
@@ -178,28 +180,30 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Barang</th>
-                                        <th>Merek</th>
-                                        <th>Jumlah</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($transactions as $index => $trans): ?>
-                                        <tr>
-                                            <td><?= $index + 1 ?></td>
-                                            <td><?= date('d/m/Y', strtotime($trans['tanggal'])) ?></td>
-                                            <td><?= htmlspecialchars($trans['nama']) ?></td>
-                                            <td><?= htmlspecialchars($trans['merek']) ?></td>
-                                            <td><?= $trans['jumlah'] ?></td>
-                                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
+                            <thead>
+    <tr>
+        <th>No</th>
+        <th>Tanggal</th>
+        <th>Nama Barang</th>
+        <th>Merek</th>
+        <th>Jumlah</th>
+        <th>Keterangan</th>
+        <th>Created By</th> <!-- Kolom baru untuk Created By -->
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($transactions as $index => $trans): ?>
+        <tr>
+            <td><?= $index + 1 ?></td>
+            <td><?= date('d/m/Y', strtotime($trans['tanggal'])) ?></td>
+            <td><?= htmlspecialchars($trans['nama']) ?></td>
+            <td><?= htmlspecialchars($trans['merek']) ?></td>
+            <td><?= $trans['jumlah'] ?></td>
+            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
+            <td><?= htmlspecialchars($trans['username'] ?? 'Tidak Diketahui') ?></td> <!-- Menampilkan username atau 'Tidak Diketahui' -->
+        </tr>
+    <?php endforeach; ?>
+</tbody>
                             </table>
                         </div>
                     </div>
