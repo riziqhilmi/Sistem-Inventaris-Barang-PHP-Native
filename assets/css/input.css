@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    height: 100vh;
+    display: flex; /* Flexbox utama */
+    justify-content: center; /* Menempatkan secara horizontal */
+    align-items: center; /* Menempatkan secara vertikal */
+}
+
+.card {
+    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
+    margin-top: -220px;
+    padding: 20px;
+    border-radius: 8px; /* Membuat sudut card lebih halus */
+}
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1; /* SVG berada di belakang elemen lainnya */
+}
