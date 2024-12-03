@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+    header('Location: login2.php');
     exit();
 }
 
@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $jumlah = $_POST['jumlah'];
     $tanggal = $_POST['tanggal'];
     $keterangan = $_POST['keterangan'];
+    $created_by = $_SESSION['user_id']; // Ambil ID pengguna dari sesi
 
     // Cek stok tersedia
     $query = "SELECT jumlah_akhir FROM barang WHERE id_barang = ?";
@@ -36,10 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
         try {
             // Memasukkan data ke tabel barang_keluar
-            $query = "INSERT INTO barang_keluar (id_barang, jumlah, tanggal, keterangan) 
-                     VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO barang_keluar (id_barang, jumlah, tanggal, keterangan, created_by) 
+                     VALUES (?, ?, ?, ?, ?)";
             $stmt = $koneksi->prepare($query);
-            $stmt->bind_param("iiss", $id_barang, $jumlah, $tanggal, $keterangan);
+            $stmt->bind_param("iissi", $id_barang, $jumlah, $tanggal, $keterangan, $created_by); // Tambahkan created_by
             $stmt->execute();
 
             // Memperbarui jumlah_akhir di tabel barang
@@ -77,10 +78,10 @@ if (isset($_GET['id_ruangan']) && !empty($_GET['id_ruangan'])) {
     $barang_list = $result->fetch_all(MYSQLI_ASSOC);
 }
 
-// Mengambil data transaksi terakhir
-$query = "SELECT bk.*, b.nama, b.merek 
+$query = "SELECT bk.*, b.nama, b.merek, u.username 
           FROM barang_keluar bk 
-          JOIN barang b ON bk.id_barang = b.id_barang 
+          LEFT JOIN barang b ON bk.id_barang = b.id_barang 
+          LEFT JOIN user u ON bk.created_by = u.id_user 
           ORDER BY bk.tanggal DESC 
           LIMIT 10";
 $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
@@ -188,41 +189,42 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     </div>
                 </div>
 
-                <!-- Tabel Riwayat Barang Keluar -->
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Riwayat Barang Keluar</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tanggal</th>
-                                        <th>Nama Barang</th>
-                                        <th>Merek</th>
-                                        <th>Jumlah</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($transactions as $index => $trans): ?>
-                                        <tr>
-                                            <td><?= $index + 1 ?></td>
-                                            <td><?= date('d/m/Y', strtotime($trans['tanggal'])) ?></td>
-                                            <td><?= htmlspecialchars($trans['nama']) ?></td>
-                                            <td><?= htmlspecialchars($trans['merek']) ?></td>
-                                            <td><?= $trans['jumlah'] ?></td>
-                                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
+              <!-- Tabel Riwayat Barang Keluar -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Riwayat Barang Keluar</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Nama Barang</th>
+                        <th>Merek</th>
+                        <th>Jumlah</th>
+                        <th>Keterangan</th>
+                        <th>Dibuat Oleh</th> <!-- Kolom untuk nama pembuat -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($transactions as $index => $trans): ?>
+                        <tr>
+                            <td><?= $index + 1 ?></td>
+                            <td><?= date('d/m/Y', strtotime($trans['tanggal'])) ?></td>
+                            <td><?= htmlspecialchars($trans['nama']) ?></td>
+                            <td><?= htmlspecialchars($trans['merek']) ?></td>
+                            <td><?= $trans['jumlah'] ?></td>
+                            <td><?= htmlspecialchars($trans['keterangan']) ?></td>
+                            <td><?= htmlspecialchars($trans['username'] ?? 'Tidak Diketahui') ?></td> <!-- Menampilkan username atau 'Tidak Diketahui' -->
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
                 <!-- Grafik -->
                 <div class="row mt-4">
                     <div class="col-lg-12">
