@@ -8,7 +8,27 @@
     <link rel="stylesheet" href="assets/css/input.css">
     <title>Ganti Password</title>
     <link rel="icon" type="image/png" href="img/logo sd pasarejo.png">
+<style>
+    /* Gaya tombol default */
+.btn-primary {
+    background-color: #007bff; /* Warna biru */
+    color: white; /* Warna teks */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: all 0.3s ease; /* Efek transisi */
+}
 
+/* Efek hover */
+.btn-primary:hover {
+    background-color: #0056b3; /* Warna biru lebih gelap */
+    color: #eaeaea; /* Warna teks berubah */
+    transform: scale(1.05); /* Membesar sedikit */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan */
+}
+
+</style>
 
 
 </head>
