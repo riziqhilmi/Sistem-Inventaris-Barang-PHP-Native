@@ -44,19 +44,26 @@ session_start();
     <div class="forms-container">
       <div class="signin-signup">
 
-        <form action="" method="POST" class="sign-in-form">
-          <h2 class="title">Sign in</h2>
-          <div class="input-field">
-            <i class="fas fa-user"></i>
-            <input type="text" name="username" id="username" placeholder="Username" required  />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="password" id="login" placeholder="Password" required  />
-          </div>
-          <input type="button" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
-          <a href="input_email.php" class="forgot">Lupa Password?</a>
-        </form>
+      <form action="" method="POST" class="sign-in-form">
+  <h2 class="title">Sign in</h2>
+  <div class="input-field">
+    <i class="fas fa-user"></i>
+    <input type="text" name="username" id="username" placeholder="Username" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="password" id="login" placeholder="Password" required />
+  </div>
+  <input type="button" onclick="loginn()" value="Login" name="submit" class="input-btn-field input-field" />
+  
+  <!-- Tombol Lupa Password -->
+  <div style="text-align: center; margin-top: 10px;">
+    <a href="input_email.php" class="forgot" style="color: #4caf50; font-weight: bold; text-decoration: none;">
+      Lupa Password?
+    </a>
+  </div>
+</form>
+
 
         <form action="" class="sign-up-form" method="post">
           <h2 class="title">Sign up</h2>
