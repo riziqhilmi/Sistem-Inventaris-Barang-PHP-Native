@@ -77,25 +77,33 @@ include ("koneksi.php");
                                     </tr>
                                     <?php
                                    $query = isset($_GET['query']) ? $_GET['query'] : '';
-
+                                   $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                   $items_per_page = 10; // Jumlah data per halaman
+                                   $offset = ($page - 1) * $items_per_page;
+   
                                    if ($query) {
-                                       $query = mysqli_real_escape_string($koneksi, $query); 
-                                       $sql = "SELECT * FROM guru WHERE nama LIKE '%$query%' OR NIP LIKE '%$query%'OR kontak LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR alamat LIKE '%$query%' OR status LIKE '%$query%'"; // Filter berdasarkan nama atau NIP
+                                       $query = mysqli_real_escape_string($koneksi, $query);
+                                       $sql = "SELECT * FROM guru WHERE nama LIKE '%$query%' OR NIP LIKE '%$query%' OR kontak LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR alamat LIKE '%$query%' OR status LIKE '%$query%' LIMIT $items_per_page OFFSET $offset";
+                                       $countSql = "SELECT COUNT(*) as total FROM guru WHERE nama LIKE '%$query%' OR NIP LIKE '%$query%' OR kontak LIKE '%$query%' OR tempat_lahir LIKE '%$query%' OR tgl_lahir LIKE '%$query%' OR alamat LIKE '%$query%' OR status LIKE '%$query%'";
                                    } else {
-                                       $sql = "SELECT * FROM guru";
+                                       $sql = "SELECT * FROM guru LIMIT $items_per_page OFFSET $offset";
+                                       $countSql = "SELECT COUNT(*) as total FROM guru";
                                    }
-                                   
+   
                                    $result = mysqli_query($koneksi, $sql);
-                                   $no = 1;
-
+                                   $countResult = mysqli_query($koneksi, $countSql);
+                                   $totalRows = mysqli_fetch_assoc($countResult)['total'];
+                                   $totalPages = ceil($totalRows / $items_per_page);
+                                   
+                                   $no = $offset + 1;
                                    while ($row = mysqli_fetch_array($result)) {
-                                    $nama = $row['nama'];
-                                    $nip = $row['NIP'];
-                                    $kontak = $row['kontak'];
-                                    $tempatLahir = $row['tempat_lahir'];
-                                    $tglLahir = $row['tgl_lahir'];
-                                    $alamat = $row['alamat'];
-                                    $status = $row['status'];
+                                       $nama = $row['nama'];
+                                       $nip = $row['NIP'];
+                                       $kontak = $row['kontak'];
+                                       $tempatLahir = $row['tempat_lahir'];
+                                       $tglLahir = $row['tgl_lahir'];
+                                       $alamat = $row['alamat'];
+                                       $status = $row['status'];
                             ?>
                           
                             
@@ -273,7 +281,32 @@ include ("koneksi.php");
                 </div>
 
             </div>
+            
         </div>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <?php if ($page > 1): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&query=<?php echo $query; ?>">Previous</a>
+                </li>
+            <?php endif; ?>
+
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>&query=<?php echo $query; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&query=<?php echo $query; ?>">Next</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</div>
     </div>
 
 </div>
