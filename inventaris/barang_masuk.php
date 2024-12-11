@@ -161,7 +161,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>                                
                                 <div class="col-md-12 mb-3">
                                     <label for="keterangan" class="form-label">Keterangan</label>
-                                    <textarea class="form-control" name="keterangan" rows="3"></textarea>
+                                    <textarea class="form-control" name="keterangan" rows="3" required></textarea>
                                 </div>
                             </div>
                             
@@ -245,10 +245,7 @@ function filterBarang(ruanganId) {
 }
 
 // Inisialisasi date picker
-flatpickr("input[type=date]", {
-    dateFormat: "Y-m-d",
-    maxDate: "today"
-});
+
 
 // Mengambil data untuk grafik
 <?php

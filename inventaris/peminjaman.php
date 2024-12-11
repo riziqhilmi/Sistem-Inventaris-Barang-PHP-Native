@@ -205,7 +205,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="keterangan" class="form-label">Keterangan</label>
-                                    <textarea class="form-control" name="keterangan" rows="3"></textarea>
+                                    <textarea class="form-control" name="keterangan" rows="3" required></textarea>
                                 </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary float-right" style="float: right;"> <img src="../img/save.png" alt="icon" style="width: 20px; height: 20px; vertical-align:middle; margin-right:5px;">Simpan</button>             
