@@ -74,17 +74,30 @@ include("koneksi.php");
                                         </tr>
                                         <?php
                                         $query = isset($_GET['query']) ? $_GET['query'] : '';
+                                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                                        $items_per_page = 10; // Jumlah data per halaman
+                                        $offset = ($page - 1) * $items_per_page;
 
                                         if ($query) {
                                             $query = mysqli_real_escape_string($koneksi, $query);
-                                            $sql = "SELECT * FROM ruangan WHERE nama_ruangan LIKE '%$query%' OR keterangan LIKE '%$query%'";
+                                            $sql = "SELECT * FROM ruangan WHERE nama_ruangan LIKE '%$query%' OR keterangan LIKE '%$query%'LIMIT $items_per_page OFFSET $offset";
+                                            $countSql = "SELECT * FROM ruangan WHERE nama_ruangan LIKE '%$query%' OR keterangan LIKE '%$query%'";
                                         } else {
-                                            $sql = "SELECT * FROM ruangan";
+                                            $sql = "SELECT * FROM ruangan LIMIT $items_per_page OFFSET $offset";
+                                            $countSql = "SELECT COUNT(*) as total FROM ruangan";
                                         }
 
                                         $result = mysqli_query($koneksi, $sql);
-                                        $no = 1;
-
+                                        $countResult = mysqli_query($koneksi, $countSql);
+                                        if ($countResult) {
+                                            $countData = mysqli_fetch_assoc($countResult);
+                                            $totalRows = isset($countData['total']) ? $countData['total'] : 0; // Pastikan 'total' ada
+                                        } else {
+                                            $totalRows = 0; // Default jika query gagal
+                                        }
+                                        $totalPages = ceil($totalRows / $items_per_page);
+                                        
+                                        $no = $offset + 1;
                                         while ($row = mysqli_fetch_array($result)) {
                                             $nama = $row['nama_ruangan'];
                                             $ket = $row['keterangan'];
@@ -199,7 +212,30 @@ include("koneksi.php");
                             </div>
                         </div>
                     </div>
+ <!-- Pagination -->
+ <div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <?php if ($page > 1): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&query=<?php echo $query; ?>">Previous</a>
+                </li>
+            <?php endif; ?>
 
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $i; ?>&query=<?php echo $query; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+
+            <?php if ($page < $totalPages): ?>
+                <li class="page-item">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&query=<?php echo $query; ?>">Next</a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </nav>
+</div>
                 </div>
             </div>
         </div>

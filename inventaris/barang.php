@@ -84,9 +84,14 @@ include("../koneksi.php");
                   }
 
                   $result = mysqli_query($koneksi, $sql);
-                                   $countResult = mysqli_query($koneksi, $countSql);
-                                   $totalRows = mysqli_fetch_assoc($countResult)['total'];
-                                   $totalPages = ceil($totalRows / $items_per_page);
+                  $countResult = mysqli_query($koneksi, $countSql);
+                  if ($countResult) {
+                      $countData = mysqli_fetch_assoc($countResult);
+                      $totalRows = isset($countData['total']) ? $countData['total'] : 0; // Pastikan 'total' ada
+                  } else {
+                      $totalRows = 0; // Default jika query gagal
+                  }
+                  $totalPages = ceil($totalRows / $items_per_page);
 
                   $no = $offset + 1;
                   while ($row = mysqli_fetch_array($result)) {
