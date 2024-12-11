@@ -138,20 +138,22 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                 <h1 class="mb-4">Peminjaman Barang</h1>
 
                 <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success" role="alert">
-                        <?php 
-                        echo $_SESSION['success'];
-                        unset($_SESSION['success']);
-                        ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong><?=$_SESSION['success'];?></strong>
+                            <?php 
+                            unset($_SESSION['success']);
+                            ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['error'])): ?>
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong><?=$_SESSION['error'];?></strong>
                         <?php 
-                        echo $_SESSION['error'];
                         unset($_SESSION['error']);
                         ?>
+                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php endif; ?>
 
