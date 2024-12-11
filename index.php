@@ -11,7 +11,91 @@
     <link rel="stylesheet" href="assets/css/style3.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>SDN PASAREJO 1 | Unofficial Site</title>
+    <style>
+               /* Styling for the Visi Card */
+               .card-body {
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transition for all properties */
+        }
+
+        /* Visi Card hover effect */
+        .visi-card:hover {
+            background-color: #f0f0f0; /* Change the background color on hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+            transform: translateY(-5px); /* Lift the card slightly */
+        }
+
+        /* Visi Card text color change on hover */
+        .visi-card:hover .card-title, .visi-card:hover .card-text {
+            color: #FF5733; /* Change text color on hover */
+        }
+
+        /* Image initially hidden */
+        .hidden-image {
+            display: none;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            width: 50%; /* Adjust the image to take up the full width of the card */
+            max-width: 400px; /* Max width of the image */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Maintain aspect ratio and cover the area */
+            margin: 20px auto; /* Center the image and add space around it */
+        }
+
+        /* Animation for the image to show up */
+        .show-image {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .card-title {
+            font-family: 'Verdana', sans-serif;
+            font-size: 1.5rem;
+            color: #FF5733;
+        }
+
+        .card-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+            /* Style for Misi content */
+    .card-body ul {
+        text-align: left; /* Align the list items to the left */
+        padding-left: 20px; /* Add some padding on the left to ensure it doesn't touch the container's edge */
+    }
+
+    .card-body ul li {
+        font-size: 1rem; 
+        color: #333; 
+        line-height: 1.6;
+    }
+
+ /* Downward arrow style */
+ .arrow-down {
+            text-align: center;
+            font-size: 2rem;
+            color: #FF5733;
+            margin-top: 20px;
+            cursor: pointer;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(20px); /* Start position, below the card */
+            transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition for sliding up and fading */
+        }
+
+        /* Animation class to show the arrow */
+        .show-arrow {
+            opacity: 1;
+            transform: translateY(0); /* Arrow moves up */
+        }
+    </style>
   </head>
   <body>
 
@@ -160,27 +244,78 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <br>
 <br>
 
-<div class="header2 col-10 mt-5 text-center mx-auto"  id="profile"><h1 data-aos="fade-right" data-aos-duration="1200">Visi dan Misi SMKN 1 Ciamis</h1>
-<div class="row" data-aos="fade-right" data-aos-duration="1200">
-<div class="col-8 visi mx-auto">
-<br>
-<h2>A.Identitas Sekolah</h2>
-<p style="text-align:justify !important;">SMK Negeri 1 Ciamis mempunyai izin pendirian sekolah tersurat, pada Nomor 326/B3/KEJ dan berdiri sejak bulan Agustus Tahun 1964. Posisi sekolah berada di Jln. Jend. Sudirman No. 269 Telp./Fax. (0265) 771204 – 776955 Desa/Kelurahan : Sindangrasa, Kecamatan Ciamis, Kab./Kota : Ciamis, Email: smkn1cms@indo.net.id, Website : www.smkn1-cms.sch.id. NSS/NDS : 341021401001.</p>
-<h2>B.Visi</h2>
-<p style="text-align:center !important;">“Terwujudnya SMK Bertaraf Internasional Pada Tahun 2010”.</p>
-<br>
-<h2>C.Misi</h2>
-<p style="text-align:justify !important;">1. Bersikap profesional dalam melakukan segala tindakan dan perbuatan pada keimanan dan ketakwaan kepada Allah SWT. <br>
-2. Membangun kemitraan yang kokoh dengan pemerintahan daerah, masyarakat, institusi pasangan dan dunia usaha industri <br>
-3. Melakukan inovasi dalam bidang ilmu pengetahuan dan teknologi. <br>
-4. Memberikan bekal pengetahuan dan keterampilan kepada seluruh warga sekolah agar mampu bersaing dalam era global. <br>
-5. Memberikan pelayanan yang prima berdasar pada standar mutu ISO 9001:2000.</p>
-</div>
-</div>
-<br>
-<br>
+<div class="header2 col-10 mt-5 text-center mx-auto" id="profile">
+    <h1 data-aos="fade-right" data-aos-duration="1200" style="font-family: 'Arial', sans-serif; color: #4CAF50;">Visi dan Misi SMKN 1 Ciamis</h1>
 
+    <div class="row mt-4" data-aos="fade-right" data-aos-duration="1200">
+        <!-- Identitas Sekolah Card (top card) -->
+        <div class="col-10 mx-auto">
+            <div class="card shadow-sm" style="border-radius: 15px; border: 1px solid #ddd;">
+                <div class="card-body">
+                    <h2 class="card-title">A. Identitas Sekolah</h2>
+                    <p style="text-align: justify !important; font-size: 1rem; color: #333; line-height: 1.6;">
+                        SMK Negeri 1 Ciamis mempunyai izin pendirian sekolah tersurat, pada Nomor 326/B3/KEJ dan berdiri sejak bulan Agustus Tahun 1964.
+                        Posisi sekolah berada di Jln. Jend. Sudirman No. 269 Telp./Fax. (0265) 771204 – 776955 Desa/Kelurahan : Sindangrasa, Kecamatan Ciamis,
+                        Kab./Kota : Ciamis, Email: smkn1cms@indo.net.id, Website : www.smkn1-cms.sch.id. NSS/NDS : 341021401001.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row mt-4" data-aos="fade-right" data-aos-duration="1200">
+        <!-- Visi Card (middle card) with specific class for hover animation -->
+        <div class="col-md-5 mx-auto">
+            <div class="card shadow-sm visi-card" style="border-radius: 15px; border: 1px solid #ddd;">
+                <div class="card-body" onclick="toggleContent()">
+                    <h2 class="card-title">B. Visi</h2>
+                    <p class="card-text">
+                        “Terwujudnya SMK Bertaraf Internasional Pada Tahun 2010”.
+                    </p>
+                    <!-- Hidden Image inside the card -->
+                    <img src="img/logo sd pasarejo.png" alt="Visi Image" class="hidden-image" id="visi-image">
+                    
+                    <!-- Downward Arrow Icon with animation -->
+                    <div class="arrow-down" id="arrow-down">
+                        <i class="fas fa-arrow-down"></i> <!-- Font Awesome Arrow Icon -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Misi Card (bottom card) -->
+        <div class="col-md-5 mx-auto">
+            <div class="card shadow-sm" style="border-radius: 15px; border: 1px solid #ddd;">
+                <div class="card-body">
+                    <h2 class="card-title">C. Misi</h2>
+                    <ul>
+                        <li>Bersikap profesional dalam melakukan segala tindakan dan perbuatan pada keimanan dan ketakwaan kepada Allah SWT.</li>
+                        <li>Membangun kemitraan yang kokoh dengan pemerintahan daerah, masyarakat, institusi pasangan dan dunia usaha industri.</li>
+                        <li>Melakukan inovasi dalam bidang ilmu pengetahuan dan teknologi.</li>
+                        <li>Memberikan bekal pengetahuan dan keterampilan kepada seluruh warga sekolah agar mampu bersaing dalam era global.</li>
+                        <li>Memberikan pelayanan yang prima berdasar pada standar mutu ISO 9001:2000.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS for animations (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Function to toggle image visibility and arrow animation
+    function toggleContent() {
+        var image = document.getElementById('visi-image');
+        var arrow = document.getElementById('arrow-down');
+        
+        // Toggle image visibility
+        image.classList.toggle('show-image');
+        
+        // Toggle arrow animation
+        arrow.classList.toggle('show-arrow');
+    }
+</script>
 
 <div class="header2 col-10 mt-5 text-center mx-auto"><h1>Jurusan Di SMKn 1 Ciamis</h1>
 <br>
@@ -388,7 +523,6 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
   </div>
 </div>
 </div>
-
 
     <!-- Optional JavaScript -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
