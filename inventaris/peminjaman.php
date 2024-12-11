@@ -123,6 +123,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="../assets/css/peminjaman.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -137,15 +138,15 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
             <div class="container">
                 <h1 class="mb-4">Peminjaman Barang</h1>
 
-                <?php if (isset($_SESSION['success'])): ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong><?=$_SESSION['success'];?></strong>
-                            <?php 
-                            unset($_SESSION['success']);
-                            ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                <?php endif; ?>
+                <?php if (isset($_SESSION['success'])):
+                    echo '<script>Swal.fire({
+                        title: "SUCCESS",
+                        text: "' . $_SESSION['success'] . '",
+                        icon: "success"
+                    });</script>';
+                    unset($_SESSION['success']);
+                    endif;
+                    ?>
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
