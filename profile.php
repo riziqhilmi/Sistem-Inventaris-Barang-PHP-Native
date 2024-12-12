@@ -11,11 +11,19 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+// Ambil ID pengguna dari session
+$user_id = $_SESSION['user_id'];
+
 // Sample data for the dashboard
-$user_name = $_SESSION['username']; // Username from the session
-$user_email = $_SESSION['user_email'] ?? "email@example.com";
-$user_photo = $_SESSION['user_photo'] ?? "assets/img/default-user.png"; // Gambar default jika tidak ada
-$user_description = $_SESSION['user_description'] ?? "This is a default description about the user."; // Deskripsi default jika tidak ada
+$user_name = $_SESSION['username'] ?? 'Default Username';
+$user_email = $_SESSION['user_email'] ?? 'email@example.com';
+$user_photo = $_SESSION['user_photo'] ?? 'assets/img/default-user.png';
+$user_description = $_SESSION['user_description'] ?? 'This is a default description about the user.';
+
 ?>
 
 <!DOCTYPE html>
@@ -222,6 +230,63 @@ $user_description = $_SESSION['user_description'] ?? "This is a default descript
                         <p><?php echo htmlspecialchars($user_description); ?></p>
                     </div>
 
+                    <?php if (isset($_GET['success'])): ?>
+        <div class="alert alert-success"><?php echo htmlspecialchars($_GET['success']); ?></div>
+    <?php endif; ?>
+    <?php if (isset($_GET['error'])): ?>
+        <div class="alert alert-danger"><?php echo htmlspecialchars($_GET['error']); ?></div>
+    <?php endif; ?>
+
+                     <!-- Tombol Update Profile -->
+<button class="btn btn-primary" style="margin-top: 20px;" data-bs-toggle="modal" data-bs-target="#updateProfileModal">Update Profile</button>
+
+<!-- Modal Update Profile -->
+<div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateProfileModalLabel">Update Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form method="POST" action="../fitur/update_profile.php">
+    <!-- Token CSRF -->
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+    <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($_SESSION['user_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" 
+               class="form-control" 
+               id="username" 
+               name="username" 
+               value="<?php echo htmlspecialchars($_SESSION['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" 
+               class="form-control" 
+               id="email" 
+               name="email" 
+               value="<?php echo htmlspecialchars($_SESSION['user_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" 
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Password (Optional)</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Changes</button>
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
                     <!-- Modal untuk memilih file -->
                     <div class="modal fade" id="fileModal" tabindex="-1" aria-labelledby="fileModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -249,6 +314,7 @@ $user_description = $_SESSION['user_description'] ?? "This is a default descript
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
