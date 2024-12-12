@@ -249,7 +249,7 @@ $user_description = $_SESSION['user_description'] ?? 'This is a default descript
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <form method="POST" action="../fitur/update_profile.php">
+            <form action="fitur/update_profile.php" method="POST">
     <!-- Token CSRF -->
     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <input type="hidden" name="id_user" value="<?php echo htmlspecialchars($_SESSION['user_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">

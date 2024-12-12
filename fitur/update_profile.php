@@ -1,30 +1,36 @@
 <?php
-include('../koneksi.php');
+// Koneksi ke database
+$koneksi = new mysqli("localhost", "root", "Chaca6Yaa*", "db_pasarejo");
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
-    $id_user = $_POST['id_user'];
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Update data
-    $query = "UPDATE `user` SET 
-              `username` = '$username',
-              `email` = '$email'
-              WHERE `id` = '$id_user'";
-
-    if (!empty($password)) {
-        // Jika password diisi, hash password baru
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $query .= ", `password` = '$hashed_password'";
-    }
-
-    $result = mysqli_query($koneksi, $query);
-    if ($result) {
-        echo "<script>alert('Profil berhasil diubah'); window.location='../profile.php';</script>";
-    } else {
-        echo "<script>alert('Profil gagal diubah: " . mysqli_error($koneksi) . "'); window.location='../profile.php';</script>";
-    }
+// Periksa koneksi
+if ($koneksi->connect_error) {
+    die("Koneksi gagal: " . $koneksi->connect_error);
 }
+
+try {
+    // Ambil data dari POST
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $user_id = $_POST['id_user']; // Asumsi Anda menggunakan user_id untuk mengupdate data
+
+    // Query menggunakan prepared statement
+    $stmt = $koneksi->prepare("UPDATE `user` SET `username` = ?, `password` = ? WHERE `id_user` = ?");
+    $stmt->bind_param("ssi", $username, $password, $user_id);
+
+    // Eksekusi query
+    $result = $stmt->execute();
+
+    // Berikan alert dan arahkan ke halaman tertentu
+    if ($result) {
+        echo "<script>alert('Profil berhasil diperbarui'); window.location='../profile.php';</script>";
+    } else {
+        echo "<script>alert('Profil gagal diperbarui: " . $stmt->error . "'); window.location='../profile.php';</script>";
+    }
+
+    $stmt->close();
+} catch (Exception $e) {
+    echo "<script>alert('Terjadi kesalahan: " . $e->getMessage() . "'); window.location='../profile.php';</script>";
+}
+
+$koneksi->close();
 ?>
