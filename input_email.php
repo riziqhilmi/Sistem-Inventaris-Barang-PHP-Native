@@ -1,37 +1,52 @@
+<?php
+session_start();
+include('koneksi.php');
+?>
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= $_SESSION['error'] ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['error']); ?>
+<?php endif; ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lupa Password</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/email.css">
-    <title>Ganti Password</title>
-    <link rel="icon" type="image/png" href="img/logo sd pasarejo.png">
-
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 400px;
+            margin-top: 100px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
-
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path fill="#0099ff" fill-opacity="1"
-            d="M0,128L80,149.3C160,171,320,213,480,234.7C640,256,800,256,960,213.3C1120,171,1280,85,1360,42.7L1440,0L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z">
-        </path>
-    </svg>
-    <div class="card shadow" style="width: 53rem;>
-        <h5 class=" card-header"></h5>
-        <div class="card-body">
-            <h5 class="card-title"><strong>Lupa kata sandi</strong></h5>
+    <div class="container">
+        <h2>Lupa Password</h2>
+        <form action="send_email.php" method="POST">
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Alamat email</label>
-                <input type="email" class="form-control" placeholder="Masukkan Email" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">Kami tidak akan pernah membagikan email Anda kepada orang lain.</div>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
-            <a href="login2.php" class="btn btn-outline-primary"><strong>Kembali</strong></a>
-                 <a href="kode_email.php" class="btn btn-primary"><strong>Selanjutnya</strong></a>
+            <button type="submit" class="btn btn-primary w-100">Kirim Email</button>
+        </form>
+        <div class="mt-3 text-center">
+            <a href="login2.php">Kembali ke Login</a>
         </div>
     </div>
-
-
 </body>
-
 </html>

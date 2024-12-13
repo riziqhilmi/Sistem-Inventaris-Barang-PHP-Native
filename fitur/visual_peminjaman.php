@@ -6,12 +6,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Koneksi ke database
-$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
+include('../koneksi.php');
 
-if (mysqli_connect_errno()){
-    echo "Koneksi database gagal : " . mysqli_connect_error();
-}
 
 // Query untuk data peminjaman
 $sql_peminjaman = "SELECT tanggal_pinjam, nama_peminjam, SUM(jumlah_pinjam) AS total_pinjam 

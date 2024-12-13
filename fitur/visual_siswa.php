@@ -6,11 +6,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
+include('../koneksi.php');
 
-if (mysqli_connect_errno()){
-    echo "Koneksi database gagal : " . mysqli_connect_error();
-}
 
 // Query untuk mengambil jumlah siswa berdasarkan jenis kelamin
 $sql_siswa = "SELECT jenis_kelamin, COUNT(*) as jumlah FROM siswa GROUP BY jenis_kelamin";

@@ -3,6 +3,7 @@
         "tecnickcom/tcpdf": "^6.7",
         "picqer/php-barcode-generator": "^2.4",
         "setasign/fpdf": "^1.8",
-        "phpoffice/phpspreadsheet": "^3.5"
+        "phpoffice/phpspreadsheet": "^3.5",
+        "phpmailer/phpmailer": "^6.9"
     }
 }

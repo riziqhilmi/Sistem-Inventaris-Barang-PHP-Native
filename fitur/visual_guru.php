@@ -6,11 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', 'Chaca6Yaa*', 'db_pasarejo');
-
-if (mysqli_connect_errno()){
-    echo "Koneksi database gagal : " . mysqli_connect_error();
-}
+include('../koneksi.php');
 
 // Query untuk mengambil jumlah guru berdasarkan status
 $sql_guru = "SELECT status, COUNT(*) as jumlah FROM guru GROUP BY status";
