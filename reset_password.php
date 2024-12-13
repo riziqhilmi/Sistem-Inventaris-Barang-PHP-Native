@@ -45,7 +45,9 @@ if (!isset($_SESSION['email'])) {
             </div>
             <button type="submit" class="btn btn-primary w-100">Ubah Password</button>
         </form>
-        
+        <div class="mt-3 text-center">
+            <a href="login2.php">Kembali ke Login</a>
+        </div>
     </div>
 </body>
 </html>
