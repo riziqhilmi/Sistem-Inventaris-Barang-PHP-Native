@@ -325,9 +325,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-5">
   <img src="img/juara mapel ipa.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akutansi</h5>
-    <p class="card-text">Mewujudkan Kompetensi Keahlian Akuntansi yang berkualitas dan religius di bidang bisnis dan manajemen untuk menanggapi persaingan di era global <br> <br></p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara 1</h5>
+    <p class="card-text">Lomba Mapel IPA dan Matematika tingkat kecamatan wonosari <br>  <br><br></p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
     </div>
@@ -338,9 +338,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-5">
   <img src="img/juara perpus.jpeg" class="card-img-top img-fluid" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Pemasaran</h5>
-    <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional. SMKN 1 CIAMIS Yakin Bisa! <br> <br></p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara 2</h5>
+    <p class="card-text"> Lomba perpustakan sekolah se kabupaten bondowoso.<br> <br>  <br></p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
     </div>
@@ -352,9 +352,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-3">
   <img src="img/juara mb.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Administrasi Perkantoran</h5>
-    <p class="card-text">Mencetak calon sekretaris, dan profesional. <br>  <br> <br> </p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara 3</h5>
+    <p class="card-text">Marching band BOMF Kaporles cup 2023.<br>  <br> <br> </p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
     </div>
@@ -366,9 +366,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-3">
   <img src="img/juara gatau.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akomodasi Perhotelan</h5>
-    <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara 1</h5>
+    <p class="card-text">Lomba Sekabupaten Bondowoso. <br> <br></p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO O1</small></p>
   </div>
 </div>
     </div>
@@ -381,9 +381,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-3">
   <img src="img/juara dm.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Jasa Boga</h5>
-    <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Grup drumband</h5>
+    <p class="card-text">CKBS Lomba marching band festival BOMF 2023</p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
     </div>
@@ -395,9 +395,9 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-3">
   <img src="img/juara pramuka.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Multimedia</h5>
-    <p class="card-text">Multimedia adalah Kompetensi Keahlian pada SMK Negeri 1 Ciamis yang berada di lingkungan Dinas Pendidikan Provinsi Jawa Barat, tepatnya di Kabupaten Ciamis.</p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara Favorit</h5>
+    <p class="card-text">CTG open IV Gramatsada tingkat kabupaten Bondowoso. <br> </p>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
     </div>
@@ -411,9 +411,8 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="card mb-3">
   <img src="img/kay.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title" style="color:#3498DB !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Rekayasa Perangkat Lunak</h5>
-    <p class="card-text">Mencetak dan menghasilkan generasi millenial yang Mahir dalam hal IT Yaitu coding,tech enterpreneur,Leadership dan serta memiliki attitude baik dalam keseharian</p>
-    <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
+    <h5 class="card-title" style="color:#3498DB !important; font-weight: 800 !important; font-size:30px !important;">SEMUA GURU SDN PASAREJO 01 BONDOWOSO</h5>
+    <p class="card-text"><small class="text-muted">SDN PASAREJO 01</small></p>
   </div>
 </div>
 </div>
@@ -422,7 +421,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
   <br>
   <br>
   <div class="row"  data-aos="fade-left" data-aos-duration="1200">
-  <div class="header2 col-10 mt-5 text-left mx-auto"><h1>&mdash;&mdash;&mdash;& Maps SMKn 1 Ciamis</h1>
+  <div class="header2 col-10 mt-5 text-left mx-auto"><h1>&mdash;&mdash;&mdash;& Maps SDN PASAREJO 01/h1>
   <br>
   <br>
 </div>
