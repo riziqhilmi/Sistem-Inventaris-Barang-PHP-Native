@@ -244,7 +244,10 @@ function filterBarang(ruanganId) {
         $('#id_barang').html('<option value="">Pilih Barang (Pilih Ruangan Terlebih Dahulu)</option>');
     }
 }
-
+flatpickr("input[type=date]", {
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+});
 
 
 <?php

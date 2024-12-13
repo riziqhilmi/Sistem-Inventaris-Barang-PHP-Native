@@ -198,7 +198,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="tanggal_pinjam" class="form-label">Tanggal Pinjam</label>
-                                    <input type="date" class="form-control" name="tanggal_pinjam" required>
+                                    <input type="date" class="form-control" name="tanggal" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="jumlah_pinjam" class="form-label">Jumlah Pinjam</label>
@@ -318,6 +318,8 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                         var url = '../fitur/cetak_riwayat_peminjaman.php';
                         window.open(url, '_blank');
                     }
+                    
+                    
                 </script>
                 </div>
 
@@ -347,7 +349,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                 LIMIT 5";
             $popular_data = $koneksi->query($query_popular)->fetch_all(MYSQLI_ASSOC);
             ?>
-
+            
             // Grafik Peminjaman per Bulan
             const ctxMonthly = document.getElementById('peminjaman_chart').getContext('2d');
             new Chart(ctxMonthly, {
@@ -378,6 +380,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     }
                 }
             });
+            
 
             // Grafik Barang Terpopuler
             const ctxPopular = document.getElementById('popular_items_chart').getContext('2d');
@@ -421,6 +424,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     }
                 }
             });
+            
             </script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             </div>
