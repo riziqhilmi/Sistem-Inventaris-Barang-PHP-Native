@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 $msg = "";
+$max_file_size = 2 * 1024 * 1024; // 2MB dalam bytes
 
 // Fetch user data
 $query = "SELECT username, email, photo FROM user WHERE id_user = ?";
@@ -71,7 +72,16 @@ if (isset($_POST['change_password'])) {
 // Handle photo upload
 if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
     $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
-    if (in_array($_FILES['photo']['type'], $allowed_types)) {
+    
+    // Check file size
+    if ($_FILES['photo']['size'] > $max_file_size) {
+        $msg = "File is too large! Maximum size allowed is 2MB.";
+    } 
+    // Check file type
+    elseif (!in_array($_FILES['photo']['type'], $allowed_types)) {
+        $msg = "Invalid file type. Please upload a JPEG, PNG, or GIF image.";
+    }
+    else {
         $photo = file_get_contents($_FILES['photo']['tmp_name']);
         $update_query = "UPDATE user SET photo = ? WHERE id_user = ?";
         $stmt = mysqli_prepare($koneksi, $update_query);
@@ -82,8 +92,6 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
         } else {
             $msg = "Error updating profile photo!";
         }
-    } else {
-        $msg = "Invalid file type. Please upload a JPEG, PNG, or GIF image.";
     }
 }
 ?>
@@ -109,6 +117,11 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
             text-align: center;
             margin-bottom: 30px;
         }
+        .file-size-info {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -122,7 +135,9 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
             <h2 class="mb-4">Profile Settings</h2>
             
             <?php if ($msg): ?>
-                <div class="alert alert-info"><?php echo $msg; ?></div>
+                <div class="alert <?php echo strpos($msg, 'successfully') !== false ? 'alert-success' : 'alert-danger'; ?>">
+                    <?php echo $msg; ?>
+                </div>
             <?php endif; ?>
 
             <!-- Profile Photo Section -->
@@ -136,6 +151,9 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
                 <form method="POST" enctype="multipart/form-data" class="mt-3">
                     <div class="mb-3">
                         <input type="file" class="form-control" name="photo" accept="image/*">
+                        <div class="file-size-info">
+                            Maximum file size: 2MB. Allowed formats: JPEG, PNG, GIF
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Photo</button>
                 </form>
