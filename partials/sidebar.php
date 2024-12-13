@@ -220,7 +220,7 @@ $current_page = basename($_SERVER['PHP_SELF']); // Mendapatkan nama file dari UR
 
 <!-- Profile Menu -->
 <div>
-    <a href="<?php echo $base_url; ?>/profile.php" class="nav-link profile-box text-white <?php echo ($current_page == 'profile.php') ? 'active-main' : ''; ?>">
+    <a href="<?php echo $base_url; ?>/profil.php" class="nav-link profile-box text-white <?php echo ($current_page == 'profile.php') ? 'active-main' : ''; ?>">
         <i class="bi bi-person-circle me-2"></i> Profile
     </a>
         </div>
