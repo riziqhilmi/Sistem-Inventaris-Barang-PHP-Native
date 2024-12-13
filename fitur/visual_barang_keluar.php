@@ -6,11 +6,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$koneksi = mysqli_connect('localhost', 'root', '', 'db_pasarejo');
+include('../koneksi.php');
 
-if (mysqli_connect_errno()){
-    echo "Koneksi database gagal : " . mysqli_connect_error();
-}
 
 // Query untuk mengambil jumlah barang keluar berdasarkan tanggal
 $sql_barang_keluar = "SELECT tanggal, SUM(jumlah) as total_jumlah FROM barang_keluar GROUP BY tanggal";

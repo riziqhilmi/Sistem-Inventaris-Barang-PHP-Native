@@ -1,16 +1,9 @@
 <?php
-// Koneksi ke database
-$koneksi = new mysqli("localhost", "root", "Chaca6Yaa*", "db_pasarejo");
-
-// Periksa koneksi
-if ($koneksi->connect_error) {
-    die("Koneksi gagal: " . $koneksi->connect_error);
-}
-
+include('../koneksi.php');
 try {
     // Ambil data dari POST
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $password = $_POST['password'];
     $user_id = $_POST['id_user']; // Asumsi Anda menggunakan user_id untuk mengupdate data
 
     // Query menggunakan prepared statement
