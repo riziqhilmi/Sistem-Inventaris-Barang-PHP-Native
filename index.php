@@ -14,6 +14,7 @@
     <!-- Include Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <title>SDN PASAREJO 1 | Unofficial Site</title>
+    <link rel="icon" type="image/png" href="img/logo sd pasarejo.png">
     <style>
                /* Styling for the Visi Card */
                .card-body {
@@ -169,7 +170,7 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="img/1.jpg" class="d-block carousel-img w-100" alt="...">
+        <img src="img/guru3.jpeg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>SDN PASAREJO 1</h5>
           <p>Sekolah SD nya chaha yaa</p>
@@ -178,10 +179,10 @@
       </div>
       
       <div class="carousel-item">
-        <img src="img/2.jpg" class="d-block carousel-img w-100" alt="...">
+        <img src="img/guru2.jpeg" class="d-block carousel-img w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
-        <h5>SDN PASAREJO 01</h5>
-          <p>
+        <h5 style="color: #00BFFF;">SDN PASAREJO 01</h5>
+          <p >
             Dengan hadirnya situs SD Negeri 1 Pasarejo ini,
             semoga dapat memberikan informasi
             kepada khalayak tentang SD Negeri 1 Pasarejo.
@@ -317,12 +318,12 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     }
 </script>
 
-<div class="header2 col-10 mt-5 text-center mx-auto"><h1>Jurusan Di SMKn 1 Ciamis</h1>
+<div class="header2 col-10 mt-5 text-center mx-auto"><h1>Prestasi SDN Pasarejo 01</h1>
 <br>
 <div class="row"  data-aos="fade-left" data-aos-duration="1200" id="ak">
     <div class="col-6" >
     <div class="card mb-5">
-  <img src="img/ak.jpg" class="card-img-top" alt="...">
+  <img src="img/juara mapel ipa.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akutansi</h5>
     <p class="card-text">Mewujudkan Kompetensi Keahlian Akuntansi yang berkualitas dan religius di bidang bisnis dan manajemen untuk menanggapi persaingan di era global <br> <br></p>
@@ -335,7 +336,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <br>
     <div class="col-6">
     <div class="card mb-5">
-  <img src="img/pm.png" class="card-img-top img-fluid" alt="...">
+  <img src="img/juara perpus.jpeg" class="card-img-top img-fluid" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Pemasaran</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional. SMKN 1 CIAMIS Yakin Bisa! <br> <br></p>
@@ -349,10 +350,10 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <div class="row"  data-aos="fade-right" data-aos-duration="1200" id="">
     <div class="col-6" id="adper">
     <div class="card mb-3">
-  <img src="img/ad.jpg" class="card-img-top" alt="...">
+  <img src="img/juara mb.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Administrasi Perkantoran</h5>
-    <p class="card-text">Mencetak calon sekretaris, dan profesional. <br> <br> <br> <br> </p>
+    <p class="card-text">Mencetak calon sekretaris, dan profesional. <br>  <br> <br> </p>
     <p class="card-text"><small class="text-muted">SMKN 1 CIAMIS</small></p>
   </div>
 </div>
@@ -363,7 +364,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 
     <div class="col-6">
     <div class="card mb-3">
-  <img src="img/ap.jpg" class="card-img-top" alt="...">
+  <img src="img/juara gatau.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Akomodasi Perhotelan</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
@@ -378,7 +379,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 <div class="row"  data-aos="fade-left" data-aos-duration="1200">
     <div class="col-6 mx-auto" id="jb">
     <div class="card mb-3">
-  <img src="img/ad.jpg" class="card-img-top" alt="...">
+  <img src="img/juara dm.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Jasa Boga</h5>
     <p class="card-text">Menjadi lembaga diklat yang menghasilkan sumber daya manusia yang profesional yang mampu berkompetisi di tingkat nasional dan internasional.</p>
@@ -392,7 +393,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
 
     <div class="col-6 mx-auto">
     <div class="card mb-3">
-  <img src="img/mm.jpg" class="card-img-top" alt="...">
+  <img src="img/juara pramuka.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Multimedia</h5>
     <p class="card-text">Multimedia adalah Kompetensi Keahlian pada SMK Negeri 1 Ciamis yang berada di lingkungan Dinas Pendidikan Provinsi Jawa Barat, tepatnya di Kabupaten Ciamis.</p>
@@ -408,7 +409,7 @@ SMK Bisa, SMKN 1 Ciamis Yakin Bisa.</p>
     <div class="col-12" id="rpl">
    
     <div class="card mb-3">
-  <img src="img/rpl.jpg" class="card-img-top" alt="...">
+  <img src="img/kay.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title" style="color:#3498DB !important; font-weight: 800 !important; font-size:30px !important;">Jurusan Rekayasa Perangkat Lunak</h5>
     <p class="card-text">Mencetak dan menghasilkan generasi millenial yang Mahir dalam hal IT Yaitu coding,tech enterpreneur,Leadership dan serta memiliki attitude baik dalam keseharian</p>
