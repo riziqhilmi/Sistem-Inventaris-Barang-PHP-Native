@@ -198,7 +198,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="tanggal_pinjam" class="form-label">Tanggal Pinjam</label>
-                                    <input type="date" class="form-control" name="tanggal" required>
+                                    <input type="date" class="form-control" name="tanggal_pinjam" required>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="jumlah_pinjam" class="form-label">Jumlah Pinjam</label>
@@ -325,6 +325,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
 
             <!-- Script untuk grafik -->
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
             <script>
             <?php
@@ -424,8 +425,13 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     }
                 }
             });
-            
+            flatpickr("input[type=date]", {
+            dateFormat: "Y-m-d",
+            maxDate: "today"
+});
+
             </script>
+            
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             </div>
         </div>

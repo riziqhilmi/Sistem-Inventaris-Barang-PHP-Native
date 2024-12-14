@@ -154,7 +154,7 @@ include("koneksi.php");
                                             </tr>
 
                                             <!-- Modal Edit Data Siswa -->
-<div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>" aria-hidden="true">
+                                            <div class="modal fade" id="editTeacherModal<?php echo $row['id_siswa']; ?>" tabindex="-1" aria-labelledby="editTeacherLabel<?php echo $row['id_siswa']; ?>" aria-hidden="true">
     <div class="modal-dialog modal-lg"> <!-- Added modal-lg for a wider form -->
         <div class="modal-content">
             <div class="modal-header">
@@ -174,14 +174,17 @@ include("koneksi.php");
                             <label for="nis" class="form-label">NIS</label>
                             <input type="text" class="form-control" name="nis" value="<?php echo $row['NIS']; ?>" required>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                            <label for="kelas" class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                        <div class="col-md-6">
+                            <label for="nisn" class="form-label">NISN</label>
+                            <input type="text" class="form-control" name="nisn" value="<?php echo $row['NISN']; ?>" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <input type="text" class="form-control" name="kelas" value="<?php echo $row['kelas']; ?>" required>
+                        </div>
                         <div class="col-md-6">
                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                             <select class="form-select" name="jenis_kelamin" required>
@@ -189,26 +192,28 @@ include("koneksi.php");
                                 <option value="Perempuan" <?php echo ($row['jenis_kelamin'] == 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
                             <input type="text" class="form-control" name="tempat_lahir" value="<?php echo $row['tempat_lahir']; ?>" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
+                            <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                            <input type="date" class="form-control" name="tgl_lahir" value="<?php echo $row['tgl_lahir']; ?>" required>
-                        </div>
-                        <div class="col-md-6">
                             <label for="agama" class="form-label">Agama</label>
                             <input type="text" class="form-control" name="agama" value="<?php echo $row['agama']; ?>" required>
                         </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" rows="3" required><?php echo $row['alamat']; ?></textarea>
+                        <div class="col-md-6">
+                            <label for="alamat" class="form-label">Alamat</label>
+                            <textarea class="form-control" name="alamat" rows="3" required><?php echo $row['alamat']; ?></textarea>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Simpan</button>

@@ -198,7 +198,7 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
     <?php foreach ($transactions as $index => $trans): ?>
         <tr>
             <td><?= $index + 1 ?></td>
-            <td><?= date('d/m/Y', strtotime($trans['tanggal'])) ?></td>
+            <td><?= date('Y-m-d', strtotime($trans['tanggal'])) ?></td>
             <td><?= htmlspecialchars($trans['nama']) ?></td>
             <td><?= htmlspecialchars($trans['merek']) ?></td>
             <td><?= $trans['jumlah'] ?></td>

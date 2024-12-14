@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $alamat = $_POST['alamat'];
 
     $query = "INSERT INTO siswa (nama, NIS, NISN, kelas, jenis_kelamin, tempat_lahir, tgl_lahir, agama, alamat) 
-              VALUES ('$nama', '$nis', '$nisn', $kelas, '$jenis_kelamin', '$tempat_lahir', '$tgl_lahir', '$agama', '$alamat')";
+              VALUES ('$nama', '$nis', '$nisn', '$kelas', '$jenis_kelamin', '$tempat_lahir', '$tgl_lahir', '$agama', '$alamat')";
 
     if (mysqli_query($koneksi, $query)) {
         echo "<script>alert('Data siswa berhasil ditambahkan'); window.location='../data_siswa.php';</script>";

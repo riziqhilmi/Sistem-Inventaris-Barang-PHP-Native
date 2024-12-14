@@ -23,6 +23,7 @@ include ("koneksi.php");
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <link rel="stylesheet" href="assets/css/table_guru.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
 
@@ -148,7 +149,8 @@ include ("koneksi.php");
                         </div>
                         <div class="col-md-6">
                             <label for="nip" class="form-label">NIP</label>
-                            <input type="text" class="form-control" name="nip" value="<?php echo $row['NIP']; ?>" required>
+                            <input type="text" class="form-control" name="nip" id="nip" value="<?php echo $row['NIP']; ?>" required oninput="validateNIP()">
+                            <small id="nipError" class="text-danger" style="display:none;">NIP harus terdiri dari 16 karakter.</small>
                         </div>
                     </div>
 
@@ -170,7 +172,10 @@ include ("koneksi.php");
                         </div>
                         <div class="col-md-6">
                             <label for="status" class="form-label">Status</label>
-                            <input type="text" class="form-control" name="status" value="<?php echo $row['status']; ?>" required>
+                            <select class="form-select" name="status" required>
+                                <option value="Aktif" <?php echo ($row['status'] == 'Aktif') ? 'selected' : ''; ?>>Aktif</option>
+                                <option value="Cuti" <?php echo ($row['status'] == 'Cuti') ? 'selected' : ''; ?>>Cuti</option>
+                            </select>
                         </div>
                     </div>
 
@@ -223,6 +228,19 @@ include ("koneksi.php");
                 });
             });
         });
+
+    function validateNIP() {
+    const nipInput = document.getElementById('nip');
+    const nipError = document.getElementById('nipError');
+    
+    if (nipInput.value.length > 16) {
+        nipError.style.display = 'block';
+        nipInput.setCustomValidity(''); // Reset custom validity
+    } else {
+        nipError.style.display = 'none';
+        nipInput.setCustomValidity(''); // Reset custom validity
+    }
+}
     </script>
 
                 <!-- Modal for Adding Teacher -->
@@ -237,8 +255,8 @@ include ("koneksi.php");
                                 <form action="fitur/tambah_guru.php" method="POST">
                                 <div class="row mb-3">
     <div class="col-md-6">
-        <label for="nama_barang" class="form-label">Nama</label>
-        <input type="text" class="form-control" name="nama_barang" required>
+        <label for="nama" class="form-label">Nama</label>
+        <input type="text" class="form-control" name="nama" required>
     </div>
     
     <div class="col-md-6">
@@ -269,7 +287,10 @@ include ("koneksi.php");
     
     <div class="mb-3">
         <label for="status" class="form-label">Status</label>
-        <input type="text" class="form-control" name="status" required>
+        <select class="form-select" name="status" required>
+            <option value="Aktif">Aktif</option>
+            <option value="Cuti">Cuti</option>
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -312,6 +333,14 @@ include ("koneksi.php");
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    flatpickr("input[type=date]", {
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+});
+</script>
+
 
 </body>
 </html>

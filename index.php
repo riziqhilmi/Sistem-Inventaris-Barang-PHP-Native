@@ -210,9 +210,9 @@
     <div class="row panel mx-auto">
       <div class="header col-8 mt-5 text-center mx-auto">
         <h1> Selamat Datang</h1>
-        <p>Selamat datang di website SDN PASAREJO 01. Sekolah bertaraf internasional yang memiliki banyak prestasi dan
+        <p>Selamat datang di website SDN PASAREJO 01. Sekolah bertaraf nasional yang memiliki banyak prestasi dan
           murid yang berkarakter.
-        </p>
+        </p>  
       </div>
     </div>
 
@@ -230,10 +230,10 @@
         <br>
         <br>
         <blockquote class="blockquote">
-          <p class="mb-0" data-aos="fade-right" data-aos-duration="1200">Dengan hadirnya situs SDN PASAREJO01 ini,
+          <p class="mb-0" data-aos="fade-right" data-aos-duration="1200">Dengan hadirnya situs SDN PASAREJO 01 ini,
             <br>
             semoga dapat memberikan informasi
-            kepada khalayak tentang <br> SDN PASAREJO 01
+            kepada khalayak tentang <br> SDN PASAREJO 01.
             SDN Bisa, SDN PASAREJO 01 Yakin Bisa.</p>
           <footer class="blockquote-footer"><cite title="Source Title">Kepala Sekolah
               SDN PASAREJO 01 Hermawan</cite></footer>
@@ -265,47 +265,41 @@
       <div class="row mt-4" data-aos="fade-right" data-aos-duration="1200">
         <!-- Visi Card (middle card) with specific class for hover animation -->
         <div class="col-md-5 mx-auto">
-          <div class="card shadow-sm visi-card" style="border-radius: 15px; border: 1px solid #ddd;">
-            <div class="card-body" onclick="toggleContent()">
-              <h2 class="card-title"><strong>B. Visi</strong></h2>
-              <p class="card-text">
-                “Terwujudnya SMK Bertaraf Internasional Pada Tahun 2010”.
-              </p>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <br>
-              <!-- Hidden Image inside the card -->
-              <img src="img/logo sd pasarejo.png" alt="Visi Image" class="hidden-image" id="visi-image">
+  <!-- Visi Card -->
+  <div class="card shadow-sm visi-card" style="border-radius: 15px; border: 1px solid #ddd;">
+    <div class="card-body" onclick="toggleContent()">
+      <h2 class="card-title"><strong>A. Visi</strong></h2>
+      <p class="card-text">
+        TERWUJUDNYA INSAN YANG BERTAQWA, BERKUALITAS, BERPRESTASI DAN BERWAWASAN LINGKUNGAN
+      </p>
+      <br>
+      <!-- Hidden Image inside the card -->
+      <img src="img/logo sd pasarejo.png" alt="Visi Image" class="hidden-image" id="visi-image">
+      <!-- Downward Arrow Icon -->
+      <div class="arrow-down" id="arrow-down">
+        <i class="fas fa-arrow-down"></i> <!-- Font Awesome Arrow Icon -->
+      </div>
+    </div>
+  </div>
+</div>
 
-              <!-- Downward Arrow Icon with animation -->
-              <div class="arrow-down" id="arrow-down">
-                <i class="fas fa-arrow-down"></i> <!-- Font Awesome Arrow Icon -->
-              </div>
-            </div>
-          </div>
-        </div>
+<!-- Misi Card -->
+<div class="col-md-5 mx-auto">
+  <div class="card shadow-sm" style="border-radius: 15px; border: 1px solid #ddd;">
+    <div class="card-body">
+      <h2 class="card-title"><strong>B. Misi</strong></h2>
+      <ul>
+        <li>Mewujudkan kebiasaan positif yang berlandaskan nilai-nilai agama.</li>
+        <li>Melaksanakan praktek ibadah sholat berjamaah serta bimbingan membaca Al-Qur'an.</li>
+        <li>Meningkatkan kualitas PBM dengan melaksanakan pembelajaran PAKEM.</li>
+        <li>Mengoptimalkan kegiatan pembelajaran dan bimbingan secara efektif sesuai dengan potensi akademik yang dimiliki serta melaksanakan kegiatan ekstrakurikuler.</li>
+        <li>Mengembangkan literasi sekolah yang berkesinambungan.</li>
+        <li>Menanamkan sikap dan tata laku cerdas dalam memanfaatkan dan mengelola lingkungan.</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-        <!-- Misi Card (bottom card) -->
-        <div class="col-md-5 mx-auto">
-          <div class="card shadow-sm" style="border-radius: 15px; border: 1px solid #ddd;">
-            <div class="card-body">
-              <h2 class="card-title"><strong>C. Misi</strong></h2>
-              <ul>
-                <li>Bersikap profesional dalam melakukan segala tindakan dan perbuatan pada keimanan dan ketakwaan
-                  kepada Allah SWT.</li>
-                <li>Membangun kemitraan yang kokoh dengan pemerintahan daerah, masyarakat, institusi pasangan dan dunia
-                  usaha industri.</li>
-                <li>Melakukan inovasi dalam bidang ilmu pengetahuan dan teknologi.</li>
-                <li>Memberikan bekal pengetahuan dan keterampilan kepada seluruh warga sekolah agar mampu bersaing dalam
-                  era global.</li>
-                <li>Memberikan pelayanan yang prima berdasar pada standar mutu ISO 9001:2000.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -379,7 +373,7 @@
             <div class="card-body">
               <h5 class="card-title"
                 style="color:#3498db !important; font-weight: 800 !important; font-size:30px !important;">Juara 1</h5>
-              <p class="card-text">Lomba Sekabupaten Bondowoso. <br> <br></p>
+              <p class="card-text">Juara Umum Drumband Tingkat Karesidenan Besuki. <br> <br></p>
               <p class="card-text"><small class="text-muted">SDN PASAREJO O1</small></p>
             </div>
           </div>

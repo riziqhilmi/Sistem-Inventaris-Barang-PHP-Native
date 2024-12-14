@@ -16,6 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $alamat = $_POST['alamat'];
     $status = $_POST['status'];
 
+    // Validasi NIP
+    if (strlen($nip) > 16) {
+        echo "<script>alert('NIP tidak boleh lebih dari 16 karakter.'); window.history.back();</script>";
+        exit();
+    }
+
     $query = "INSERT INTO guru (nama, NIP, kontak, tempat_lahir, tgl_lahir, alamat, status) 
               VALUES ('$nama', '$nip', '$kontak', '$tempat_lahir', '$tgl_lahir', '$alamat', '$status')";
 
