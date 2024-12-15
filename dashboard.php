@@ -43,7 +43,7 @@ if (!isset($_SESSION['user_id'])) {
 
             <div class="row">
                 <div class="col-12">
-                    <iframe title="project" width="100%" height="600" src="https://app.powerbi.com/reportEmbed?reportId=1def6ae0-41ba-489d-8e1b-3e9dd8b10950&autoAuth=true&ctid=5263cc81-5912-42c4-abc1-d0f1b668b530" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe title="project2" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=737c6aa7-8ae6-4382-b45c-7c910c143f71&autoAuth=true&ctid=5263cc81-5912-42c4-abc1-d0f1b668b530" frameborder="0" allowFullScreen="true"></iframe>
                 </div>
             </div>
 
