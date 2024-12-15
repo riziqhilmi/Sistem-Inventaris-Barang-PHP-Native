@@ -12,14 +12,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $id_barang = $_POST['id_barang'];
     $nama_peminjam = $_POST['nama_peminjam'];
     $tanggal_pinjam = $_POST['tanggal_pinjam'];
-    $tanggal_kembali = $_POST['tanggal_kembali'];
+    $tanggal_kembali = $_POST['tanggal_kembali']; // Pastikan ini diisi jika diperlukan
     $jumlah_pinjam = $_POST['jumlah_pinjam'];
     $keterangan = $_POST['keterangan'];
     $created_by = $_SESSION['user_id']; // Ambil ID pengguna dari sesi
 
+    // Validasi input
+    if (empty($id_barang) || empty($nama_peminjam) || empty($tanggal_pinjam) || empty($jumlah_pinjam)) {
+        $_SESSION['error'] = "Semua field harus diisi.";
+        header('Location: peminjaman.php');
+        exit();
+    }
+
     $koneksi->begin_transaction();
 
     try {
+        // Cek stok barang
         $cek_stok_query = "SELECT jumlah_akhir FROM barang WHERE id_barang = ?";
         $cek_stmt = $koneksi->prepare($cek_stok_query);
         $cek_stmt->bind_param("i", $id_barang);
@@ -28,16 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $cek_stmt->fetch();
         $cek_stmt->close();
 
+        // Cek apakah jumlah pinjam melebihi stok
         if ($jumlah_pinjam > $stok_akhir) {
             throw new Exception("Jumlah pinjaman melebihi stok yang tersedia.");
         }
 
+        // Insert data peminjaman
         $query = "INSERT INTO peminjaman (id_barang, nama_peminjam, tanggal_pinjam, tanggal_kembali, jumlah_pinjam, keterangan, created_by) 
                  VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $koneksi->prepare($query);
-        $stmt->bind_param("isssssi", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan, $created_by); // Tambahkan created_by
+        $stmt->bind_param("isssssi", $id_barang, $nama_peminjam, $tanggal_pinjam, $tanggal_kembali, $jumlah_pinjam, $keterangan, $created_by);
         $stmt->execute();
 
+        // Update stok barang
         $query = "UPDATE barang SET jumlah_akhir = jumlah_akhir - ? WHERE id_barang = ?";
         $stmt = $koneksi->prepare($query);
         $stmt->bind_param("ii", $jumlah_pinjam, $id_barang);
@@ -50,9 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     } catch (Exception $e) {
         $koneksi->rollback();
         $_SESSION['error'] = "Terjadi kesalahan: " . $e->getMessage();
+        header('Location: peminjaman.php'); // Redirect ke halaman peminjaman
+        exit();
     }
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['return'])) {
     $id_peminjaman = $_POST['id_peminjaman'];
     $tanggal_kembali = date('Y-m-d'); 
@@ -243,8 +255,8 @@ $transactions = $koneksi->query($query)->fetch_all(MYSQLI_ASSOC);
                     <?php foreach ($transactions as $index => $trans): ?>
                         <tr>
                             <td><?= $index + 1 ?></td>
-                            <td><?= date('d/m/Y', strtotime($trans['tanggal_pinjam'])) ?></td>
-                            <td><?= $trans['tanggal_kembali'] ? date('d/m/Y', strtotime($trans['tanggal_kembali'])) : '-' ?></td>
+                            <td><?= date('Y/m/d', strtotime($trans['tanggal_pinjam'])) ?></td>
+                            <td><?= $trans['tanggal_kembali'] ? date('Y/m/d', strtotime($trans['tanggal_kembali'])) : '-' ?></td>
                             <td><?= htmlspecialchars($trans['nama_peminjam']) ?></td>
                             <td><?= htmlspecialchars($trans['nama']) ?></td>
                             <td><?= htmlspecialchars($trans['merek']) ?></td>

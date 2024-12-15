@@ -10,51 +10,7 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
-function reg() {
-  let usr = document.getElementById('usr');
-  let email = document.getElementById('email');
-  let pass = document.getElementById('psw');
-  let confirm_pass = document.getElementById('cpsw');
-  if (usr.value == "") {
-    alert('Isi dulu username');
-    return;
-  } else if (email.value == "") {
-    alert('Isi dulu email') 
-    return; 
-  } else if (psw.value == ""){
-    alert('Isi dulu password')
-    return;
-  } else if (cpsw.value == ""){
-    alert('Isi dulu confirm password dulu')
-    return;
-  }
 
-  let formData = new FormData();
-  formData.append('usernamee', usr.value);
-  formData.append('email', email.value);
-  formData.append('passwordd', pass.value);
-  formData.append('confirm_password', confirm_pass.value);
-
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if(this.readyState == 4 && this.status == 200) {
-      let data = JSON.parse(this.responseText);
-      if(data.status == "success") {
-        alert('Pendaftaran Berhasil Silahkan Login!!!');
-        document.getElementById('sign-in-btn').click();
-        usr.value = "";
-        email.value = "";
-        pass.value = "";
-        confirm_pass.value = "";
-      } else if(data.status == 'error') {
-        alert('Password dan Confirm Password tidak cocok!!!');
-      }
-    }
-  };
-
-  xhttp.open('POST', 'reg.php', true);
-  xhttp.send(formData);
-}
 function loginn() {
   let user = document.getElementById('username');
   let passs = document.getElementById('login');

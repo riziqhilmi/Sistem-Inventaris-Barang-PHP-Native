@@ -41,3 +41,4 @@ include('koneksi.php');
       echo json_encode(array('status'=> 'error2','message'=> 'User tidak ditemukan!!!'));
     }
   }
+?>

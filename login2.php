@@ -65,26 +65,30 @@ session_start();
 </form>
 
 
-        <form action="" class="sign-up-form" method="post">
-          <h2 class="title">Sign up</h2>
-          <div class="input-field">
-            <i class="fas fa-user"></i>
-            <input type="text" name="usernamee" id="usr" placeholder="Username" required />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-envelope"></i>
-            <input type="email" name="email" id="email" placeholder="Email" required />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="passwordd" id="psw" placeholder="Password" required />
-          </div>
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input type="password" name="confirm_password" id="cpsw" placeholder="Confirm password" required />
-          </div>
-          <input type="button" onclick="reg()" name="sign_up" class="input-btn-field input-field" value="Sign up" />
-        </form>
+<form action="" class="sign-up-form" method="post">
+  <h2 class="title">Sign up</h2>
+  <div class="input-field">
+    <i class="fas fa-id-card"></i>
+    <input type="text" name="nip" id="nip" placeholder="NIP" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-user"></i>
+    <input type="text" name="usernamee" id="usr" placeholder="Username" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-envelope"></i>
+    <input type="email" name="email" id="email" placeholder="Email" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="passwordd" id="psw" placeholder="Password" required />
+  </div>
+  <div class="input-field">
+    <i class="fas fa-lock"></i>
+    <input type="password" name="confirm_password" id="cpsw" placeholder="Confirm password" required />
+  </div>
+  <input type="button" onclick="reg()" name="sign_up" class="input-btn-field input-field" value="Sign up" />
+</form>
 
       </div>
     </div>
@@ -119,5 +123,60 @@ session_start();
 
   <script src="assets/js/login2.js"></script>
 </body>
+<script>
 
+function reg() {
+  let nip = document.getElementById('nip');
+  let usr = document.getElementById('usr');
+  let email = document.getElementById('email');
+  let pass = document.getElementById('psw');
+  let confirm_pass = document.getElementById('cpsw');
+
+  if (nip.value == "") {
+    alert('Isi dulu NIP');
+    return;
+  } else if (usr.value == "") {
+    alert('Isi dulu username');
+    return;
+  } else if (email.value == "") {
+    alert('Isi dulu email') 
+    return; 
+  } else if (pass.value == ""){
+    alert('Isi dulu password')
+    return;
+  } else if (confirm_pass.value == ""){
+    alert('Isi dulu confirm password dulu')
+    return;
+  }
+
+  let formData = new FormData();
+  formData.append('nip', nip.value);
+  formData.append('usernamee', usr.value);
+  formData.append('email', email.value);
+  formData.append('passwordd', pass.value);
+  formData.append('confirm_password', confirm_pass.value);
+
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      let data = JSON.parse(this.responseText);
+      if(data.status == "success") {
+        alert(data.message);
+        document.getElementById('sign-in-btn').click();
+        nip.value = "";
+        usr.value = "";
+        email.value = "";
+        pass.value = "";
+        confirm_pass.value = "";
+      } else {
+        alert(data.message);
+      }
+    }
+  };
+
+  xhttp.open('POST', 'reg.php', true);
+  xhttp.send(formData);
+}
+
+</script>
 </html>

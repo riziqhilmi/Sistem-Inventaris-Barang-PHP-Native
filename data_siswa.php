@@ -10,6 +10,9 @@ if (!isset($_SESSION['user_id'])) {
 ?>
 <?php
 include("koneksi.php");
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -181,10 +184,22 @@ include("koneksi.php");
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="kelas" class="form-label">Kelas</label>
-                            <input type="text" class="form-control" name="kelas" value="<?php echo $row['kelas']; ?>" required>
-                        </div>
+                    <div class="col-md-6">
+        <label for="kelas" class="form-label">Kelas</label>
+        <select class="form-select" name="kelas" required>
+            <option value="">Pilih Kelas</option>
+            <?php
+            // Ambil data ruangan yang mengandung kata 'Kelas'
+            $query_ruangan_kelas = "SELECT id_ruangan, nama_ruangan FROM ruangan WHERE nama_ruangan LIKE '%Kelas%'";
+            $result_ruangan_kelas = $koneksi->query($query_ruangan_kelas);
+            
+            while ($row_ruangan = $result_ruangan_kelas->fetch_assoc()) {
+                $selected = ($row['kelas'] == $row_ruangan['nama_ruangan']) ? 'selected' : '';
+                echo "<option value='{$row_ruangan['nama_ruangan']}' $selected>{$row_ruangan['nama_ruangan']}</option>";
+            }
+            ?>
+        </select>
+    </div>
                         <div class="col-md-6">
                             <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                             <select class="form-select" name="jenis_kelamin" required>
@@ -256,9 +271,20 @@ include("koneksi.php");
                                                 <input type="text" class="form-control" name="nisn" required>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="kelas" class="form-label">Kelas</label>
-                                                <input type="text" class="form-control" name="kelas" required>
-                                            </div>
+                            <label for="kelas" class="form-label">Kelas</label>
+                            <select class="form-select" name="kelas" required>
+                            <option value="">Pilih Kelas</option>
+                                <?php
+            
+                                $query_ruangan_kelas = "SELECT id_ruangan, nama_ruangan FROM ruangan WHERE nama_ruangan LIKE '%Kelas%'";
+                                $result_ruangan_kelas = $koneksi->query($query_ruangan_kelas);
+            
+                                while ($row_ruangan = $result_ruangan_kelas->fetch_assoc()) {
+                                echo "<option value='{$row_ruangan['nama_ruangan']}'>{$row_ruangan['nama_ruangan']}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
                                             <div class="col-md-6">
                                                 <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
                                                 <select class="form-select" name="jenis_kelamin" required>
